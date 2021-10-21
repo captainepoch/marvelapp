@@ -1,0 +1,75 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "kotlin-kapt"
+    id "kotlin-parcelize"
+    id "androidx.navigation.safeargs"
+}
+
+android {
+    compileSdk buildVersions.compileSdk
+
+    defaultConfig {
+        applicationId buildVersions.applicationId
+        minSdk buildVersions.minSdk
+        targetSdk buildVersions.targetSdk
+        versionCode buildVersions.versionCode
+        versionName buildVersions.versionName
+
+        testInstrumentationRunner buildVersions.testRunner
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+
+        release {
+            debuggable false
+            minifyEnabled false
+
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+        }
+    }
+
+    flavorDimensions flavors.env
+    productFlavors {
+        create(flavors.pre) {
+            dimension = flavors.env
+        }
+
+        create(flavors.pro) {
+            dimension = flavors.env
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility buildVersions.java
+        targetCompatibility buildVersions.java
+    }
+
+    kotlinOptions {
+        jvmTarget = buildVersions.java.toString()
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation project(":core")
+    implementation project(":characters")
+    implementation project(":design")
+
+    implementation deps.androidx.navigationFragment
+    implementation deps.androidx.navigationUi
+
+    implementation deps.material
+
+    // Testing (move to core-testing)
+    /*testImplementation "junit:junit:4.+"
+    androidTestImplementation "androidx.test.ext:junit:1.1.3"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"*/
+}

@@ -1,0 +1,6 @@
+rootProject.name = "Marvel API"
+
+include ":app"
+include ":core"
+include ":characters"
+include ":design"

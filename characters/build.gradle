@@ -1,0 +1,51 @@
+plugins {
+    id "com.android.library"
+    id "kotlin-android"
+    id "kotlin-parcelize"
+}
+
+android {
+    compileSdk buildVersions.compileSdk
+
+    defaultConfig {
+        minSdk buildVersions.minSdk
+        targetSdk buildVersions.targetSdk
+        versionCode buildVersions.versionCode
+        versionName buildVersions.versionName
+
+        testInstrumentationRunner buildVersions.testRunner
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+        }
+    }
+
+    flavorDimensions flavors.env
+    productFlavors {
+        create(flavors.pre) {
+            dimension = flavors.env
+        }
+
+        create(flavors.pro) {
+            dimension = flavors.env
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility buildVersions.java
+        targetCompatibility buildVersions.java
+    }
+
+    kotlinOptions {
+        jvmTarget = buildVersions.java.toString()
+    }
+}
+
+dependencies {
+    implementation project(":core")
+}

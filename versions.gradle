@@ -1,0 +1,92 @@
+ext.deps = [:]
+
+def versions = [:]
+versions.appcompat = "1.3.1"
+versions.constraintlayout = "2.1.1"
+versions.coreKtx = "1.6.0"
+versions.koin = "3.1.2"
+versions.kotlin = "1.5.31"
+versions.kotlinx = "1.5.2"
+versions.lifecycle = "2.3.1"
+versions.lifecycleExt = "2.2.0"
+versions.material = "1.4.0"
+versions.navigation = "2.3.5"
+versions.okhttp = "4.9.0"
+versions.retrofit = "2.9.0"
+versions.timber = "5.0.1"
+
+// Android related dependencies
+def buildVersions = [:]
+buildVersions.applicationId = "com.adolfo.marvel"
+buildVersions.minSdk = 23
+buildVersions.targetSdk = 30
+buildVersions.compileSdk = 30
+buildVersions.versionCode = 1
+buildVersions.versionName = "1.0.0"
+buildVersions.java = JavaVersion.VERSION_1_8
+buildVersions.testRunner = "androidx.test.runner.AndroidJUnitRunner"
+ext.buildVersions = buildVersions
+
+def flavors = [:]
+flavors.env = "environment"
+flavors.pre = "pre"
+flavors.pro = "pro"
+ext.flavors = flavors
+
+def pluginsVersion = [:]
+pluginsVersion.androidGradlePlugin = "7.0.3"
+pluginsVersion.kotlinPlugin = versions.kotlin
+versions.plugins = pluginsVersion
+
+def deps = [:]
+
+def androidx = [:]
+androidx.appcompat = "androidx.appcompat:appcompat:$versions.appcompat"
+androidx.constraintlayout = "androidx.constraintlayout:constraintlayout:$versions.constraintlayout"
+androidx.coreKtx = "androidx.core:core-ktx:$versions.coreKtx"
+androidx.lifecycleExt = "androidx.lifecycle:lifecycle-extensions:$versions.lifecycleExt"
+androidx.lifecycleJava8 = "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
+androidx.lifecycleLivedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
+androidx.lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle"
+androidx.navigationFragment = "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
+androidx.navigationUi = "androidx.navigation:navigation-ui-ktx:$versions.navigation"
+androidx.viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+androidx.viewmodel_savedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycle"
+deps.androidx = androidx
+
+def gradlePlugins = [:]
+gradlePlugins.gradle = "com.android.tools.build:gradle:$versions.plugins.androidGradlePlugin"
+gradlePlugins.kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.plugins.kotlinPlugin"
+gradlePlugins.safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
+deps.gradlePlugins = gradlePlugins
+
+def koin = [:]
+koin.android = "io.insert-koin:koin-android:$versions.koin"
+koin.core = "io.insert-koin:koin-core:$versions.koin"
+deps.koin = koin
+
+def kotlinx = [:]
+kotlinx.coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.kotlinx"
+kotlinx.coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.kotlinx"
+deps.kotlinx = kotlinx
+
+def retrofit = [:]
+retrofit.convGson = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+retrofit.lib = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+deps.retrofit = retrofit
+
+deps.material = "com.google.android.material:material:$versions.material"
+deps.okHttpLogInterceptor = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
+deps.timber = "com.jakewharton.timber:timber:$versions.timber"
+
+// Add repositories for all the project
+static def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.mavenCentral()
+    handler.maven {
+        url "https://jitpack.io"
+    }
+}
+
+ext.addRepos = this.&addRepos
+ext.deps = deps

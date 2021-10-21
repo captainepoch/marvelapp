@@ -1,0 +1,97 @@
+plugins {
+    id "com.android.library"
+    id "kotlin-android"
+}
+
+android {
+    compileSdk buildVersions.compileSdk
+
+    defaultConfig {
+        minSdk buildVersions.minSdk
+        targetSdk buildVersions.targetSdk
+
+        testInstrumentationRunner buildVersions.testRunner
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+
+        release {
+            debuggable false
+            minifyEnabled false
+
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+        }
+    }
+
+    flavorDimensions flavors.env
+    productFlavors {
+        create(flavors.pre) {
+            dimension = flavors.env
+
+            buildConfigField "String", "ENDPOINT", "\"https://gateway.marvel.com/\""
+
+            def keys = new Properties()
+            file(rootProject.file("marvel_keys.properties")).withInputStream {
+                keys.load(it)
+            }
+            buildConfigField "String", "MARVEL_PUBLIC_KEY", keys["MARVEL_PUBLIC_KEY"]
+            buildConfigField "String", "MARVEL_PRIVATE_KEY", keys["MARVEL_PRIVATE_KEY"]
+        }
+
+        create(flavors.pro) {
+            dimension = flavors.env
+
+            buildConfigField "String", "ENDPOINT", "\"https://gateway.marvel.com/\""
+
+            def keys = new Properties()
+            file(rootProject.file("marvel_keys.properties")).withInputStream {
+                keys.load(it)
+            }
+            buildConfigField "String", "MARVEL_PUBLIC_KEY", keys["MARVEL_PUBLIC_KEY"]
+            buildConfigField "String", "MARVEL_PRIVATE_KEY", keys["MARVEL_PRIVATE_KEY"]
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility buildVersions.java
+        targetCompatibility buildVersions.java
+    }
+
+    kotlinOptions {
+        jvmTarget = buildVersions.java.toString()
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    api deps.androidx.coreKtx
+
+    api deps.androidx.appcompat
+    api deps.androidx.constraintlayout
+    api deps.androidx.lifecycleExt
+    api deps.androidx.lifecycleJava8
+    api deps.androidx.lifecycleLivedataKtx
+    api deps.androidx.lifecycleRuntime
+    api deps.androidx.viewmodel
+    api deps.androidx.viewmodel_savedstate
+
+    api deps.koin.android
+    api deps.koin.core
+
+    api deps.kotlinx.coroutinesCore
+    api deps.kotlinx.coroutinesAndroid
+
+    api deps.okHttpLogInterceptor
+    api deps.retrofit.convGson
+    api deps.retrofit.lib
+
+    api deps.timber
+}
