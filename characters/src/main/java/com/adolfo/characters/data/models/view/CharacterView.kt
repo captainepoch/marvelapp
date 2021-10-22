@@ -10,5 +10,5 @@ data class CharacterView(
     val description: String,
     val modified: String,
     val resourceURI: String,
-    val thumbnail: CharacterThumbView
+    val thumbnail: String
 ) : Parcelable

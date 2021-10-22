@@ -93,5 +93,6 @@ dependencies {
     api deps.retrofit.convGson
     api deps.retrofit.lib
 
+    api deps.glide
     api deps.timber
 }

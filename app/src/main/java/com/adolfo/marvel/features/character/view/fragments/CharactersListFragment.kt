@@ -46,7 +46,6 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
     private fun handleCharacters(charactersView: CharactersView?) {
         charactersView?.let {
-            //charactersAdapter.items = it.results
             charactersAdapter.submitList(it.results)
         }
     }

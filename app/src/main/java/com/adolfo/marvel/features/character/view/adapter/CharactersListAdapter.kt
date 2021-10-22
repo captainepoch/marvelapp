@@ -27,7 +27,10 @@ class CharactersListAdapter : ListAdapter<CharacterView, CharacterViewHolder>(Ch
         RecyclerView.ViewHolder(item.root) {
 
         fun bind(character: CharacterView) {
-            item.liHeroe.setName(character.name)
+            item.liHeroe.inflateItem(
+                character.name,
+                character.thumbnail
+            )
         }
     }
 

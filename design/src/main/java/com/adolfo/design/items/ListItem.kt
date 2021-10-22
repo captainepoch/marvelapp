@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.adolfo.core.extensions.loadFromUrl
 import com.adolfo.design.databinding.ItemListBinding
 
 class ListItem @JvmOverloads constructor(
@@ -16,7 +17,13 @@ class ListItem @JvmOverloads constructor(
         LayoutInflater.from(context), this
     )
 
-    fun setName(name: String) {
+    fun inflateItem(name: String, avatarUrl: String) {
         binding.tvName.text = name
+
+        with(avatarUrl) {
+            if (this.isNotEmpty() && this.isNotBlank()) {
+                binding.ivAvatar.loadFromUrl(avatarUrl)
+            }
+        }
     }
 }
