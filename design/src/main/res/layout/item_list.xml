@@ -10,7 +10,7 @@
         android:id="@+id/ivAvatar"
         android:layout_width="0dp"
         android:layout_height="128dp"
-        android:background="@android:color/holo_red_dark"
+        android:background="@android:color/transparent"
         android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
