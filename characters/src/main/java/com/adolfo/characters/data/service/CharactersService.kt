@@ -8,6 +8,5 @@ class CharactersService(private val retrofit: Retrofit) : CharactersApi {
 
     override suspend fun getCharacters(limit: Int?) = api.getCharacters(limit)
 
-    override suspend fun getCharacter(id: String?) {
-    }
+    override suspend fun getCharacter(id: Int?) = api.getCharacter(id)
 }

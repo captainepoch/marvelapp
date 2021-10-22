@@ -1,5 +1,6 @@
 package com.adolfo.characters.domain.repository
 
+import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.models.entity.CharactersEntity
 import com.adolfo.characters.data.service.CharactersService
 import com.adolfo.core.exception.Failure.NetworkConnection
@@ -21,6 +22,10 @@ class CharactersRepositoryImp(
         emit(getCharactersFromService())
     }.catch { emit(Error(Throwable(it))) }
 
+    override fun getCharacter(id: Int?) = flow {
+        emit(getCharacterDetailFromService(id))
+    }.catch { emit(Error(Throwable(it))) }
+
     private suspend fun getCharactersFromService(): State<CharactersEntity> {
         return if (networkTools.hasInternetConnection()) {
             service.getCharacters(10).run {
@@ -35,6 +40,18 @@ class CharactersRepositoryImp(
         }
     }
 
-    override fun getCharacter(id: Int) {
+    private suspend fun getCharacterDetailFromService(id: Int?): State<CharacterEntity> {
+        return if (networkTools.hasInternetConnection()) {
+            service.getCharacter(id).run {
+                if (isSuccessful && body() != null) {
+                    val singleItem = body()!!.data.results?.first() ?: CharacterEntity.empty()
+                    Success(singleItem)
+                } else {
+                    Error(ServerError(code()))
+                }
+            }
+        } else {
+            Error(NetworkConnection)
+        }
     }
 }

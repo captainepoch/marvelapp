@@ -3,6 +3,7 @@ package com.adolfo.marvel.common.navigation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import com.adolfo.core.extensions.viewBinding
 import com.adolfo.marvel.databinding.ActivityMainBinding
@@ -23,5 +24,9 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(binding.fragmentContainer.id) as NavHostFragment
         navController = navHostFragment.navController
+    }
+
+    fun navigateTo(direction: NavDirections) {
+        navController.navigate(direction)
     }
 }

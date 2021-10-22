@@ -7,6 +7,24 @@
     <fragment
         android:id="@+id/fragmentCharacters"
         android:name="com.adolfo.marvel.features.character.view.fragments.CharactersListFragment"
-        tools:layout="@layout/fragment_characters" />
+        tools:layout="@layout/fragment_characters">
+
+        <action
+            android:id="@+id/action_list_to_detail"
+            app:destination="@id/fragmentCharacterDetail" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentCharacterDetail"
+        android:name="com.adolfo.marvel.features.character.view.fragments.CharacterDetailFragment"
+        tools:layout="@layout/fragment_character_detail">
+
+        <argument
+            android:name="characterDetail"
+            app:argType="com.adolfo.characters.data.models.view.CharacterView"
+            app:nullable="true" />
+
+    </fragment>
 
 </navigation>

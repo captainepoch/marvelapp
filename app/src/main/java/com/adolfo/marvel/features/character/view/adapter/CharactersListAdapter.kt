@@ -11,6 +11,8 @@ import com.adolfo.marvel.features.character.view.adapter.CharactersListAdapter.C
 
 class CharactersListAdapter : ListAdapter<CharacterView, CharacterViewHolder>(CharacterDiff) {
 
+    internal var characterListener: (CharacterView) -> Unit = {}
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         return CharacterViewHolder(
             ItemCharacterBinding.inflate(
@@ -20,17 +22,21 @@ class CharactersListAdapter : ListAdapter<CharacterView, CharacterViewHolder>(Ch
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), characterListener)
     }
 
     inner class CharacterViewHolder(private val item: ItemCharacterBinding) :
         RecyclerView.ViewHolder(item.root) {
 
-        fun bind(character: CharacterView) {
+        fun bind(character: CharacterView, listener: (CharacterView) -> Unit) {
             item.liHeroe.inflateItem(
                 character.name,
                 character.thumbnail
             )
+
+            item.liHeroe.setOnClickListener {
+                listener(character)
+            }
         }
     }
 
