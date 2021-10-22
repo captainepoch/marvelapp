@@ -2,17 +2,14 @@ package com.adolfo.marvel.features.character.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.marvel.databinding.ItemCharacterBinding
 import com.adolfo.marvel.features.character.view.adapter.CharactersListAdapter.CharacterViewHolder
-import kotlin.properties.Delegates
 
-class CharactersListAdapter : RecyclerView.Adapter<CharacterViewHolder>() {
-
-    internal var items: List<CharacterView> by Delegates.observable(emptyList()) { _, _, _ ->
-        notifyDataSetChanged()
-    }
+class CharactersListAdapter : ListAdapter<CharacterView, CharacterViewHolder>(CharacterDiff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         return CharacterViewHolder(
@@ -23,11 +20,7 @@ class CharactersListAdapter : RecyclerView.Adapter<CharacterViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.bind(items[position])
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
+        holder.bind(getItem(position))
     }
 
     inner class CharacterViewHolder(private val item: ItemCharacterBinding) :
@@ -35,6 +28,16 @@ class CharactersListAdapter : RecyclerView.Adapter<CharacterViewHolder>() {
 
         fun bind(character: CharacterView) {
             item.liHeroe.setName(character.name)
+        }
+    }
+
+    private object CharacterDiff : DiffUtil.ItemCallback<CharacterView>() {
+        override fun areItemsTheSame(oldItem: CharacterView, newItem: CharacterView): Boolean {
+            return (oldItem == newItem)
+        }
+
+        override fun areContentsTheSame(oldItem: CharacterView, newItem: CharacterView): Boolean {
+            return (oldItem.id == oldItem.id)
         }
     }
 }
