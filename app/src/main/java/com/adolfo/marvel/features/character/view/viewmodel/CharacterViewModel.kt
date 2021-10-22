@@ -10,6 +10,7 @@ import com.adolfo.core.extensions.cancelIfActive
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core.interactor.UseCase
 import com.adolfo.core.ui.viewmodel.BaseViewModel
+import com.adolfo.marvel.common.platform.AppConstants
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -21,7 +22,9 @@ class CharacterViewModel(
 
     private var charactersJob: Job? = null
 
-    private val charactersLiveData = stateHandle.getLiveData<CharactersView>("characters")
+    private val charactersLiveData = stateHandle.getLiveData<CharactersView>(
+        AppConstants.LiveData.CHARACTERS_VM
+    )
     val characters: LiveData<CharactersView> get() = charactersLiveData
 
     init {
@@ -36,6 +39,8 @@ class CharacterViewModel(
                     when (state) {
                         is Success<CharactersEntity> -> {
                             charactersLiveData.value = state.data.toCharacters().toCharactersView()
+                        }
+                        else -> {
                         }
                     }
                 }
