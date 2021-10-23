@@ -11,5 +11,5 @@ class GetCharacters(
 
     override fun execute(params: Params?) = repository.getCharacters(params?.offset)
 
-    data class Params(val offset:Int)
+    data class Params(val offset: Int)
 }

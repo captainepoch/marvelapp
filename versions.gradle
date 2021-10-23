@@ -15,6 +15,7 @@ versions.navigation = "2.3.5"
 versions.okhttp = "4.9.0"
 versions.recyclerview = "1.2.1"
 versions.retrofit = "2.9.0"
+versions.room = "2.3.0"
 versions.timber = "5.0.1"
 
 // Android related dependencies
@@ -53,6 +54,9 @@ androidx.lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime:$versions.life
 androidx.navigationFragment = "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
 androidx.navigationUi = "androidx.navigation:navigation-ui-ktx:$versions.navigation"
 androidx.recyclerview = "androidx.recyclerview:recyclerview:$versions.recyclerview"
+androidx.room = "androidx.room:room-runtime:$versions.room"
+androidx.roomCompiler = "androidx.room:room-compiler:$versions.room"
+androidx.roomKtx = "androidx.room:room-ktx:$versions.room"
 androidx.viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
 androidx.viewmodel_savedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycle"
 deps.androidx = androidx

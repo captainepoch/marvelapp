@@ -1,6 +1,13 @@
 package com.adolfo.characters.core.di
 
+import androidx.room.Room
+import com.adolfo.characters.core.utils.CharactersConstants
 import com.adolfo.characters.data.service.CharactersService
+import com.adolfo.characters.domain.database.CharactersDatabase
+import com.adolfo.characters.domain.datasource.CharactersDatasource
+import com.adolfo.characters.domain.datasource.CharactersDatasourceImp
+import com.adolfo.characters.domain.local.CharactersLocal
+import com.adolfo.characters.domain.local.CharactersLocalImp
 import com.adolfo.characters.domain.repository.CharactersRepository
 import com.adolfo.characters.domain.repository.CharactersRepositoryImp
 import com.adolfo.characters.domain.usecases.GetCharacterDetail
@@ -8,7 +15,7 @@ import com.adolfo.characters.domain.usecases.GetCharacters
 import org.koin.dsl.module
 
 val charactersRepository = module {
-    factory<CharactersRepository> { CharactersRepositoryImp(get(), get()) }
+    factory<CharactersRepository> { CharactersRepositoryImp(get()) }
 }
 
 val charactersService = module {
@@ -20,8 +27,26 @@ val charactersUseCases = module {
     factory { GetCharacterDetail(get()) }
 }
 
+val charactersDatabase = module {
+    factory {
+        Room.databaseBuilder(
+            get(),
+            CharactersDatabase::class.java,
+            CharactersConstants.DATABASE_NAME
+        ).build()
+    }
+
+    factory<CharactersLocal> { CharactersLocalImp(get()) }
+}
+
+val charactersDatasource = module {
+    factory<CharactersDatasource> { CharactersDatasourceImp(get(), get(), get()) }
+}
+
 val characters = listOf(
+    charactersDatabase,
     charactersService,
     charactersRepository,
-    charactersUseCases
+    charactersUseCases,
+    charactersDatasource
 )
