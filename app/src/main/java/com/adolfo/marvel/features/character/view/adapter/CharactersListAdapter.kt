@@ -45,11 +45,11 @@ class CharactersListAdapter : ListAdapter<CharacterView, CharacterViewHolder>(Ch
     private object CharacterDiff : DiffUtil.ItemCallback<CharacterView>() {
 
         override fun areItemsTheSame(oldItem: CharacterView, newItem: CharacterView): Boolean {
-            return (oldItem == newItem)
+            return (oldItem.id == newItem.id)
         }
 
         override fun areContentsTheSame(oldItem: CharacterView, newItem: CharacterView): Boolean {
-            return (oldItem.id == newItem.id)
+            return (oldItem == newItem)
         }
     }
 }

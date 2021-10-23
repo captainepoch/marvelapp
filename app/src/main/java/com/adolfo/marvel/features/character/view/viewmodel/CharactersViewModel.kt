@@ -13,15 +13,14 @@ import com.adolfo.marvel.common.ui.viewmodel.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import timber.log.Timber.Forest
 
 class CharactersViewModel(
     stateHandle: SavedStateHandle,
     private val getCharacters: GetCharacters
 ) : BaseViewModel() {
 
-    private var offset: Int = 0
+    private val offset: Int
+        get() = charactersLiveData.value?.results.orEmpty().size
 
     private var charactersJob: Job? = null
 
@@ -41,9 +40,11 @@ class CharactersViewModel(
                 .collect { state ->
                     when (state) {
                         is Success<CharactersEntity> -> {
-                            charactersLiveData.value = state.data.toCharacters().toCharactersView()
-
-                            offset += 10
+                            val list = charactersLiveData.value?.results.orEmpty().toMutableList()
+                            list.addAll(
+                                state.data.toCharacters().toCharactersView().results
+                            )
+                            charactersLiveData.value = CharactersView(list)
                         }
                         else -> {
                         }

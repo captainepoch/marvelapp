@@ -6,8 +6,8 @@ import androidx.navigation.fragment.navArgs
 import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.core.extensions.isEmptyOrBlank
 import com.adolfo.core.extensions.loadFromUrl
-import com.adolfo.core.extensions.observe
 import com.adolfo.core.extensions.viewBinding
+import com.adolfo.core.extensions.viewObserve
 import com.adolfo.marvel.R
 import com.adolfo.marvel.common.ui.fragment.BaseFragment
 import com.adolfo.marvel.databinding.FragmentCharacterDetailBinding
@@ -29,7 +29,7 @@ class CharacterDetailFragment : BaseFragment(R.layout.fragment_character_detail)
 
     private fun initObservers() {
         with(viewModel) {
-            observe(character, ::handleCharacterDetail)
+            viewObserve(character, ::handleCharacterDetail)
         }
     }
 

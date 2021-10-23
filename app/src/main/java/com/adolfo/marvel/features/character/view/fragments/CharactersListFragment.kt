@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.core.extensions.endlessScrollListener
-import com.adolfo.core.extensions.observe
 import com.adolfo.core.extensions.viewBinding
+import com.adolfo.core.extensions.viewObserve
 import com.adolfo.marvel.R
 import com.adolfo.marvel.common.ui.fragment.BaseFragment
 import com.adolfo.marvel.databinding.FragmentCharactersBinding
@@ -13,7 +13,6 @@ import com.adolfo.marvel.features.character.view.adapter.CharactersListAdapter
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModel
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import timber.log.Timber
-import timber.log.Timber.Forest
 
 class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
@@ -32,7 +31,7 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
     private fun initObservers() {
         with(viewModel) {
-            viewLifecycleOwner.observe(characters, ::handleCharacters)
+            viewObserve(characters, ::handleCharacters)
         }
     }
 
@@ -53,9 +52,8 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
     private fun handleCharacters(charactersView: CharactersView?) {
         charactersView?.let { characters ->
-            val actualList = charactersAdapter.currentList.toMutableList()
-            actualList.addAll(characters.results)
-            charactersAdapter.submitList(actualList.toList())
+            Timber.i(characters.results.toString())
+            charactersAdapter.submitList(characters.results)
         }
     }
 }
