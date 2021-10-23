@@ -1,8 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/ivDetailAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_12"
+            android:layout_marginEnd="@dimen/size_12"
+            app:layout_constraintTop_toBottomOf="@id/ivDetailAvatar"
+            tools:text="Description of a Super Hero" />
+
+        <!--
+        <View
+            android:id="@+id/separator"
+            android:layout_width="100dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/size_16"
+            android:background="@color/item_detail_underscore"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+
+        <com.adolfo.design.items.ItemDetailInformation
+            android:id="@+id/idiComics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:idiTitle="@string/character_detail_n_comics"
+            app:layout_constraintTop_toBottomOf="@id/separator" />
+
+        <com.adolfo.design.items.ItemDetailInformation
+            android:id="@+id/idiStories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:idiTitle="@string/character_detail_n_stories"
+            app:layout_constraintTop_toBottomOf="@id/idiComics" />
+
+        <com.adolfo.design.items.ItemDetailInformation
+            android:id="@+id/idiEvents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:idiTitle="@string/character_detail_n_events"
+            app:layout_constraintTop_toBottomOf="@id/idiStories" />
+
+        <com.adolfo.design.items.ItemDetailInformation
+            android:id="@+id/idiSeries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:idiTitle="@string/character_detail_n_series"
+            app:layout_constraintTop_toBottomOf="@id/idiEvents" />
+        -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

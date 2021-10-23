@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.navArgs
 import com.adolfo.characters.data.models.view.CharacterView
+import com.adolfo.core.extensions.isEmptyOrBlank
+import com.adolfo.core.extensions.loadFromUrl
 import com.adolfo.core.extensions.observe
 import com.adolfo.core.extensions.viewBinding
 import com.adolfo.marvel.R
@@ -11,7 +13,6 @@ import com.adolfo.marvel.common.ui.fragment.BaseFragment
 import com.adolfo.marvel.databinding.FragmentCharacterDetailBinding
 import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModel
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
-import timber.log.Timber
 
 class CharacterDetailFragment : BaseFragment(R.layout.fragment_character_detail) {
 
@@ -33,8 +34,14 @@ class CharacterDetailFragment : BaseFragment(R.layout.fragment_character_detail)
     }
 
     private fun handleCharacterDetail(characterView: CharacterView?) {
-        characterView?.let {
-            Timber.d("${it.name}")
+        characterView?.let { character ->
+            binding.ivDetailAvatar.loadFromUrl(character.thumbnail)
+
+            binding.tvDescription.text = if (character.description.isEmptyOrBlank()) {
+                getString(R.string.character_detail_no_description)
+            } else {
+                character.description
+            }
         }
     }
 
