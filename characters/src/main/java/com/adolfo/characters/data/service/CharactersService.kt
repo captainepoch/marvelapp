@@ -6,7 +6,7 @@ class CharactersService(private val retrofit: Retrofit) : CharactersApi {
 
     private val api: CharactersApi by lazy { retrofit.create(CharactersApi::class.java) }
 
-    override suspend fun getCharacters(limit: Int?) = api.getCharacters(limit)
+    override suspend fun getCharacters(offset: Int?, limit: Int?) = api.getCharacters(offset, limit)
 
     override suspend fun getCharacter(id: Int?) = api.getCharacter(id)
 }

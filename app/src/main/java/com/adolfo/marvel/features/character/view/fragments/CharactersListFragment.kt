@@ -48,7 +48,9 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
     private fun handleCharacters(charactersView: CharactersView?) {
         charactersView?.let {
-            charactersAdapter.submitList(it.results)
+            val actualList = charactersAdapter.currentList.toMutableList()
+            actualList.addAll(it.results)
+            charactersAdapter.submitList(actualList)
 
             Timber.d("Updated characters")
         }

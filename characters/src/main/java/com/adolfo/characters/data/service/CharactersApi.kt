@@ -16,7 +16,8 @@ interface CharactersApi {
 
     @GET(CHARACTERS)
     suspend fun getCharacters(
-        @Query("limit") limit: Int? = 5,
+        @Query("offset") offset: Int?,
+        @Query("limit") limit: Int? = 10,
     ): Response<ApiResponse<CharactersEntity>>
 
     @GET(CHARACTER)

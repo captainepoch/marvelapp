@@ -7,7 +7,9 @@ import com.adolfo.core.interactor.UseCase
 
 class GetCharacters(
     private val repository: CharactersRepository
-) : UseCase<UseCase.None, State<CharactersEntity>>() {
+) : UseCase<GetCharacters.Params, State<CharactersEntity>>() {
 
-    override fun execute(params: None?) = repository.getCharacters()
+    override fun execute(params: Params?) = repository.getCharacters(params?.offset)
+
+    data class Params(val offset:Int)
 }

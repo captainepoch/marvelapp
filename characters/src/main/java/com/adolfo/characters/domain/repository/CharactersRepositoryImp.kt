@@ -18,17 +18,17 @@ class CharactersRepositoryImp(
     private val service: CharactersService
 ) : CharactersRepository {
 
-    override fun getCharacters() = flow {
-        emit(getCharactersFromService())
+    override fun getCharacters(offset: Int?) = flow {
+        emit(getCharactersFromService(offset))
     }.catch { emit(Error(Throwable(it))) }
 
     override fun getCharacter(id: Int?) = flow {
         emit(getCharacterDetailFromService(id))
     }.catch { emit(Error(Throwable(it))) }
 
-    private suspend fun getCharactersFromService(): State<CharactersEntity> {
+    private suspend fun getCharactersFromService(offset: Int?): State<CharactersEntity> {
         return if (networkTools.hasInternetConnection()) {
-            service.getCharacters(10).run {
+            service.getCharacters(offset, 10).run {
                 if (isSuccessful && body() != null) {
                     Success(body()!!.data)
                 } else {

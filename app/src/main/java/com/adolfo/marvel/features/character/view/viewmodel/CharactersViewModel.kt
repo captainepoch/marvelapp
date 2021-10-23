@@ -8,9 +8,8 @@ import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.domain.usecases.GetCharacters
 import com.adolfo.core.extensions.cancelIfActive
 import com.adolfo.core.functional.State.Success
-import com.adolfo.core.interactor.UseCase
-import com.adolfo.marvel.common.ui.viewmodel.BaseViewModel
 import com.adolfo.marvel.common.platform.AppConstants
+import com.adolfo.marvel.common.ui.viewmodel.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -19,6 +18,8 @@ class CharactersViewModel(
     stateHandle: SavedStateHandle,
     private val getCharacters: GetCharacters
 ) : BaseViewModel() {
+
+    private var offset: Int = 0
 
     private var charactersJob: Job? = null
 
@@ -34,11 +35,13 @@ class CharactersViewModel(
     fun getCharacters() {
         charactersJob?.cancelIfActive()
         charactersJob = viewModelScope.launch {
-            getCharacters(UseCase.None())
+            getCharacters(GetCharacters.Params(offset))
                 .collect { state ->
                     when (state) {
                         is Success<CharactersEntity> -> {
                             charactersLiveData.value = state.data.toCharacters().toCharactersView()
+
+                            offset += 10
                         }
                         else -> {
                         }
