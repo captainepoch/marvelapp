@@ -7,7 +7,7 @@ class CharactersLocalImp(db: CharactersDatabase) : CharactersLocal {
 
     private val dao by lazy { db.getCharactersDao() }
 
-    override fun getAllCharacters(): List<CharacterEntity> {
+    override fun getAllCharacters(): List<CharacterEntity>? {
         return dao.getAll()
     }
 

@@ -42,7 +42,7 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
     private fun initListeners() {
         binding.rvCharacters.endlessScrollListener {
-            viewModel.getCharacters()
+            viewModel.getCharacters(true)
         }
 
         charactersAdapter.characterListener = {

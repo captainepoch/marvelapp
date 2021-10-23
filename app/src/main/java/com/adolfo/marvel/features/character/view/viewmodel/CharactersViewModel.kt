@@ -33,10 +33,10 @@ class CharactersViewModel(
         getCharacters()
     }
 
-    fun getCharacters() {
+    fun getCharacters(isPaginated: Boolean = false) {
         charactersJob?.cancelIfActive()
         charactersJob = viewModelScope.launch {
-            getCharacters(GetCharacters.Params(offset))
+            getCharacters(GetCharacters.Params(offset, isPaginated))
                 .collect { state ->
                     when (state) {
                         is Success<CharactersEntity> -> {
