@@ -13,6 +13,8 @@ import com.adolfo.marvel.common.ui.viewmodel.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import timber.log.Timber.Forest
 
 class CharactersViewModel(
     stateHandle: SavedStateHandle,

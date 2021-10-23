@@ -3,6 +3,7 @@ package com.adolfo.marvel.features.character.view.fragments
 import android.os.Bundle
 import android.view.View
 import com.adolfo.characters.data.models.view.CharactersView
+import com.adolfo.core.extensions.endlessScrollListener
 import com.adolfo.core.extensions.observe
 import com.adolfo.core.extensions.viewBinding
 import com.adolfo.marvel.R
@@ -12,6 +13,7 @@ import com.adolfo.marvel.features.character.view.adapter.CharactersListAdapter
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModel
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import timber.log.Timber
+import timber.log.Timber.Forest
 
 class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
@@ -30,29 +32,30 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
     private fun initObservers() {
         with(viewModel) {
-            observe(characters, ::handleCharacters)
+            viewLifecycleOwner.observe(characters, ::handleCharacters)
         }
     }
 
     private fun initView() {
+        charactersAdapter.submitList(mutableListOf())
         binding.rvCharacters.adapter = charactersAdapter
     }
 
     private fun initListeners() {
-        charactersAdapter.characterListener = {
-            Timber.d("${it.name}")
+        binding.rvCharacters.endlessScrollListener {
+            viewModel.getCharacters()
+        }
 
+        charactersAdapter.characterListener = {
             navigateTo(CharactersListFragmentDirections.actionListToDetail(it))
         }
     }
 
     private fun handleCharacters(charactersView: CharactersView?) {
-        charactersView?.let {
+        charactersView?.let { characters ->
             val actualList = charactersAdapter.currentList.toMutableList()
-            actualList.addAll(it.results)
-            charactersAdapter.submitList(actualList)
-
-            Timber.d("Updated characters")
+            actualList.addAll(characters.results)
+            charactersAdapter.submitList(actualList.toList())
         }
     }
 }

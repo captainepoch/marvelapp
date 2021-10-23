@@ -22,8 +22,10 @@ class CharactersListAdapter : ListAdapter<CharacterView, CharacterViewHolder>(Ch
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.bind(getItem(position), characterListener)
+        holder.bind(currentList[position], characterListener)
     }
+
+    override fun getItemCount() = currentList.size
 
     inner class CharacterViewHolder(private val item: ItemCharacterBinding) :
         RecyclerView.ViewHolder(item.root) {
@@ -41,12 +43,13 @@ class CharactersListAdapter : ListAdapter<CharacterView, CharacterViewHolder>(Ch
     }
 
     private object CharacterDiff : DiffUtil.ItemCallback<CharacterView>() {
+
         override fun areItemsTheSame(oldItem: CharacterView, newItem: CharacterView): Boolean {
             return (oldItem == newItem)
         }
 
         override fun areContentsTheSame(oldItem: CharacterView, newItem: CharacterView): Boolean {
-            return (oldItem.id == oldItem.id)
+            return (oldItem.id == newItem.id)
         }
     }
 }

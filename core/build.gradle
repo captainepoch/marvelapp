@@ -80,6 +80,7 @@ dependencies {
     api deps.androidx.lifecycleJava8
     api deps.androidx.lifecycleLivedataKtx
     api deps.androidx.lifecycleRuntime
+    api deps.androidx.recyclerview
     api deps.androidx.viewmodel
     api deps.androidx.viewmodel_savedstate
 
