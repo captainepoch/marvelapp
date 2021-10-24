@@ -12,7 +12,6 @@ import com.adolfo.marvel.databinding.FragmentCharactersBinding
 import com.adolfo.marvel.features.character.view.adapter.CharactersListAdapter
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModel
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
-import timber.log.Timber
 
 class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
@@ -36,7 +35,6 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
     }
 
     private fun initView() {
-        charactersAdapter.submitList(mutableListOf())
         binding.rvCharacters.adapter = charactersAdapter
     }
 
@@ -52,7 +50,6 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
     private fun handleCharacters(charactersView: CharactersView?) {
         charactersView?.let { characters ->
-            Timber.i(characters.results.toString())
             charactersAdapter.submitList(characters.results)
         }
     }
