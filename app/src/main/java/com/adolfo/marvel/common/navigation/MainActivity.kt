@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
+import com.adolfo.core.extensions.gone
+import com.adolfo.core.extensions.isVisible
 import com.adolfo.core.extensions.viewBinding
+import com.adolfo.core.extensions.visible
 import com.adolfo.marvel.R
 import com.adolfo.marvel.databinding.ActivityMainBinding
 
@@ -55,5 +58,16 @@ class MainActivity : AppCompatActivity() {
 
     fun setToolbarTitle(title: String) {
         supportActionBar?.title = title
+    }
+
+    fun showLoader(show: Boolean) {
+        if (binding.loader.isVisible() != show && binding.animation.isAnimating != show) {
+            if (show) {
+                binding.animation.playAnimation()
+                binding.loader.visible()
+            } else {
+                binding.loader.gone()
+            }
+        }
     }
 }

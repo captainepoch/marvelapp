@@ -30,6 +30,7 @@ class CharacterDetailFragment : BaseFragment(R.layout.fragment_character_detail)
     private fun initObservers() {
         with(viewModel) {
             viewObserve(character, ::handleCharacterDetail)
+            viewObserve(loader, ::showLoader)
         }
     }
 

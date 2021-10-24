@@ -12,12 +12,14 @@ import com.adolfo.marvel.common.platform.AppConstants
 import com.adolfo.marvel.common.ui.viewmodel.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class CharactersViewModel(
     stateHandle: SavedStateHandle,
     private val getCharacters: GetCharacters
-) : BaseViewModel() {
+) : BaseViewModel(stateHandle) {
 
     private val offset: Int
         get() = charactersLiveData.value?.results.orEmpty().size
@@ -37,6 +39,8 @@ class CharactersViewModel(
         charactersJob?.cancelIfActive()
         charactersJob = viewModelScope.launch {
             getCharacters(GetCharacters.Params(offset, isPaginated))
+                .onStart { showLoader(true) }
+                .onCompletion { showLoader(false) }
                 .collect { state ->
                     when (state) {
                         is Success<CharactersEntity> -> {

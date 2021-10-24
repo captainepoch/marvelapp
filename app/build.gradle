@@ -66,6 +66,7 @@ dependencies {
     implementation deps.androidx.navigationFragment
     implementation deps.androidx.navigationUi
 
+    implementation deps.lottie
     implementation deps.material
 
     // Testing (move to core-testing)

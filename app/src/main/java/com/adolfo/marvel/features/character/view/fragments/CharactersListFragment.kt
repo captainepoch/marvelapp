@@ -31,6 +31,7 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
     private fun initObservers() {
         with(viewModel) {
             viewObserve(characters, ::handleCharacters)
+            viewObserve(loader, ::showLoader)
         }
     }
 
