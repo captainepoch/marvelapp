@@ -1,11 +1,14 @@
 <resources>
-	<string name="app_name" translatable="false">Marvel API</string>
+    <string name="app_name" translatable="false">Marvel API</string>
 
-	<!-- Character detail -->
-	<string name="character_detail_n_comics">Number of comics this hero appears</string>
-	<string name="character_detail_n_stories">Number of stories this hero appears</string>
-	<string name="character_detail_n_events">Number of events this hero appears</string>
-	<string name="character_detail_n_series">Number of series this hero appears</string>
-	<string name="character_detail_no_description">This character does not have any description.</string>
+    <!-- Placeholders -->
+    <string name="empty" translatable="false" />
+
+    <!-- Character detail -->
+    <string name="character_detail_n_comics">Number of comics this hero appears</string>
+    <string name="character_detail_n_stories">Number of stories this hero appears</string>
+    <string name="character_detail_n_events">Number of events this hero appears</string>
+    <string name="character_detail_n_series">Number of series this hero appears</string>
+    <string name="character_detail_no_description">This character does not have any description.</string>
 
 </resources>

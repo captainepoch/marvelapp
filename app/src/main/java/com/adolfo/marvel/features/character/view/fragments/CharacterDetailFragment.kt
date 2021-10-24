@@ -37,6 +37,8 @@ class CharacterDetailFragment : BaseFragment(R.layout.fragment_character_detail)
         characterView?.let { character ->
             binding.ivDetailAvatar.loadFromUrl(character.thumbnail)
 
+            getMainActivity().setToolbarTitle(character.name)
+
             binding.tvDescription.text = if (character.description.isEmptyOrBlank()) {
                 getString(R.string.character_detail_no_description)
             } else {

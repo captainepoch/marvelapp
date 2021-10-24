@@ -6,7 +6,11 @@ import com.adolfo.marvel.common.navigation.MainActivity
 
 open class BaseFragment(layoutId: Int) : Fragment(layoutId) {
 
+    fun getMainActivity(): MainActivity {
+        return (requireActivity() as MainActivity)
+    }
+
     fun navigateTo(direction: NavDirections) {
-        (requireActivity() as MainActivity).navigateTo(direction)
+        getMainActivity().navigateTo(direction)
     }
 }
