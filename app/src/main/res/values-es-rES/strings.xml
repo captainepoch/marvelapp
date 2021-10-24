@@ -4,5 +4,5 @@
     <string name="character_detail_n_stories">Número de historias donde aparece</string>
     <string name="character_detail_n_events">Número de eventos donde aparece</string>
     <string name="character_detail_n_series">Número de series donde aparece</string>
-    <string name="character_detail_no_description">Este Super Héroe no dispone de descripción.</string>
+    <string name="character_detail_no_description">Este personaje no dispone de descripción.</string>
 </resources>

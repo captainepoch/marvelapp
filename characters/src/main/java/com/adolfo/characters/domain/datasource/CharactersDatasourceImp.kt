@@ -25,12 +25,14 @@ class CharactersDatasourceImp(
     ): State<CharactersEntity> {
         val localData = local.getAllCharacters()
         return if (localData.isNotNullOrEmpty() && !isPaginated) {
-            Timber.d("LOCAL")
             Success(CharactersEntity.fromList(localData.orEmpty()))
         } else {
-            Timber.d("SERVICE")
             getCharactersFromService(offset)
         }
+    }
+
+    override suspend fun getCharacter(id: Int?): State<CharacterEntity> {
+        return getCharacterDetailFromService(id)
     }
 
     private suspend fun getCharactersFromService(offset: Int?): State<CharactersEntity> {
@@ -51,5 +53,20 @@ class CharactersDatasourceImp(
 
     private fun saveCharactersToLocal(list: List<CharacterEntity>) {
         local.saveCharacters(list)
+    }
+
+    private suspend fun getCharacterDetailFromService(id: Int?): State<CharacterEntity> {
+        return if (networkTools.hasInternetConnection()) {
+            service.getCharacter(id).run {
+                if (isSuccessful && body() != null) {
+                    val singleItem = body()!!.data.results?.first() ?: CharacterEntity.empty()
+                    Success(singleItem)
+                } else {
+                    Error(ServerError(code()))
+                }
+            }
+        } else {
+            Error(NetworkConnection)
+        }
     }
 }
