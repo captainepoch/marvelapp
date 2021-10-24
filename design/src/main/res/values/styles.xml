@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Text" />
+
+    <style name="Text.24">
+        <item name="android:textSize">@dimen/text_16</item>
+    </style>
+
+    <style name="Text.24.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.24.Bold.Marvel">
+        <item name="android:fontFamily">@font/avenir_regular</item>
+    </style>
+</resources>
