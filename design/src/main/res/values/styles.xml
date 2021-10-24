@@ -2,15 +2,15 @@
 <resources>
     <style name="Text" />
 
-    <style name="Text.24">
-        <item name="android:textSize">@dimen/text_16</item>
+    <style name="Text.20">
+        <item name="android:textSize">@dimen/text_20</item>
     </style>
 
-    <style name="Text.24.Bold">
+    <style name="Text.20.Bold">
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Text.24.Bold.Marvel">
-        <item name="android:fontFamily">@font/avenir_regular</item>
+    <style name="Text.20.Bold.Marvel">
+        <item name="android:fontFamily">@font/marvel_regular</item>
     </style>
 </resources>
