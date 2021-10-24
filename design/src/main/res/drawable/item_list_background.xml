@@ -10,7 +10,7 @@
     <gradient
         android:angle="90"
         android:endColor="@android:color/transparent"
-        android:startColor="@color/black" />
+        android:startColor="@color/liquorice" />
 
     <padding
         android:bottom="@dimen/size_2"
