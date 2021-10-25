@@ -1,6 +1,8 @@
 package com.adolfo.characters.repository
 
+import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.models.entity.CharactersEntity
+import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.domain.datasource.CharactersDatasourceImp
 import com.adolfo.characters.domain.repository.CharactersRepository
@@ -29,7 +31,7 @@ class CharactersRepositoryTest {
     }
 
     @Test
-    fun `should get characters`() = runBlocking {
+    fun `should get characters success`() = runBlocking {
         val mockResponse = Success(CharactersEntity.empty().toCharacters().toCharactersView())
 
         val dataSource = mock<CharactersDatasourceImp> {
@@ -44,6 +46,28 @@ class CharactersRepositoryTest {
             result.`should be instance of`<Success<CharactersEntity>>()
             when (result) {
                 is Success<CharactersView> -> {
+                    result.data shouldBeEqualTo mockResponse.data
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `should get character success`() = runBlocking {
+        val mockResponse = Success(CharacterEntity.empty().toCharacter().toCharacterView())
+
+        val dataSource = mock<CharactersDatasourceImp> {
+            onBlocking { getCharacter(0) } doReturn mockResponse
+        }
+
+        repository = CharactersRepositoryImp(dataSource)
+        getCharacters = GetCharacters(repository)
+
+        val flow = repository.getCharacter(0)
+        flow.collect { result ->
+            result.`should be instance of`<Success<CharactersEntity>>()
+            when (result) {
+                is Success<CharacterView> -> {
                     result.data shouldBeEqualTo mockResponse.data
                 }
             }
