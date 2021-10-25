@@ -1,6 +1,7 @@
 package com.adolfo.marvel.features.character.view.viewmodel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.adolfo.characters.data.models.view.CharactersView
@@ -8,11 +9,10 @@ import com.adolfo.characters.domain.usecases.GetCharacters
 import com.adolfo.core.exception.Failure.CustomError
 import com.adolfo.core.exception.Failure.Throwable
 import com.adolfo.core.extensions.cancelIfActive
+import com.adolfo.core.functional.Event
 import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
-import com.adolfo.marvel.common.platform.AppConstants
 import com.adolfo.marvel.common.ui.viewmodel.BaseViewModel
-import com.adolfo.core.functional.Event
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class CharactersViewModel(
-    stateHandle: SavedStateHandle,
     private val getCharacters: GetCharacters
 ) : BaseViewModel() {
 
@@ -30,14 +29,10 @@ class CharactersViewModel(
 
     private var charactersJob: Job? = null
 
-    private val charactersLiveData = stateHandle.getLiveData<CharactersView>(
-        AppConstants.LiveData.CHARACTERS_VM
-    )
+    private val charactersLiveData: MutableLiveData<CharactersView> = MutableLiveData()
     val characters: LiveData<CharactersView> get() = charactersLiveData
 
-    private val customErrorLiveData = stateHandle.getLiveData<Event<CustomError>>(
-        AppConstants.LiveData.CHARACTERS_CUSTOM_ERROR_VM
-    )
+    private val customErrorLiveData: MutableLiveData<Event<CustomError>> = MutableLiveData()
     val customError: LiveData<Event<CustomError>> get() = customErrorLiveData
 
     init {
@@ -76,7 +71,8 @@ class CharactersViewModel(
                         }
                         is Error -> {
                             if (isPaginated) {
-                                customErrorLiveData.value = Event(CustomError(CustomError.PAGINATION_ERROR))
+                                customErrorLiveData.value =
+                                    Event(CustomError(CustomError.PAGINATION_ERROR))
                             } else {
                                 handleFailure(state.failure)
                             }

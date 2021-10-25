@@ -5,6 +5,6 @@ import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModel
 import org.koin.dsl.module
 
 val viewModels = module {
-    factory { CharactersViewModel(get(), get()) }
-    factory { CharacterViewModel(get(), get()) }
+    factory { CharactersViewModel(get()) }
+    factory { CharacterViewModel(get()) }
 }

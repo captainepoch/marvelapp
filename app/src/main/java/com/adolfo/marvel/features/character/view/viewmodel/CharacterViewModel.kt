@@ -10,7 +10,6 @@ import com.adolfo.core.exception.Failure.Throwable
 import com.adolfo.core.extensions.cancelIfActive
 import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
-import com.adolfo.marvel.common.platform.AppConstants
 import com.adolfo.marvel.common.ui.viewmodel.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
@@ -20,14 +19,12 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class CharacterViewModel(
-    stateHandle: SavedStateHandle,
     private val getCharacterDetail: GetCharacterDetail
 ) : BaseViewModel() {
 
     private var getCharacterJob: Job? = null
 
-    private val characterDetail: MutableLiveData<CharacterView> =
-        stateHandle.getLiveData(AppConstants.LiveData.CHARACTER_VM)
+    private val characterDetail: MutableLiveData<CharacterView> = MutableLiveData()
     val character: LiveData<CharacterView> get() = characterDetail
 
     fun getCharacterDetail(id: Int?) {
