@@ -64,7 +64,17 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
     private fun handleCharacters(charactersView: CharactersView?) {
         charactersView?.let { characters ->
-            charactersAdapter.submitList(characters.results)
+            if (characters.isFullEmtpy) {
+                showEmptyState()
+            } else if (characters.isPaginationEmpty) {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.characters_pagination_empty_title),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            } else {
+                charactersAdapter.submitList(characters.results)
+            }
         }
     }
 
@@ -75,42 +85,10 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
     private fun handleFailure(failure: Failure?) {
         when (failure) {
             is NetworkConnection -> {
-                binding.errorView.actions(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_error_outline),
-                    getString(R.string.network_connection_error_title),
-                    getString(R.string.network_connection_error_desc),
-                    getString(R.string.error_button_retry),
-                    getString(R.string.error_button_exit)
-                )
-
-                binding.errorView.onActionClick = { action ->
-                    if (action == PRIMARY_ACTION) {
-                        binding.errorView.gone()
-
-                        getCharacters()
-                    } else {
-                        requireActivity().finishAndRemoveTask()
-                    }
-                }
+                showNetworkError()
             }
             is ServerError -> {
-                binding.errorView.actions(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_error_outline),
-                    getString(R.string.server_error_title),
-                    getString(R.string.server_error_desc),
-                    getString(R.string.error_button_retry),
-                    getString(R.string.error_button_exit)
-                )
-
-                binding.errorView.onActionClick = { action ->
-                    if (action == PRIMARY_ACTION) {
-                        binding.errorView.gone()
-
-                        getCharacters()
-                    } else {
-                        requireActivity().finishAndRemoveTask()
-                    }
-                }
+                showServerError()
             }
             is CustomError -> {
                 if (failure.code == CustomError.PAGINATION_ERROR) {
@@ -122,23 +100,87 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
                 }
             }
             else -> {
-                binding.errorView.actions(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_error_outline),
-                    getString(R.string.unknown_error_title),
-                    getString(R.string.unknown_error_desc),
-                    getString(R.string.error_button_retry),
-                    getString(R.string.error_button_exit)
-                )
+                showUnknownError()
+            }
+        }
+    }
 
-                binding.errorView.onActionClick = { action ->
-                    if (action == PRIMARY_ACTION) {
-                        binding.errorView.gone()
+    private fun showNetworkError() {
+        binding.errorView.actions(
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_error_outline),
+            getString(R.string.network_connection_error_title),
+            getString(R.string.network_connection_error_desc),
+            getString(R.string.button_retry),
+            getString(R.string.button_exit)
+        )
 
-                        getCharacters()
-                    } else {
-                        requireActivity().finishAndRemoveTask()
-                    }
-                }
+        binding.errorView.onActionClick = { action ->
+            if (action == PRIMARY_ACTION) {
+                binding.errorView.gone()
+
+                getCharacters()
+            } else {
+                requireActivity().finishAndRemoveTask()
+            }
+        }
+    }
+
+    private fun showEmptyState() {
+        binding.errorView.actions(
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_emoji_people),
+            getString(R.string.characters_emtpy_state_title),
+            getString(R.string.characters_emtpy_state_desc),
+            getString(R.string.button_retry),
+            getString(R.string.button_exit),
+        )
+
+        binding.errorView.onActionClick = { action ->
+            if (action == PRIMARY_ACTION) {
+                binding.errorView.gone()
+
+                getCharacters()
+            } else {
+                requireActivity().finishAndRemoveTask()
+            }
+        }
+    }
+
+    private fun showServerError() {
+        binding.errorView.actions(
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_error_outline),
+            getString(R.string.server_error_title),
+            getString(R.string.server_error_desc),
+            getString(R.string.button_retry),
+            getString(R.string.button_exit)
+        )
+
+        binding.errorView.onActionClick = { action ->
+            if (action == PRIMARY_ACTION) {
+                binding.errorView.gone()
+
+                getCharacters()
+            } else {
+                requireActivity().finishAndRemoveTask()
+            }
+        }
+    }
+
+    private fun showUnknownError() {
+        binding.errorView.actions(
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_error_outline),
+            getString(R.string.unknown_error_title),
+            getString(R.string.unknown_error_desc),
+            getString(R.string.button_retry),
+            getString(R.string.button_exit)
+        )
+
+        binding.errorView.onActionClick = { action ->
+            if (action == PRIMARY_ACTION) {
+                binding.errorView.gone()
+
+                getCharacters()
+            } else {
+                requireActivity().finishAndRemoveTask()
             }
         }
     }

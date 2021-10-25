@@ -5,6 +5,9 @@
     <string name="empty" translatable="false" />
 
     <!-- Characters -->
+    <string name="characters_emtpy_state_title">Nothing to show</string>
+    <string name="characters_emtpy_state_desc">There is not anything we can show to you right now. Please try again in a few minutes.</string>
+    <string name="characters_pagination_empty_title">You reached the end of the list!</string>
     <string name="characters_pagination_error">An error occurred while scrolling. Please try again in a few minutes</string>
 
     <!-- Character detail -->
@@ -21,7 +24,8 @@
     <string name="server_error_desc">The server reported an error while retriving the data. Please try again in a few minutes.</string>
     <string name="unknown_error_title">Unknown error</string>
     <string name="unknown_error_desc">An unknown error has been detected. Please try again in a few minutes.</string>
-    <string name="error_button_retry">Retry</string>
-    <string name="error_button_goback">Go back</string>
-    <string name="error_button_exit">Exit</string>
+
+    <string name="button_retry">Retry</string>
+    <string name="button_goback">Go back</string>
+    <string name="button_exit">Exit</string>
 </resources>

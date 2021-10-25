@@ -85,8 +85,8 @@ class CharacterDetailFragment : BaseFragment(R.layout.fragment_character_detail)
                     ContextCompat.getDrawable(requireContext(), R.drawable.ic_error_outline),
                     getString(R.string.network_connection_error_title),
                     getString(R.string.network_connection_error_desc),
-                    getString(R.string.error_button_retry),
-                    getString(R.string.error_button_goback)
+                    getString(R.string.button_retry),
+                    getString(R.string.button_goback)
                 )
 
                 binding.errorView.onActionClick = { action ->
@@ -104,8 +104,8 @@ class CharacterDetailFragment : BaseFragment(R.layout.fragment_character_detail)
                     ContextCompat.getDrawable(requireContext(), R.drawable.ic_error_outline),
                     getString(R.string.server_error_title),
                     getString(R.string.server_error_desc),
-                    getString(R.string.error_button_retry),
-                    getString(R.string.error_button_goback)
+                    getString(R.string.button_retry),
+                    getString(R.string.button_goback)
                 )
 
                 binding.errorView.onActionClick = { action ->
@@ -123,8 +123,8 @@ class CharacterDetailFragment : BaseFragment(R.layout.fragment_character_detail)
                     ContextCompat.getDrawable(requireContext(), R.drawable.ic_error_outline),
                     getString(R.string.unknown_error_title),
                     getString(R.string.unknown_error_desc),
-                    getString(R.string.error_button_retry),
-                    getString(R.string.error_button_goback)
+                    getString(R.string.button_retry),
+                    getString(R.string.button_goback)
                 )
 
                 binding.errorView.onActionClick = { action ->

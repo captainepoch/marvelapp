@@ -3,6 +3,7 @@ package com.adolfo.marvel.features.character.view.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.domain.usecases.GetCharacters
 import com.adolfo.core.exception.Failure.CustomError
@@ -55,8 +56,18 @@ class CharactersViewModel(
                     when (state) {
                         is Success<CharactersView> -> {
                             val list = charactersLiveData.value?.results.orEmpty().toMutableList()
-                            list.addAll(state.data.results)
-                            charactersLiveData.value = CharactersView(list)
+                            val results = state.data.results
+
+                            if (results.isNullOrEmpty() && (offset == 0)) {
+                                charactersLiveData.value =
+                                    CharactersView(listOf(), isFullEmtpy = true)
+                            } else if (results.isNullOrEmpty() && isPaginated) {
+                                charactersLiveData.value =
+                                    CharactersView(listOf(), isPaginationEmpty = true)
+                            } else {
+                                list.addAll(results)
+                                charactersLiveData.value = CharactersView(list)
+                            }
                         }
                         is Error -> {
                             if (isPaginated) {
