@@ -1,8 +1,6 @@
 plugins {
     id "com.android.library"
     id "kotlin-android"
-    id "kotlin-kapt"
-    id "kotlin-parcelize"
 }
 
 android {
@@ -11,16 +9,20 @@ android {
     defaultConfig {
         minSdk buildVersions.minSdk
         targetSdk buildVersions.targetSdk
-        versionCode buildVersions.versionCode
-        versionName buildVersions.versionName
 
         testInstrumentationRunner buildVersions.testRunner
         consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
+        debug {
+            debuggable true
+        }
+
         release {
+            debuggable false
             minifyEnabled false
+
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"
         }
@@ -43,14 +45,34 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = buildVersions.java.toString()
+        jvmTarget = buildVersions.java
     }
 }
 
 dependencies {
     implementation project(":core")
 
-    kapt deps.androidx.roomCompiler
+    api deps.androidx.coretesting
 
-    testImplementation project(":core-testing")
+    api deps.junit
+
+    api deps.kluent
+
+    api deps.koin.test
+
+    api deps.kotlin.test
+    api deps.kotlin.reflect
+    api deps.kotlinx.coroutinesTest
+
+    api deps.mockito.android
+    api deps.mockito.core
+    api deps.mockito.inline
+    api deps.mockito.mockitokotlin2
+
+    api deps.mockk.agentJvm
+    api deps.mockk.lib
+
+    api deps.okhttp.mockwebserver
+
+    api deps.roboelectric
 }

@@ -93,7 +93,7 @@ dependencies {
     api deps.kotlinx.coroutinesCore
     api deps.kotlinx.coroutinesAndroid
 
-    api deps.okHttpLogInterceptor
+    api deps.okhttp.okHttpLogInterceptor
     api deps.retrofit.convGson
     api deps.retrofit.lib
 

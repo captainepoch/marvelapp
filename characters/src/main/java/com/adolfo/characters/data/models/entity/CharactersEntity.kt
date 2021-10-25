@@ -12,6 +12,8 @@ data class CharactersEntity(
 ) {
 
     companion object {
+        fun empty(): CharactersEntity =
+            CharactersEntity(-1, -1, -1, -1, -1, listOf())
 
         fun fromList(list: List<CharacterEntity>): CharactersEntity =
             CharactersEntity(-1, -1, -1, -1, -1, list)

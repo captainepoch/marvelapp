@@ -1,12 +1,12 @@
 package com.adolfo.characters.domain.datasource
 
-import com.adolfo.characters.data.models.entity.CharacterEntity
-import com.adolfo.characters.data.models.entity.CharactersEntity
+import com.adolfo.characters.data.models.view.CharacterView
+import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.core.functional.State
 
 interface CharactersDatasource {
 
-    suspend fun getCharacters(offset: Int?, isPaginated: Boolean): State<CharactersEntity>
+    suspend fun getCharacters(offset: Int?, isPaginated: Boolean): State<CharactersView>
 
-    suspend fun getCharacter(id: Int?): State<CharacterEntity>
+    suspend fun getCharacter(id: Int?): State<CharacterView>
 }

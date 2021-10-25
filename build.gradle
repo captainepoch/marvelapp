@@ -1,19 +1,22 @@
 buildscript {
-	apply from: "versions.gradle"
+    apply from: "versions.gradle"
 
-	addRepos(repositories)
+    addRepos(repositories)
 
-	dependencies {
-		classpath deps.gradlePlugins.gradle
-		classpath deps.gradlePlugins.kotlin
-		classpath deps.gradlePlugins.safeArgs
-	}
+    dependencies {
+        // Base plugins
+        classpath deps.gradlePlugins.gradle
+        classpath deps.gradlePlugins.kotlin
+
+        // Third-party plugins
+        classpath deps.gradlePlugins.safeArgs
+    }
 }
 
 allprojects {
-	addRepos(repositories)
+    addRepos(repositories)
 }
 
 task clean(type: Delete) {
-	delete rootProject.buildDir
+    delete rootProject.buildDir
 }

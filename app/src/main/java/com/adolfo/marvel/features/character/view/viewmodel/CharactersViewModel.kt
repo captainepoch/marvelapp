@@ -3,7 +3,6 @@ package com.adolfo.marvel.features.character.view.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.adolfo.characters.data.models.entity.CharactersEntity
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.domain.usecases.GetCharacters
 import com.adolfo.core.extensions.cancelIfActive
@@ -43,11 +42,9 @@ class CharactersViewModel(
                 .onCompletion { showLoader(false) }
                 .collect { state ->
                     when (state) {
-                        is Success<CharactersEntity> -> {
+                        is Success<CharactersView> -> {
                             val list = charactersLiveData.value?.results.orEmpty().toMutableList()
-                            list.addAll(
-                                state.data.toCharacters().toCharactersView().results
-                            )
+                            list.addAll(state.data.results)
                             charactersLiveData.value = CharactersView(list)
                         }
                         else -> {

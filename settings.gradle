@@ -2,5 +2,6 @@ rootProject.name = "Marvel API"
 
 include ":app"
 include ":core"
+include ":core-testing"
 include ":characters"
 include ":design"

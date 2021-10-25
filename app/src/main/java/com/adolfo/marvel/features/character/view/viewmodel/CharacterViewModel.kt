@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.domain.usecases.GetCharacterDetail
 import com.adolfo.core.extensions.cancelIfActive
@@ -36,8 +35,8 @@ class CharacterViewModel(
                 .onCompletion { showLoader(false) }
                 .collect { state ->
                     when (state) {
-                        is Success<CharacterEntity> -> {
-                            characterDetail.value = state.data.toCharacter().toCharacterView()
+                        is Success<CharacterView> -> {
+                            characterDetail.value = state.data
                         }
                         else -> {
                         }
