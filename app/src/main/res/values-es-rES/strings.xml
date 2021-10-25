@@ -5,4 +5,17 @@
     <string name="character_detail_n_events">Número de eventos donde aparece</string>
     <string name="character_detail_n_series">Número de series donde aparece</string>
     <string name="character_detail_no_description">Este personaje no dispone de descripción.</string>
+    <string name="characters_emtpy_state_title">Nada que mostrar</string>
+    <string name="characters_emtpy_state_desc">No hay ningún dato que mostrar en este momento. Por favor, prueba en unos minutos.</string>
+    <string name="characters_pagination_empty_title">¡Has llegado al final de la lista!</string>
+    <string name="characters_pagination_error">Ha ocurrido un error mientras navegabas. Por favor, prueba en unos minutos.</string>
+    <string name="network_connection_error_title">Error de red</string>
+    <string name="network_connection_error_desc">Hay un problema con tu conexión a internet. Por favor, conecta tu telefóno a internet y prueba de nuevo.</string>
+    <string name="server_error_title">Error del servidor</string>
+    <string name="server_error_desc">Ha ocurrido un error en el servidor remoto. Por favor, prueba en unos minutos.</string>
+    <string name="unknown_error_title">Error desconocido</string>
+    <string name="unknown_error_desc">Ha ocurrido un error desconocido. Por favor, prueba de nuevo en unos minutos.</string>
+    <string name="button_retry">Reintentar</string>
+    <string name="button_goback">Ir atrás</string>
+    <string name="button_exit">Salir</string>
 </resources>
