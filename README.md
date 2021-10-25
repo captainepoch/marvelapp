@@ -11,5 +11,5 @@ In order to build the application, you must follow the following steps:
     `marvel_keys.properties`.
 3.  Go to [developer.marvel.com](https://developer.marvel.com/) and make an
     account.
-4.  Copy the public key to the field `MARVEL_PUBLIC_KEY` and the private key to
-    `MARVEL_PRIVATE_KEY` field inside the `marvel_keys.properties` file.
+4.  Copy the public key to `MARVEL_PUBLIC_KEY` and the private key to
+    `MARVEL_PRIVATE_KEY` inside the `marvel_keys.properties` file.
