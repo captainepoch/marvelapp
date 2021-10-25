@@ -6,6 +6,7 @@ import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.data.service.CharactersService
 import com.adolfo.characters.domain.local.CharactersLocal
+import com.adolfo.core.exception.Failure
 import com.adolfo.core.exception.Failure.NetworkConnection
 import com.adolfo.core.exception.Failure.ServerError
 import com.adolfo.core.extensions.isNotNullOrEmpty
@@ -13,6 +14,7 @@ import com.adolfo.core.functional.State
 import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core.network.NetworkTools
+import javax.net.ssl.SSLHandshakeException
 
 class CharactersDatasourceImp(
     private val networkTools: NetworkTools,
@@ -24,19 +26,34 @@ class CharactersDatasourceImp(
         offset: Int?,
         isPaginated: Boolean
     ): State<CharactersView> {
-        val localData = local.getAllCharacters()
-        return if (localData.isNotNullOrEmpty() && !isPaginated) {
-            Success(
-                CharactersEntity.fromList(localData.orEmpty())
-                    .toCharacters().toCharactersView()
-            )
-        } else {
-            getCharactersFromService(offset)
+        return runCatching {
+            val localData = local.getAllCharacters()
+            if (localData.isNotNullOrEmpty() && !isPaginated) {
+                Success(
+                    CharactersEntity.fromList(localData.orEmpty())
+                        .toCharacters().toCharactersView()
+                )
+            } else {
+                getCharactersFromService(offset)
+            }
+        }.map {
+            it
+        }.getOrElse { throwable ->
+            when (throwable) {
+                is SSLHandshakeException -> Error(ServerError(ServerError.SSL_HANDSHAKE_EXCEPTION))
+                else -> Error(Failure.Throwable(throwable))
+            }
         }
     }
 
     override suspend fun getCharacter(id: Int?): State<CharacterView> {
-        return getCharacterDetailFromService(id)
+        return runCatching {
+            getCharacterDetailFromService(id)
+        }.map {
+            it
+        }.getOrElse { throwable ->
+            Error(Failure.Throwable(throwable))
+        }
     }
 
     private suspend fun getCharactersFromService(offset: Int?): State<CharactersView> {

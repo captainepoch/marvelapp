@@ -1,12 +1,28 @@
 package com.adolfo.core.exception
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+
 sealed class Failure {
 
-    data class ServerError(val code: Int) : Failure()
+    @Parcelize
+    data class ServerError(val code: Int) : Failure(), Parcelable {
+        companion object CustomServerCodes {
+            const val SSL_HANDSHAKE_EXCEPTION = -1
+        }
+    }
 
-    data class Throwable(val throwable: kotlin.Throwable?) : Failure()
+    @Parcelize
+    data class Throwable(val throwable: kotlin.Throwable?) : Failure(), Parcelable
 
-    data class CustomError(val code: Int, val msg: String?) : Failure()
+    @Parcelize
+    data class CustomError(val code: Int, val msg: String? = null) : Failure(), Parcelable {
+        companion object CharactersCodes {
+            const val PAGINATION_ERROR = 1
+        }
+    }
 
-    object NetworkConnection : Failure()
+    @Parcelize
+    object NetworkConnection : Failure(), Parcelable
 }

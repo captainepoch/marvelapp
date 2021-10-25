@@ -6,6 +6,10 @@ import java.security.MessageDigest
 
 fun String.Companion.empty() = ""
 
+fun String?.isNull(): Boolean {
+    return (this == null)
+}
+
 fun String.isEmptyOrBlank(): Boolean {
     return (this.isEmpty() || this.isBlank())
 }

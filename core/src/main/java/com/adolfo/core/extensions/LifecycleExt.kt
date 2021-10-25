@@ -15,7 +15,7 @@ fun <L : LiveData<Failure>> LifecycleOwner.failure(liveData: L, body: (Failure?)
 fun <T : Any, L : LiveData<T>> Fragment.viewObserve(liveData: L, body: (T?) -> Unit) =
     liveData.observe(viewLifecycleOwner, Observer(body))
 
-fun <T : Any, L : LiveData<Failure>> Fragment.viewFailureObserve(
+fun <L : LiveData<Failure>> Fragment.viewFailureObserve(
     liveData: L,
     body: (Failure?) -> Unit
 ) = liveData.observe(viewLifecycleOwner, Observer(body))

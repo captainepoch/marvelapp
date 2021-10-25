@@ -7,7 +7,7 @@ class EndlessScrollListener(
     private val endlessScroll: () -> Unit
 ) : RecyclerView.OnScrollListener() {
 
-    private val minPositionToEnd = 2
+    private val minPositionToEnd = 1
     private var previousItemCount = 0
     private var isLoading = false
 
@@ -22,17 +22,17 @@ class EndlessScrollListener(
         val totalItems = layoutManager.itemCount
 
         if (isLoading) {
-            if (totalItems > previousItemCount) {
+            if (totalItems >= previousItemCount) {
                 isLoading = false
                 previousItemCount = totalItems
             }
-        } else {
-            if (totalItems ==
-                layoutManager.findLastCompletelyVisibleItemPosition() + minPositionToEnd
-            ) {
-                isLoading = true
-                endlessScroll()
-            }
+        }
+
+        if (!isLoading && totalItems ==
+            layoutManager.findLastCompletelyVisibleItemPosition() + minPositionToEnd
+        ) {
+            isLoading = true
+            endlessScroll()
         }
     }
 }

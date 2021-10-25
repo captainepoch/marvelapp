@@ -56,6 +56,10 @@ class MainActivity : AppCompatActivity() {
         navController.navigate(direction)
     }
 
+    fun navigateBack() {
+        navController.popBackStack()
+    }
+
     fun setToolbarTitle(title: String) {
         supportActionBar?.title = title
     }

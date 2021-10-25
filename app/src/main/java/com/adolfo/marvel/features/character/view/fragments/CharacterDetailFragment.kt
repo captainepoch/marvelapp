@@ -2,12 +2,20 @@ package com.adolfo.marvel.features.character.view.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import com.adolfo.characters.data.models.view.CharacterView
+import com.adolfo.core.exception.Failure
+import com.adolfo.core.exception.Failure.NetworkConnection
+import com.adolfo.core.exception.Failure.ServerError
+import com.adolfo.core.extensions.gone
 import com.adolfo.core.extensions.isEmptyOrBlank
 import com.adolfo.core.extensions.loadFromUrl
 import com.adolfo.core.extensions.viewBinding
+import com.adolfo.core.extensions.viewFailureObserve
 import com.adolfo.core.extensions.viewObserve
+import com.adolfo.design.common.extensions.actions
+import com.adolfo.design.info.InformationView.ACTION.PRIMARY_ACTION
 import com.adolfo.marvel.R
 import com.adolfo.marvel.common.ui.fragment.BaseFragment
 import com.adolfo.marvel.databinding.FragmentCharacterDetailBinding
@@ -25,12 +33,14 @@ class CharacterDetailFragment : BaseFragment(R.layout.fragment_character_detail)
 
         initObservers()
         initView()
+        initListeners()
     }
 
     private fun initObservers() {
         with(viewModel) {
             viewObserve(character, ::handleCharacterDetail)
             viewObserve(loader, ::showLoader)
+            viewFailureObserve(failure, ::handleFailure)
         }
     }
 
@@ -49,6 +59,84 @@ class CharacterDetailFragment : BaseFragment(R.layout.fragment_character_detail)
     }
 
     private fun initView() {
+        getCharacter()
+    }
+
+    private fun getCharacter() {
         viewModel.getCharacterDetail(arguments.characterDetail?.id)
+    }
+
+    private fun initListeners() {
+        binding.errorView.onActionClick = { action ->
+            binding.errorView.gone()
+
+            if (action == PRIMARY_ACTION) {
+                getCharacter()
+            } else {
+                navigateBack()
+            }
+        }
+    }
+
+    private fun handleFailure(failure: Failure?) {
+        when (failure) {
+            is NetworkConnection -> {
+                binding.errorView.actions(
+                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_error_outline),
+                    getString(R.string.network_connection_error_title),
+                    getString(R.string.network_connection_error_desc),
+                    getString(R.string.error_button_retry),
+                    getString(R.string.error_button_goback)
+                )
+
+                binding.errorView.onActionClick = { action ->
+                    if (action == PRIMARY_ACTION) {
+                        binding.errorView.gone()
+
+                        getCharacter()
+                    } else {
+                        navigateBack()
+                    }
+                }
+            }
+            is ServerError -> {
+                binding.errorView.actions(
+                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_error_outline),
+                    getString(R.string.server_error_title),
+                    getString(R.string.server_error_desc),
+                    getString(R.string.error_button_retry),
+                    getString(R.string.error_button_goback)
+                )
+
+                binding.errorView.onActionClick = { action ->
+                    if (action == PRIMARY_ACTION) {
+                        binding.errorView.gone()
+
+                        getCharacter()
+                    } else {
+                        navigateBack()
+                    }
+                }
+            }
+            else -> {
+                binding.errorView.actions(
+                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_error_outline),
+                    getString(R.string.unknown_error_title),
+                    getString(R.string.unknown_error_desc),
+                    getString(R.string.error_button_retry),
+                    getString(R.string.error_button_goback)
+                )
+
+                binding.errorView.onActionClick = { action ->
+                    if (action == PRIMARY_ACTION) {
+                        binding.errorView.gone()
+
+                        getCharacter()
+                    } else {
+                        navigateBack()
+                    }
+                }
+            }
+        }
     }
 }

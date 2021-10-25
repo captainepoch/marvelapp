@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/ivAvatar"
         android:layout_width="0dp"
-        android:layout_height="128dp"
+        android:layout_height="@dimen/size_128"
         android:adjustViewBounds="true"
         android:background="@drawable/ic_marvel_logo"
         android:foreground="@drawable/item_list_background"

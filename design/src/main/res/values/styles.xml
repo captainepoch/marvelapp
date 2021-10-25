@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Text styles -->
     <style name="Text" />
 
     <style name="Text.20">
@@ -12,5 +13,13 @@
 
     <style name="Text.20.Bold.Marvel">
         <item name="android:fontFamily">@font/marvel_regular</item>
+    </style>
+
+    <style name="Text.28">
+        <item name="android:textSize">@dimen/text_28</item>
+    </style>
+
+    <style name="Text.28.Bold">
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>
