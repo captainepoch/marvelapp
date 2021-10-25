@@ -2,6 +2,7 @@ package com.adolfo.marvel.features.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import androidx.lifecycle.SavedStateHandle
 import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.domain.repository.CharactersRepositoryImp
@@ -45,7 +46,7 @@ class CharacterViewModelTest {
     fun setup() {
         getCharacterDetail = GetCharacterDetail(repository)
 
-        viewModel = CharacterViewModel(getCharacterDetail).apply {
+        viewModel = CharacterViewModel(SavedStateHandle(), getCharacterDetail).apply {
             character.observeForever(characterObserver)
             failure.observeForever(errorObserver)
         }

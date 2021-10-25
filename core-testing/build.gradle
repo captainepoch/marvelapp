@@ -50,8 +50,6 @@ android {
 }
 
 dependencies {
-    implementation project(":core")
-
     api deps.androidx.coretesting
 
     api deps.junit

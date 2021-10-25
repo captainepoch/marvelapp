@@ -12,6 +12,7 @@ import com.adolfo.core.extensions.cancelIfActive
 import com.adolfo.core.functional.Event
 import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
+import com.adolfo.marvel.common.platform.AppConstants
 import com.adolfo.marvel.common.ui.viewmodel.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class CharactersViewModel(
+    stateHandle: SavedStateHandle,
     private val getCharacters: GetCharacters
 ) : BaseViewModel() {
 
@@ -29,7 +31,9 @@ class CharactersViewModel(
 
     private var charactersJob: Job? = null
 
-    private val charactersLiveData: MutableLiveData<CharactersView> = MutableLiveData()
+    private val charactersLiveData = stateHandle.getLiveData<CharactersView>(
+        AppConstants.LiveData.CHARACTERS_VM
+    )
     val characters: LiveData<CharactersView> get() = charactersLiveData
 
     private val customErrorLiveData: MutableLiveData<Event<CustomError>> = MutableLiveData()

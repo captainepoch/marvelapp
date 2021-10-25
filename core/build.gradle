@@ -100,4 +100,6 @@ dependencies {
 
     api deps.glide
     api deps.timber
+
+    testImplementation project(":core-testing")
 }
