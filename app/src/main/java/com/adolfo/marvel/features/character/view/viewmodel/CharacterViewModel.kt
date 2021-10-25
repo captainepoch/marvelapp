@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 class CharacterViewModel(
     stateHandle: SavedStateHandle,
     private val getCharacterDetail: GetCharacterDetail
-) : BaseViewModel(stateHandle) {
+) : BaseViewModel() {
 
     private var getCharacterJob: Job? = null
 

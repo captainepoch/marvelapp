@@ -2,21 +2,15 @@ package com.adolfo.marvel.common.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.adolfo.core.exception.Failure
-import com.adolfo.marvel.common.platform.AppConstants
 
-open class BaseViewModel(
-    private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
+open class BaseViewModel : ViewModel() {
 
-    private val loaderLiveData =
-        savedStateHandle.getLiveData<Boolean>(AppConstants.LiveData.LOADER_VM)
+    private val loaderLiveData: MutableLiveData<Boolean> = MutableLiveData()
     val loader: LiveData<Boolean> get() = loaderLiveData
 
-    private val failureLiveData =
-        savedStateHandle.getLiveData<Failure>(AppConstants.LiveData.FAILURE_VM)
+    private val failureLiveData: MutableLiveData<Failure> = MutableLiveData()
     val failure: LiveData<Failure> get() = failureLiveData
 
     protected fun showLoader(show: Boolean?) {

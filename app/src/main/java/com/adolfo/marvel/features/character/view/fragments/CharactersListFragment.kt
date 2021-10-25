@@ -13,6 +13,7 @@ import com.adolfo.core.extensions.gone
 import com.adolfo.core.extensions.viewBinding
 import com.adolfo.core.extensions.viewFailureObserve
 import com.adolfo.core.extensions.viewObserve
+import com.adolfo.core.functional.Event
 import com.adolfo.design.common.extensions.actions
 import com.adolfo.design.info.InformationView.ACTION.PRIMARY_ACTION
 import com.adolfo.marvel.R
@@ -22,7 +23,6 @@ import com.adolfo.marvel.features.character.view.adapter.CharactersListAdapter
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModel
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
-import timber.log.Timber
 
 class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
@@ -43,6 +43,7 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
         with(viewModel) {
             viewObserve(characters, ::handleCharacters)
             viewObserve(loader, ::showLoader)
+            viewObserve(customError, ::handleCustomError)
             viewFailureObserve(failure, ::handleFailure)
         }
     }
@@ -53,7 +54,6 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
     private fun initListeners() {
         binding.rvCharacters.endlessScrollListener {
-            Timber.d("ENDLESS_SCROLL")
             getCharacters(true)
         }
 
@@ -70,7 +70,7 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
                 Snackbar.make(
                     binding.root,
                     getString(R.string.characters_pagination_empty_title),
-                    Snackbar.LENGTH_SHORT
+                    Snackbar.LENGTH_LONG
                 ).show()
             } else {
                 charactersAdapter.submitList(characters.results)
@@ -82,6 +82,18 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
         viewModel.getCharacters(isPaginated)
     }
 
+    private fun handleCustomError(event: Event<CustomError>?) {
+        event?.getContentIfNotHandled()?.let { failure ->
+            if (failure.code == CustomError.PAGINATION_ERROR) {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.characters_pagination_error),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
     private fun handleFailure(failure: Failure?) {
         when (failure) {
             is NetworkConnection -> {
@@ -89,15 +101,6 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
             }
             is ServerError -> {
                 showServerError()
-            }
-            is CustomError -> {
-                if (failure.code == CustomError.PAGINATION_ERROR) {
-                    Snackbar.make(
-                        binding.root,
-                        getString(R.string.characters_pagination_error),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                }
             }
             else -> {
                 showUnknownError()

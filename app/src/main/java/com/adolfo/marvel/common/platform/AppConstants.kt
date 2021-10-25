@@ -3,10 +3,8 @@ package com.adolfo.marvel.common.platform
 class AppConstants {
 
     object LiveData {
-        const val LOADER_VM = "loader"
-        const val FAILURE_VM = "failure"
-
         const val CHARACTERS_VM = "characters"
+        const val CHARACTERS_CUSTOM_ERROR_VM = "charactersCustomError"
         const val CHARACTER_VM = "character"
     }
 }

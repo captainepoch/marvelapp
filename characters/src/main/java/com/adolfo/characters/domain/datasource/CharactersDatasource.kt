@@ -6,7 +6,11 @@ import com.adolfo.core.functional.State
 
 interface CharactersDatasource {
 
-    suspend fun getCharacters(offset: Int?, isPaginated: Boolean): State<CharactersView>
+    suspend fun getCharacters(
+        offset: Int?,
+        isPaginated: Boolean,
+        limit: Int?
+    ): State<CharactersView>
 
     suspend fun getCharacter(id: Int?): State<CharacterView>
 }

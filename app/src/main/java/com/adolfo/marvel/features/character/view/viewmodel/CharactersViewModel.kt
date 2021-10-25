@@ -3,7 +3,6 @@ package com.adolfo.marvel.features.character.view.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.domain.usecases.GetCharacters
 import com.adolfo.core.exception.Failure.CustomError
@@ -13,6 +12,7 @@ import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
 import com.adolfo.marvel.common.platform.AppConstants
 import com.adolfo.marvel.common.ui.viewmodel.BaseViewModel
+import com.adolfo.core.functional.Event
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 class CharactersViewModel(
     stateHandle: SavedStateHandle,
     private val getCharacters: GetCharacters
-) : BaseViewModel(stateHandle) {
+) : BaseViewModel() {
 
     private val offset: Int
         get() = charactersLiveData.value?.results.orEmpty().size
@@ -34,6 +34,11 @@ class CharactersViewModel(
         AppConstants.LiveData.CHARACTERS_VM
     )
     val characters: LiveData<CharactersView> get() = charactersLiveData
+
+    private val customErrorLiveData = stateHandle.getLiveData<Event<CustomError>>(
+        AppConstants.LiveData.CHARACTERS_CUSTOM_ERROR_VM
+    )
+    val customError: LiveData<Event<CustomError>> get() = customErrorLiveData
 
     init {
         getCharacters()
@@ -47,7 +52,7 @@ class CharactersViewModel(
                 .onCompletion { showLoader(false) }
                 .catch { failure ->
                     if (isPaginated) {
-                        handleFailure(CustomError(CustomError.PAGINATION_ERROR))
+                        customErrorLiveData.value = Event(CustomError(CustomError.PAGINATION_ERROR))
                     } else {
                         handleFailure(Throwable(failure))
                     }
@@ -71,7 +76,7 @@ class CharactersViewModel(
                         }
                         is Error -> {
                             if (isPaginated) {
-                                handleFailure(CustomError(CustomError.PAGINATION_ERROR))
+                                customErrorLiveData.value = Event(CustomError(CustomError.PAGINATION_ERROR))
                             } else {
                                 handleFailure(state.failure)
                             }

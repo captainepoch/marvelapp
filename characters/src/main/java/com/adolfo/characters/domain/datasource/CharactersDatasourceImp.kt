@@ -24,7 +24,8 @@ class CharactersDatasourceImp(
 
     override suspend fun getCharacters(
         offset: Int?,
-        isPaginated: Boolean
+        isPaginated: Boolean,
+        limit: Int?
     ): State<CharactersView> {
         return runCatching {
             val localData = local.getAllCharacters()
@@ -34,7 +35,7 @@ class CharactersDatasourceImp(
                         .toCharacters().toCharactersView()
                 )
             } else {
-                getCharactersFromService(offset)
+                getCharactersFromService(offset, limit)
             }
         }.map {
             it
@@ -56,9 +57,9 @@ class CharactersDatasourceImp(
         }
     }
 
-    private suspend fun getCharactersFromService(offset: Int?): State<CharactersView> {
+    private suspend fun getCharactersFromService(offset: Int?, limit: Int?): State<CharactersView> {
         return if (networkTools.hasInternetConnection()) {
-            service.getCharacters(offset, 10).run {
+            service.getCharacters(offset, limit).run {
                 if (isSuccessful && body() != null) {
                     val data = body()!!.data
                     saveCharactersToLocal(data.results.orEmpty())

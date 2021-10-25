@@ -1,5 +1,6 @@
 package com.adolfo.characters.data.service
 
+import com.adolfo.characters.core.utils.CharactersConstants
 import com.adolfo.characters.data.models.entity.CharactersEntity
 import com.adolfo.core.platform.ApiResponse
 import retrofit2.Response
@@ -17,7 +18,7 @@ interface CharactersApi {
     @GET(CHARACTERS)
     suspend fun getCharacters(
         @Query("offset") offset: Int?,
-        @Query("limit") limit: Int? = 10,
+        @Query("limit") limit: Int? = CharactersConstants.Services.DEFAULT_CHARACTERS_LIMIT,
     ): Response<ApiResponse<CharactersEntity>>
 
     @GET(CHARACTER)
