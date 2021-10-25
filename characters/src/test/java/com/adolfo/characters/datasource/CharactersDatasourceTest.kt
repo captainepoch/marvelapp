@@ -1,6 +1,8 @@
 package com.adolfo.characters.datasource
 
+import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.models.entity.CharactersEntity
+import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.data.service.CharactersApi
 import com.adolfo.characters.data.service.CharactersService
@@ -63,6 +65,38 @@ class CharactersDatasourceTest {
         data.`should be instance of`<Success<CharactersView>>()
         if (data is Success<CharactersView>) {
             data.data shouldBeEqualTo characters.toCharacters().toCharactersView()
+        }
+    }
+
+    @Test
+    fun `should get character from datasource success`() = runBlocking {
+        val characters = CharactersEntity.fromList(listOf(CharacterEntity.empty()))
+        val response = ApiResponse(
+            -1,
+            String.empty(),
+            String.empty(),
+            String.empty(),
+            String.empty(),
+            characters,
+            String.empty(),
+        )
+
+        val api = mock<CharactersApi> {
+            onBlocking { getCharacter(0) } doReturn Response.success(response)
+        }
+        api.getCharacter(0).body() shouldBeEqualTo response
+
+        val service = mock<CharactersService> {
+            onBlocking { getCharacter(0) } doReturn Response.success(response)
+        }
+
+        val datasource: CharactersDatasource =
+            CharactersDatasourceImp(networkTools, service, mock())
+
+        val data = datasource.getCharacter(0)
+        data.`should be instance of`<Success<CharactersView>>()
+        if (data is Success<CharacterView>) {
+            data.data shouldBeEqualTo characters.toCharacters().toCharactersView().results.first()
         }
     }
 }
