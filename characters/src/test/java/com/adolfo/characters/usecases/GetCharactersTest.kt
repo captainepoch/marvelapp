@@ -34,13 +34,13 @@ class GetCharactersTest : UnitTest() {
         val mockResponse = Success(CharactersEntity.empty().toCharacters().toCharactersView())
 
         val dataSource = mock<CharactersDatasourceImp> {
-            onBlocking { getCharacters(0, false) } doReturn mockResponse
+            onBlocking { getCharacters(0, false, 15) } doReturn mockResponse
         }
 
         repository = CharactersRepositoryImp(dataSource)
         getCharacters = GetCharacters(repository)
 
-        val flow = repository.getCharacters(0, false)
+        val flow = repository.getCharacters(0, false, 15)
         flow.collect { result ->
             result.`should be instance of`<Success<CharactersEntity>>()
             when (result) {
