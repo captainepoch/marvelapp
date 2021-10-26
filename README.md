@@ -13,3 +13,8 @@ In order to build the application, you must follow the following steps:
     account.
 4.  Copy the public key to `MARVEL_PUBLIC_KEY` and the private key to
     `MARVEL_PRIVATE_KEY` inside the `marvel_keys.properties` file.
+
+## Documentation
+
+The architecture of the application is described at the
+[ARCHITECTURE](ARCHITECTURE.md) file.
