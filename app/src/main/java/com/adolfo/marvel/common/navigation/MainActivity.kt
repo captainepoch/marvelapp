@@ -8,7 +8,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import com.adolfo.core.extensions.gone
 import com.adolfo.core.extensions.isVisible
-import com.adolfo.core.extensions.viewBinding
+import com.adolfo.marvel.common.extensions.viewBinding
 import com.adolfo.core.extensions.visible
 import com.adolfo.marvel.R
 import com.adolfo.marvel.databinding.ActivityMainBinding

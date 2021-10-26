@@ -3,7 +3,6 @@ package com.adolfo.core.exception
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-
 sealed class Failure {
 
     @Parcelize
@@ -23,6 +22,5 @@ sealed class Failure {
         }
     }
 
-    @Parcelize
-    object NetworkConnection : Failure(), Parcelable
+    object NetworkConnection : Failure()
 }

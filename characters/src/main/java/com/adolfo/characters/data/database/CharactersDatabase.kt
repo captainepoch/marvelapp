@@ -1,4 +1,4 @@
-package com.adolfo.characters.domain.database
+package com.adolfo.characters.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

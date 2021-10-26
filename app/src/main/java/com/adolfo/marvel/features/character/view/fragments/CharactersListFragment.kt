@@ -10,13 +10,13 @@ import com.adolfo.core.exception.Failure.NetworkConnection
 import com.adolfo.core.exception.Failure.ServerError
 import com.adolfo.core.extensions.endlessScrollListener
 import com.adolfo.core.extensions.gone
-import com.adolfo.core.extensions.viewBinding
 import com.adolfo.core.extensions.viewFailureObserve
 import com.adolfo.core.extensions.viewObserve
 import com.adolfo.core.functional.Event
 import com.adolfo.design.common.extensions.actions
 import com.adolfo.design.info.InformationView.ACTION.PRIMARY_ACTION
 import com.adolfo.marvel.R
+import com.adolfo.marvel.common.extensions.viewBinding
 import com.adolfo.marvel.common.ui.fragment.BaseFragment
 import com.adolfo.marvel.databinding.FragmentCharactersBinding
 import com.adolfo.marvel.features.character.view.adapter.CharactersListAdapter
@@ -64,7 +64,7 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
     private fun handleCharacters(charactersView: CharactersView?) {
         charactersView?.let { characters ->
-            if (characters.isFullEmtpy) {
+            if (characters.isFullEmpty) {
                 showEmptyState()
             } else if (characters.isPaginationEmpty) {
                 Snackbar.make(

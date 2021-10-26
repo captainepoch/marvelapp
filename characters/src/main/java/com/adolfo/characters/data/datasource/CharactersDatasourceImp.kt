@@ -1,11 +1,9 @@
-package com.adolfo.characters.domain.datasource
+package com.adolfo.characters.data.datasource
 
+import com.adolfo.characters.data.local.CharactersLocal
 import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.models.entity.CharactersEntity
-import com.adolfo.characters.data.models.view.CharacterView
-import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.data.service.CharactersService
-import com.adolfo.characters.domain.local.CharactersLocal
 import com.adolfo.core.exception.Failure
 import com.adolfo.core.exception.Failure.NetworkConnection
 import com.adolfo.core.exception.Failure.ServerError
@@ -26,14 +24,11 @@ class CharactersDatasourceImp(
         offset: Int?,
         isPaginated: Boolean,
         limit: Int?
-    ): State<CharactersView> {
+    ): State<CharactersEntity> {
         return runCatching {
             val localData = local.getAllCharacters()
             if (localData.isNotNullOrEmpty() && !isPaginated) {
-                Success(
-                    CharactersEntity.fromList(localData.orEmpty())
-                        .toCharacters().toCharactersView()
-                )
+                Success(CharactersEntity.fromList(localData.orEmpty()))
             } else {
                 getCharactersFromService(offset, limit)
             }
@@ -47,7 +42,7 @@ class CharactersDatasourceImp(
         }
     }
 
-    override suspend fun getCharacter(id: Int?): State<CharacterView> {
+    override suspend fun getCharacter(id: Int?): State<CharacterEntity> {
         return runCatching {
             getCharacterDetailFromService(id)
         }.map {
@@ -57,13 +52,16 @@ class CharactersDatasourceImp(
         }
     }
 
-    private suspend fun getCharactersFromService(offset: Int?, limit: Int?): State<CharactersView> {
+    private suspend fun getCharactersFromService(
+        offset: Int?,
+        limit: Int?
+    ): State<CharactersEntity> {
         return if (networkTools.hasInternetConnection()) {
             service.getCharacters(offset, limit).run {
                 if (isSuccessful && body() != null) {
                     val data = body()!!.data
                     saveCharactersToLocal(data.results.orEmpty())
-                    Success(data.toCharacters().toCharactersView())
+                    Success(data)
                 } else {
                     Error(ServerError(code()))
                 }
@@ -77,12 +75,12 @@ class CharactersDatasourceImp(
         local.saveCharacters(list)
     }
 
-    private suspend fun getCharacterDetailFromService(id: Int?): State<CharacterView> {
+    private suspend fun getCharacterDetailFromService(id: Int?): State<CharacterEntity> {
         return if (networkTools.hasInternetConnection()) {
             service.getCharacter(id).run {
                 if (isSuccessful && body() != null) {
                     val singleItem = body()!!.data.results?.first() ?: CharacterEntity.empty()
-                    Success(singleItem.toCharacter().toCharacterView())
+                    Success(singleItem)
                 } else {
                     Error(ServerError(code()))
                 }

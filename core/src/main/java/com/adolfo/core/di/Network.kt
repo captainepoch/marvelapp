@@ -5,7 +5,7 @@ import com.adolfo.core.network.NetworkTools
 import org.koin.dsl.module
 
 val networkModule = module {
-    single { NetworkConfig().getRetrofit() }
+    single { NetworkConfig.getRetrofit() }
 
     factory { NetworkTools(get()) }
 }

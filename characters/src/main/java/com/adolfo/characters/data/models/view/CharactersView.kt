@@ -6,6 +6,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class CharactersView(
     val results: List<CharacterView>,
-    val isFullEmtpy: Boolean = false,
+    val isFullEmpty: Boolean = false,
     val isPaginationEmpty: Boolean = false
 ) : Parcelable

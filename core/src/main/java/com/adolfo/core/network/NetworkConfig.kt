@@ -8,7 +8,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class NetworkConfig {
+object NetworkConfig {
 
     private lateinit var retrofitClient: Retrofit
 

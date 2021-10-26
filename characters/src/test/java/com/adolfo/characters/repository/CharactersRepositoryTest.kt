@@ -4,7 +4,7 @@ import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.models.entity.CharactersEntity
 import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.data.models.view.CharactersView
-import com.adolfo.characters.domain.datasource.CharactersDatasourceImp
+import com.adolfo.characters.data.datasource.CharactersDatasourceImp
 import com.adolfo.characters.domain.repository.CharactersRepository
 import com.adolfo.characters.domain.repository.CharactersRepositoryImp
 import com.adolfo.characters.domain.usecases.GetCharacters

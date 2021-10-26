@@ -64,7 +64,7 @@ class CharactersViewModel(
 
                             if (results.isNullOrEmpty() && (offset == 0)) {
                                 charactersLiveData.value =
-                                    CharactersView(listOf(), isFullEmtpy = true)
+                                    CharactersView(listOf(), isFullEmpty = true)
                             } else if (results.isNullOrEmpty() && isPaginated) {
                                 charactersLiveData.value =
                                     CharactersView(listOf(), isPaginationEmpty = true)

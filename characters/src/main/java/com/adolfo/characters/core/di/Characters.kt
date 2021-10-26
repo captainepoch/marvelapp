@@ -3,11 +3,11 @@ package com.adolfo.characters.core.di
 import androidx.room.Room
 import com.adolfo.characters.core.utils.CharactersConstants
 import com.adolfo.characters.data.service.CharactersService
-import com.adolfo.characters.domain.database.CharactersDatabase
-import com.adolfo.characters.domain.datasource.CharactersDatasource
-import com.adolfo.characters.domain.datasource.CharactersDatasourceImp
-import com.adolfo.characters.domain.local.CharactersLocal
-import com.adolfo.characters.domain.local.CharactersLocalImp
+import com.adolfo.characters.data.database.CharactersDatabase
+import com.adolfo.characters.data.datasource.CharactersDatasource
+import com.adolfo.characters.data.datasource.CharactersDatasourceImp
+import com.adolfo.characters.data.local.CharactersLocal
+import com.adolfo.characters.data.local.CharactersLocalImp
 import com.adolfo.characters.domain.repository.CharactersRepository
 import com.adolfo.characters.domain.repository.CharactersRepositoryImp
 import com.adolfo.characters.domain.usecases.GetCharacterDetail

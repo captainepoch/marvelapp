@@ -1,4 +1,4 @@
-package com.adolfo.characters.domain.local
+package com.adolfo.characters.data.local
 
 import com.adolfo.characters.data.models.entity.CharacterEntity
 

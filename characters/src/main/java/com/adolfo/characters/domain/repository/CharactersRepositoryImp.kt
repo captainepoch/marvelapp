@@ -1,6 +1,11 @@
 package com.adolfo.characters.domain.repository
 
-import com.adolfo.characters.domain.datasource.CharactersDatasource
+import com.adolfo.characters.data.datasource.CharactersDatasource
+import com.adolfo.characters.data.models.entity.CharacterEntity
+import com.adolfo.characters.data.models.entity.CharactersEntity
+import com.adolfo.core.functional.State
+import com.adolfo.core.functional.State.Error
+import com.adolfo.core.functional.State.Success
 import kotlinx.coroutines.flow.flow
 
 class CharactersRepositoryImp(
@@ -8,10 +13,26 @@ class CharactersRepositoryImp(
 ) : CharactersRepository {
 
     override fun getCharacters(offset: Int?, isPaginated: Boolean, limit: Int?) = flow {
-        emit(datasource.getCharacters(offset, isPaginated, limit))
+        when (val data: State<CharactersEntity> =
+            datasource.getCharacters(offset, isPaginated, limit)
+        ) {
+            is Success<CharactersEntity> -> emit(
+                Success(
+                    data.data.toCharacters().toCharactersView()
+                )
+            )
+            is Error -> emit(Error(data.failure))
+        }
     }
 
     override fun getCharacter(id: Int?) = flow {
-        emit(datasource.getCharacter(id))
+        when (val data: State<CharacterEntity> = datasource.getCharacter(id)) {
+            is Success<CharacterEntity> -> emit(
+                Success(
+                    data.data.toCharacter().toCharacterView()
+                )
+            )
+            is Error -> emit(Error(data.failure))
+        }
     }
 }

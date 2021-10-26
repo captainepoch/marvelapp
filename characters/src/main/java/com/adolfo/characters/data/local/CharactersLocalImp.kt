@@ -1,7 +1,7 @@
-package com.adolfo.characters.domain.local
+package com.adolfo.characters.data.local
 
 import com.adolfo.characters.data.models.entity.CharacterEntity
-import com.adolfo.characters.domain.database.CharactersDatabase
+import com.adolfo.characters.data.database.CharactersDatabase
 
 class CharactersLocalImp(db: CharactersDatabase) : CharactersLocal {
 

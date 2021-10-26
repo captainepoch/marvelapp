@@ -11,12 +11,12 @@ import com.adolfo.core.exception.Failure.ServerError
 import com.adolfo.core.extensions.gone
 import com.adolfo.core.extensions.isEmptyOrBlank
 import com.adolfo.core.extensions.loadFromUrl
-import com.adolfo.core.extensions.viewBinding
 import com.adolfo.core.extensions.viewFailureObserve
 import com.adolfo.core.extensions.viewObserve
 import com.adolfo.design.common.extensions.actions
 import com.adolfo.design.info.InformationView.ACTION.PRIMARY_ACTION
 import com.adolfo.marvel.R
+import com.adolfo.marvel.common.extensions.viewBinding
 import com.adolfo.marvel.common.ui.fragment.BaseFragment
 import com.adolfo.marvel.databinding.FragmentCharacterDetailBinding
 import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModel

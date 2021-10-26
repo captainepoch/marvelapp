@@ -1,4 +1,4 @@
-package com.adolfo.core.extensions
+package com.adolfo.marvel.common.extensions
 
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity

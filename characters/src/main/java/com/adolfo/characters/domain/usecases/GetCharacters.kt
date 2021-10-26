@@ -20,7 +20,7 @@ class GetCharacters(
 
     data class Params(
         val offset: Int,
-        val isPaginated: Boolean,
+        val isPaginated: Boolean?,
         val limit: Int? = CharactersConstants.Services.DEFAULT_CHARACTERS_LIMIT
     )
 }

@@ -54,7 +54,7 @@ class CharactersViewModelTest {
     @Test
     fun `should emit get characters`() = coroutinesRule.dispatcher.runBlockingTest {
         val expectedResult = Success(
-            CharactersView(listOf(), isFullEmtpy = true)
+            CharactersView(listOf(), isFullEmpty = true)
         )
         val expectedError = Failure.Throwable(Throwable())
 

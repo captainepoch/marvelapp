@@ -6,9 +6,9 @@ import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.data.service.CharactersApi
 import com.adolfo.characters.data.service.CharactersService
-import com.adolfo.characters.domain.datasource.CharactersDatasource
-import com.adolfo.characters.domain.datasource.CharactersDatasourceImp
-import com.adolfo.characters.domain.local.CharactersLocal
+import com.adolfo.characters.data.datasource.CharactersDatasource
+import com.adolfo.characters.data.datasource.CharactersDatasourceImp
+import com.adolfo.characters.data.local.CharactersLocal
 import com.adolfo.core.extensions.empty
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core.network.NetworkTools
