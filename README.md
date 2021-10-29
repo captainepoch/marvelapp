@@ -1,6 +1,6 @@
 # Marvel API
 
-This is a client to list and see the detail of Marvel's character roaster.
+This is a client to list and see the detail of Marvel's character roster.
 
 ## How to build
 
