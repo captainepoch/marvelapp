@@ -58,6 +58,20 @@ This way, we keep a single source of truth for the views, meaning that all the
 data will live in the LiveData(s) that the View is observing, making the
 restoration of the view while navigating an easy task.
 
+### Jetpack ViewModel
+
+The decision to use the ViewModel library of Jetpack was made based on having
+available the SavedStateHandle.
+
+This object allows the ViewModel to handle process death by the system, meaning
+that the state of the application, along with the data we want to preserve and
+restore when the application is killed by the system and restored by the user,
+respectively.
+
+In this case, it was used for the LiveData objects of the ViewModels in the
+application. That way, if the app is killed by the system while in background,
+the data is restored when the app is opened from background by the user.
+
 ## Clean Architecture
 
 This application follows the Clean Architecture principles. Each layer has a
