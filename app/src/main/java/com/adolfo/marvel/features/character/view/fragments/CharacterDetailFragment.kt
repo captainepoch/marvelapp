@@ -20,12 +20,12 @@ import com.adolfo.marvel.common.extensions.viewBinding
 import com.adolfo.marvel.common.ui.fragment.BaseFragment
 import com.adolfo.marvel.databinding.FragmentCharacterDetailBinding
 import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModel
-import org.koin.androidx.viewmodel.ext.android.stateViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterDetailFragment : BaseFragment(R.layout.fragment_character_detail) {
 
     private val binding by viewBinding(FragmentCharacterDetailBinding::bind)
-    private val viewModel by stateViewModel<CharacterViewModel>()
+    private val viewModel by viewModel<CharacterViewModel>()
     private val arguments by navArgs<CharacterDetailFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

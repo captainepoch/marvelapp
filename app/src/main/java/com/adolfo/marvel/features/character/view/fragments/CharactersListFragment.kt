@@ -22,12 +22,12 @@ import com.adolfo.marvel.databinding.FragmentCharactersBinding
 import com.adolfo.marvel.features.character.view.adapter.CharactersListAdapter
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModel
 import com.google.android.material.snackbar.Snackbar
-import org.koin.androidx.viewmodel.ext.android.stateViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
 
     private val binding by viewBinding(FragmentCharactersBinding::bind)
-    private val viewModel by stateViewModel<CharactersViewModel>()
+    private val viewModel by viewModel<CharactersViewModel>()
 
     private val charactersAdapter by lazy { CharactersListAdapter() }
 
