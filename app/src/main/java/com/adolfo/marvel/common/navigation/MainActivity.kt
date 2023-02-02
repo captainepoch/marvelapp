@@ -1,21 +1,33 @@
 package com.adolfo.marvel.common.navigation
 
 import android.os.Bundle
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.NavHostFragment
-import com.adolfo.core.extensions.gone
-import com.adolfo.core.extensions.isVisible
-import com.adolfo.marvel.common.extensions.viewBinding
-import com.adolfo.core.extensions.visible
-import com.adolfo.marvel.R
-import com.adolfo.marvel.databinding.ActivityMainBinding
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.ui.Modifier
+import com.adolfo.marvel.ui.theme.MarvelAppTheme
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
-    private val binding by viewBinding(ActivityMainBinding::inflate)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContent {
+            MarvelAppTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
+                    CharactersScreen()
+                }
+            }
+        }
+
+    }
+
+    /*private val binding by viewBinding(ActivityMainBinding::inflate)
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,5 +85,7 @@ class MainActivity : AppCompatActivity() {
                 binding.loader.gone()
             }
         }
-    }
+    }*/
+
+
 }

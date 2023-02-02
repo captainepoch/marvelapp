@@ -10,7 +10,7 @@ open class BaseFragment(layoutId: Int) : Fragment(layoutId) {
         return (requireActivity() as MainActivity)
     }
 
-    fun navigateTo(direction: NavDirections) {
+    /*fun navigateTo(direction: NavDirections) {
         getMainActivity().navigateTo(direction)
     }
 
@@ -20,5 +20,5 @@ open class BaseFragment(layoutId: Int) : Fragment(layoutId) {
 
     fun showLoader(show: Boolean?) {
         getMainActivity().showLoader(show ?: false)
-    }
+    }*/
 }

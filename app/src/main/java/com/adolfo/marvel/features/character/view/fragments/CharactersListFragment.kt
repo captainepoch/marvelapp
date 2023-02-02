@@ -42,7 +42,7 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
     private fun initObservers() {
         with(viewModel) {
             viewObserve(characters, ::handleCharacters)
-            viewObserve(loader, ::showLoader)
+            //viewObserve(loader, ::showLoader)
             viewObserve(customError, ::handleCustomError)
             viewFailureObserve(failure, ::handleFailure)
         }
@@ -58,7 +58,7 @@ class CharactersListFragment : BaseFragment(R.layout.fragment_characters) {
         }
 
         charactersAdapter.characterListener = {
-            navigateTo(CharactersListFragmentDirections.actionListToDetail(it))
+            //navigateTo(CharactersListFragmentDirections.actionListToDetail(it))
         }
     }
 
