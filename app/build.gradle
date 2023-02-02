@@ -12,8 +12,10 @@ android {
 
     defaultConfig {
         applicationId buildVersions.applicationId
+
         minSdk buildVersions.minSdk
         targetSdk buildVersions.targetSdk
+
         versionCode buildVersions.versionCode
         versionName buildVersions.versionName
 
@@ -51,7 +53,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = buildVersions.java.toString()
+        jvmTarget = buildVersions.java
     }
 
     buildFeatures {
