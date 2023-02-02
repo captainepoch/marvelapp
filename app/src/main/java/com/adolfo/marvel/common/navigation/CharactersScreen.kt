@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adolfo.marvel.common.navigation.models.CharacterItemModel
 import com.adolfo.marvel.common.navigation.models.CharacterScreenItem
 
 @Composable
@@ -20,15 +21,13 @@ fun CharactersScreen(modifier: Modifier = Modifier) {
         )
         {
             items(getHeroList()) { hero ->
-                CharacterScreenItem(modifier, heroName = hero.name)
+                CharacterScreenItem(modifier, hero = hero)
             }
         }
     }
 }
 
-private fun getHeroList() = List(10) { HeroItem("aaaa") }
-
-data class HeroItem(val name: String)
+private fun getHeroList() = List(10) { CharacterItemModel("aaaa") }
 
 @Preview
 @Composable

@@ -25,7 +25,7 @@ import com.adolfo.marvel.ui.theme.TextStyles
 @Composable
 fun CharacterScreenItem(
     modifier: Modifier = Modifier,
-    heroName: String = "-"
+    hero: CharacterItemModel = CharacterItemModel()
 ) {
     Box(
         modifier = modifier
@@ -51,7 +51,7 @@ fun CharacterScreenItem(
             contentScale = ContentScale.FillBounds
         )
         Text(
-            text = heroName,
+            text = hero.name,
             modifier = modifier
                 .wrapContentSize()
                 .align(Alignment.BottomStart)
@@ -64,5 +64,5 @@ fun CharacterScreenItem(
 @Preview
 @Composable
 fun PreviewCharacterScreenItem() {
-    CharacterScreenItem(heroName = "Placeholder")
+    CharacterScreenItem(hero = CharacterItemModel("Placeholder"))
 }
