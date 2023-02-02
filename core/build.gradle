@@ -84,6 +84,7 @@ dependencies {
     api deps.androidx.recyclerview
     api deps.androidx.viewmodel
     api deps.androidx.viewmodel_savedstate
+    api "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
 
     api deps.koin.android
     api deps.koin.core

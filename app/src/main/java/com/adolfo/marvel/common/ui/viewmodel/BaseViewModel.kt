@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.adolfo.core.exception.Failure
 
+@Deprecated("Not for Compose.")
 open class BaseViewModel : ViewModel() {
 
     private val loaderLiveData: MutableLiveData<Boolean> = MutableLiveData()
