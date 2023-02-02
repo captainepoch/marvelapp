@@ -11,11 +11,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adolfo.marvel.R
+import com.adolfo.marvel.ui.theme.TextStyles
 
 @Composable
 fun CharacterScreenItem(
@@ -30,7 +35,19 @@ fun CharacterScreenItem(
         Image(
             painter = painterResource(id = R.drawable.ic_marvel_logo),
             contentDescription = "Marvel logo",
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier
+                .fillMaxSize()
+                .drawWithCache {
+                    val gradient = Brush.verticalGradient(
+                        colors = listOf(Color.Transparent, Color.Black),
+                        startY = size.height / 3,
+                        endY = size.height
+                    )
+                    onDrawWithContent {
+                        drawContent()
+                        drawRect(gradient, blendMode = BlendMode.Multiply)
+                    }
+                },
             contentScale = ContentScale.FillBounds
         )
         Text(
@@ -38,7 +55,8 @@ fun CharacterScreenItem(
             modifier = modifier
                 .wrapContentSize()
                 .align(Alignment.BottomStart)
-                .padding(4.dp)
+                .padding(4.dp),
+            style = TextStyles.CharacterTitle
         )
     }
 }
