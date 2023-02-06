@@ -1,10 +1,9 @@
 package com.adolfo.marvel.common.navigation.models
 
-sealed class CharacterState<out T> {
+import com.adolfo.core.functional.State.Error
 
-    object Loading : CharacterState<Nothing>()
-    object Error : CharacterState<Nothing>()
-    data class CharacterScreenState(
-        val list:List<Any>
-    ) : CharacterState<Nothing>()
-}
+data class CharactersScreenState(
+    val isLoading: Boolean = false,
+    val error: Error? = null,
+    val characters: List<CharacterItemModel> = listOf()
+)
