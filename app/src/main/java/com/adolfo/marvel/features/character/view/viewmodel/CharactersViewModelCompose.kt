@@ -54,7 +54,12 @@ class CharactersViewModelCompose(
                             val results = result.data.results
 
                             _characters.value = _characters.value.copy(
-                                characters = results.map { CharacterItemModel(it.name) }
+                                characters = results.map {
+                                    CharacterItemModel(
+                                        it.name,
+                                        it.thumbnail
+                                    )
+                                }
                             )
                             /*val list = charactersLiveData.value?.results.orEmpty().toMutableList()
                             val results = state.data.results

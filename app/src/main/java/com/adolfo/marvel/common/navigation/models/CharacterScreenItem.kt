@@ -16,9 +16,13 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter.State.Empty.painter
+import coil.request.ImageRequest
 import com.adolfo.marvel.R
 import com.adolfo.marvel.ui.theme.TextStyles
 
@@ -32,8 +36,13 @@ fun CharacterScreenItem(
             .height(128.dp)
             .fillMaxWidth()
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_marvel_logo),
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(hero.image)
+                .fallback(R.drawable.ic_marvel_logo)
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(id = R.drawable.ic_marvel_logo),
             contentDescription = "Marvel logo",
             modifier = modifier
                 .fillMaxSize()
@@ -64,5 +73,5 @@ fun CharacterScreenItem(
 @Preview
 @Composable
 fun PreviewCharacterScreenItem() {
-    CharacterScreenItem(hero = CharacterItemModel("Placeholder"))
+    CharacterScreenItem(hero = CharacterItemModel("Placeholder", ""))
 }
