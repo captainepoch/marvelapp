@@ -1,6 +1,5 @@
 package com.adolfo.marvel.common.navigation.models
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
@@ -21,8 +24,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter.State.Empty.painter
 import coil.request.ImageRequest
+import coil.request.SuccessResult
 import com.adolfo.marvel.R
 import com.adolfo.marvel.ui.theme.TextStyles
 
@@ -31,6 +34,8 @@ fun CharacterScreenItem(
     modifier: Modifier = Modifier,
     hero: CharacterItemModel = CharacterItemModel()
 ) {
+    var imageContentScale by remember { mutableStateOf(ContentScale.FillBounds) }
+
     Box(
         modifier = modifier
             .height(128.dp)
@@ -41,6 +46,14 @@ fun CharacterScreenItem(
                 .data(hero.image)
                 .fallback(R.drawable.ic_marvel_logo)
                 .crossfade(true)
+                .listener(object : ImageRequest.Listener {
+
+                    override fun onSuccess(request: ImageRequest, result: SuccessResult) {
+                        super.onSuccess(request, result)
+
+                        imageContentScale = ContentScale.Crop
+                    }
+                })
                 .build(),
             placeholder = painterResource(id = R.drawable.ic_marvel_logo),
             contentDescription = "Marvel logo",
@@ -57,7 +70,7 @@ fun CharacterScreenItem(
                         drawRect(gradient, blendMode = BlendMode.Multiply)
                     }
                 },
-            contentScale = ContentScale.FillBounds
+            contentScale = imageContentScale
         )
         Text(
             text = hero.name,
