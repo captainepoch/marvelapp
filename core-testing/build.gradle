@@ -63,7 +63,6 @@ dependencies {
     api deps.mockito.inline
     api deps.mockito.mockitokotlin
 
-    api deps.mockk.agentJvm
     api deps.mockk.lib
 
     api deps.okhttp.mockwebserver

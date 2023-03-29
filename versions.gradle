@@ -35,7 +35,6 @@ buildVersions.versionCode = 1
 buildVersions.versionName = "1.0.0"
 buildVersions.java = JavaVersion.VERSION_11
 buildVersions.testRunner = "androidx.test.runner.AndroidJUnitRunner"
-
 buildVersions.namespaceBase = "com.adolfo"
 ext.buildVersions = buildVersions
 
@@ -100,7 +99,6 @@ mockito.inline = "org.mockito:mockito-inline:${versions.mockito}"
 deps.mockito = mockito
 
 def mockk = [:]
-mockk.agentJvm = "io.mockk:mockk-agent-jvm:${versions.mockk}"
 mockk.lib = "io.mockk:mockk:${versions.mockk}"
 deps.mockk = mockk
 

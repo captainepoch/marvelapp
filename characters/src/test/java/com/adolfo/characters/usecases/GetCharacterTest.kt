@@ -8,7 +8,6 @@ import com.adolfo.characters.domain.repository.CharactersRepository
 import com.adolfo.characters.domain.repository.CharactersRepositoryImp
 import com.adolfo.characters.domain.usecases.GetCharacterDetail
 import com.adolfo.core.functional.State.Success
-import com.adolfo.core_testing.UnitTest
 import com.nhaarman.mockitokotlin2.doReturn
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.`should be instance of`

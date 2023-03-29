@@ -4,42 +4,38 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
 import com.adolfo.characters.data.models.view.CharactersView
-import com.adolfo.characters.domain.repository.CharactersRepositoryImp
+import com.adolfo.characters.domain.repository.CharactersRepository
 import com.adolfo.characters.domain.usecases.GetCharacters
 import com.adolfo.core.exception.Failure
 import com.adolfo.core.functional.State
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core_testing.CoroutineTestRule
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModel
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.doReturn
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
-import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 class CharactersViewModelTest {
-
-    @get:Rule
-    var coroutinesRule = CoroutineTestRule()
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var viewModel: CharactersViewModel
 
-    private var repository = mock<CharactersRepositoryImp>()
-    private var getCharacters = mock<GetCharacters>()
+    private var repository = mockk<CharactersRepository>()
+    private var getCharacters = mockk<GetCharacters>()
 
-    private val charactersObserver = mock<Observer<CharactersView>>()
-    private val errorObserver = mock<Observer<Failure>>()
+    private val charactersObserver = mockk<Observer<CharactersView>>()
+    private val errorObserver = mockk<Observer<Failure>>()
 
     @Before
     fun setup() {
@@ -52,7 +48,7 @@ class CharactersViewModelTest {
     }
 
     @Test
-    fun `should emit get characters`() = coroutinesRule.dispatcher.runBlockingTest {
+    fun `should emit get characters`() = runTest {
         val expectedResult = Success(
             CharactersView(listOf(), isFullEmpty = true)
         )
@@ -61,9 +57,9 @@ class CharactersViewModelTest {
         val channel = Channel<State<CharactersView>>()
         val flow = channel.consumeAsFlow()
 
-        doReturn(flow)
-            .whenever(repository)
-            .getCharacters(0, false, 15)
+        coEvery {
+            repository.getCharacters(0, false, 15)
+        } returns flow
 
         launch {
             channel.send(expectedResult)
@@ -72,7 +68,11 @@ class CharactersViewModelTest {
 
         viewModel.getCharacters(false)
 
-        verify(charactersObserver).onChanged(expectedResult.data)
-        verify(errorObserver).onChanged(expectedError)
+        coVerify {
+            charactersObserver.onChanged(expectedResult.data)
+        }
+        coVerify {
+            errorObserver.onChanged(expectedError)
+        }
     }
 }
