@@ -4,13 +4,12 @@ plugins {
 }
 
 android {
+    namespace "${buildVersions.namespaceBase}.design"
     compileSdk buildVersions.compileSdk
 
     defaultConfig {
         minSdk buildVersions.minSdk
         targetSdk buildVersions.targetSdk
-        versionCode buildVersions.versionCode
-        versionName buildVersions.versionName
 
         testInstrumentationRunner buildVersions.testRunner
         consumerProguardFiles "consumer-rules.pro"

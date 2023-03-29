@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace "${buildVersions.namespaceBase}.core"
     compileSdk buildVersions.compileSdk
 
     defaultConfig {
@@ -17,12 +18,8 @@ android {
     }
 
     buildTypes {
-        debug {
-            debuggable true
-        }
 
         release {
-            debuggable false
             minifyEnabled false
 
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -78,7 +75,6 @@ dependencies {
 
     api deps.androidx.appcompat
     api deps.androidx.constraintlayout
-    api deps.androidx.lifecycleExt
     api deps.androidx.lifecycleJava8
     api deps.androidx.lifecycleLivedataKtx
     api deps.androidx.lifecycleRuntime

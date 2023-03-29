@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace "${buildVersions.namespaceBase}.core_testing"
     compileSdk buildVersions.compileSdk
 
     defaultConfig {
@@ -15,12 +16,7 @@ android {
     }
 
     buildTypes {
-        debug {
-            debuggable true
-        }
-
         release {
-            debuggable false
             minifyEnabled false
 
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -45,7 +41,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = buildVersions.java
+        jvmTarget = buildVersions.java.toString()
     }
 }
 
@@ -65,7 +61,7 @@ dependencies {
     api deps.mockito.android
     api deps.mockito.core
     api deps.mockito.inline
-    api deps.mockito.mockitokotlin2
+    api deps.mockito.mockitokotlin
 
     api deps.mockk.agentJvm
     api deps.mockk.lib
