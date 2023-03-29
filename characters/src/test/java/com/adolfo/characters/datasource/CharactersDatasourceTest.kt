@@ -1,25 +1,24 @@
 package com.adolfo.characters.datasource
 
+import com.adolfo.characters.data.datasource.CharactersDatasource
+import com.adolfo.characters.data.datasource.CharactersDatasourceImp
+import com.adolfo.characters.data.local.CharactersLocal
 import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.models.entity.CharactersEntity
 import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.data.service.CharactersApi
 import com.adolfo.characters.data.service.CharactersService
-import com.adolfo.characters.data.datasource.CharactersDatasource
-import com.adolfo.characters.data.datasource.CharactersDatasourceImp
-import com.adolfo.characters.data.local.CharactersLocal
 import com.adolfo.core.extensions.empty
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core.network.NetworkTools
 import com.adolfo.core.platform.ApiResponse
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.`should be instance of`
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Before
 import org.junit.Test
+import org.mockito.Mockito.mock
 import retrofit2.Response
 
 class CharactersDatasourceTest {

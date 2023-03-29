@@ -11,10 +11,6 @@ import com.adolfo.core.functional.State
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core_testing.CoroutineTestRule
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModel
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.consumeAsFlow
@@ -23,6 +19,10 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
+import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 class CharactersViewModelTest {

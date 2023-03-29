@@ -8,8 +8,6 @@ import com.adolfo.characters.domain.repository.CharactersRepositoryImp
 import com.adolfo.characters.domain.usecases.GetCharacters
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core_testing.UnitTest
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.`should be instance of`
@@ -18,6 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.test.mock.MockProviderRule
 import org.mockito.Mockito
+import org.mockito.Mockito.mock
 
 class GetCharactersTest : UnitTest() {
 
