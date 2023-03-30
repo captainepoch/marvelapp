@@ -7,19 +7,18 @@ import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.domain.repository.CharactersRepository
 import com.adolfo.characters.domain.usecases.GetCharacterDetail
-import com.adolfo.core.exception.Failure
-import com.adolfo.core.functional.State
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core_testing.CoroutineTestRule
 import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModel
-import io.mockk.coEvery
-import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.spyk
+import io.mockk.unmockkAll
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.consumeAsFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -28,18 +27,17 @@ import org.junit.Test
 class CharacterViewModelTest {
 
     @get:Rule
-    var coroutinesRule = CoroutineTestRule()
+    val coroutineTestRule = CoroutineTestRule()
 
     @get:Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
+    val instantExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var viewModel: CharacterViewModel
 
-    private var repository = mockk<CharactersRepository>()
+    private val repository = mockk<CharactersRepository>()
     private var getCharacterDetail = mockk<GetCharacterDetail>()
 
-    private val characterObserver = mockk<Observer<CharacterView>>()
-    private val errorObserver = mockk<Observer<Failure>>()
+    private val characterObserver = spyk<Observer<CharacterView>>()
 
     @Before
     fun setup() {
@@ -47,26 +45,28 @@ class CharacterViewModelTest {
 
         viewModel = CharacterViewModel(SavedStateHandle(), getCharacterDetail).apply {
             character.observeForever(characterObserver)
-            failure.observeForever(errorObserver)
         }
+
+        every { characterObserver.onChanged(any()) } answers {}
+    }
+
+    @After
+    fun tearDown() {
+        unmockkAll()
     }
 
     @Test
     fun `should get character`() = runTest {
         val expectedResult = Success(CharacterEntity.empty().toCharacter().toCharacterView())
 
-        val channel = Channel<State<CharacterView>>()
-        val flow = channel.consumeAsFlow()
-
-        coEvery { repository.getCharacter(0) } returns flow
-
-        launch {
-            channel.send(expectedResult)
-        }
+        val flow = MutableStateFlow(expectedResult)
+        every {
+            repository.getCharacter(0)
+        } returns flow
 
         viewModel.getCharacterDetail(0)
 
-        coVerify {
+        verify {
             characterObserver.onChanged(expectedResult.data)
         }
     }
