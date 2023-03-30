@@ -24,17 +24,6 @@ android {
         }
     }
 
-    flavorDimensions flavors.env
-    productFlavors {
-        create(flavors.pre) {
-            dimension = flavors.env
-        }
-
-        create(flavors.pro) {
-            dimension = flavors.env
-        }
-    }
-
     compileOptions {
         sourceCompatibility buildVersions.java
         targetCompatibility buildVersions.java
@@ -56,16 +45,8 @@ dependencies {
 
     api deps.kotlin.test
     api deps.kotlin.reflect
+
     api deps.kotlinx.coroutinesTest
 
-    api deps.mockito.android
-    api deps.mockito.core
-    api deps.mockito.inline
-    api deps.mockito.mockitokotlin
-
     api deps.mockk.lib
-
-    api deps.okhttp.mockwebserver
-
-    api deps.roboelectric
 }
