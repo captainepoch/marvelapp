@@ -14,8 +14,6 @@ versions.kotlinx = "1.6.4"
 versions.lifecycle = "2.6.1"
 versions.lottie = "6.0.0"
 versions.material = "1.8.0"
-versions.mockito = "5.2.0"
-versions.mockitokotlin = "4.1.0"
 versions.mockk = "1.13.4"
 versions.navigation = "2.5.3"
 versions.okhttp = "4.10.0"
@@ -90,13 +88,6 @@ kotlinx.coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versio
 kotlinx.coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.kotlinx}"
 kotlinx.coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.kotlinx}"
 deps.kotlinx = kotlinx
-
-def mockito = [:]
-mockito.android = "org.mockito:mockito-android:${versions.mockito}"
-mockito.core = "org.mockito:mockito-core:${versions.mockito}"
-mockito.mockitokotlin = "org.mockito.kotlin:mockito-kotlin:${versions.mockitokotlin}"
-mockito.inline = "org.mockito:mockito-inline:${versions.mockito}"
-deps.mockito = mockito
 
 def mockk = [:]
 mockk.lib = "io.mockk:mockk:${versions.mockk}"
