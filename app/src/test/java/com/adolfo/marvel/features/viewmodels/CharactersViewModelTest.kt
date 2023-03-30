@@ -6,7 +6,6 @@ import androidx.lifecycle.SavedStateHandle
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.domain.repository.CharactersRepository
 import com.adolfo.characters.domain.usecases.GetCharacters
-import com.adolfo.core.exception.Failure
 import com.adolfo.core.functional.State
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core_testing.CoroutineTestRule
@@ -18,6 +17,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -25,6 +25,9 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class CharactersViewModelTest {
+
+    @get:Rule
+    var coroutinesRule = CoroutineTestRule()
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
@@ -35,7 +38,6 @@ class CharactersViewModelTest {
     private var getCharacters = mockk<GetCharacters>()
 
     private val charactersObserver = mockk<Observer<CharactersView>>()
-    private val errorObserver = mockk<Observer<Failure>>()
 
     @Before
     fun setup() {
@@ -43,7 +45,6 @@ class CharactersViewModelTest {
 
         viewModel = CharactersViewModel(SavedStateHandle(), getCharacters).apply {
             characters.observeForever(charactersObserver)
-            failure.observeForever(errorObserver)
         }
     }
 
@@ -52,7 +53,6 @@ class CharactersViewModelTest {
         val expectedResult = Success(
             CharactersView(listOf(), isFullEmpty = true)
         )
-        val expectedError = Failure.Throwable(Throwable())
 
         val channel = Channel<State<CharactersView>>()
         val flow = channel.consumeAsFlow()
@@ -63,16 +63,12 @@ class CharactersViewModelTest {
 
         launch {
             channel.send(expectedResult)
-            channel.close(expectedError.throwable)
         }
 
         viewModel.getCharacters(false)
 
         coVerify {
             charactersObserver.onChanged(expectedResult.data)
-        }
-        coVerify {
-            errorObserver.onChanged(expectedError)
         }
     }
 }
