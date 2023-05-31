@@ -6,7 +6,6 @@ versions.constraintlayout = "2.1.4"
 versions.coreKtx = "1.9.0"
 versions.coretesting = "2.2.0"
 versions.glide = "4.15.1"
-versions.gradlePluginVersions = "0.46.0"
 versions.junit = "4.13.2"
 versions.kluent = "1.72"
 versions.koin = "3.4.0"
@@ -45,6 +44,7 @@ ext.flavors = flavors
 
 def pluginsVersion = [:]
 pluginsVersion.androidGradlePlugin = "7.4.2"
+pluginsVersion.gradlePluginVersions = "0.46.0"
 versions.plugins = pluginsVersion
 
 def deps = [:]
@@ -68,8 +68,8 @@ androidx.viewmodel_savedstate = "androidx.lifecycle:lifecycle-viewmodel-savedsta
 deps.androidx = androidx
 
 def gradlePlugins = [:]
-gradlePlugins.gradle = "com.android.tools.build:gradle:${versions.plugins.androidGradlePlugin}"
-gradlePlugins.gradlePluginVersions = "com.github.ben-manes:gradle-versions-plugin:${versions.gradlePluginVersions}"
+gradlePlugins.gradle = "com.android.tools.build:gradle:${pluginsVersion.androidGradlePlugin}"
+gradlePlugins.gradlePluginVersions = "com.github.ben-manes:gradle-versions-plugin:${pluginsVersion.gradlePluginVersions}"
 gradlePlugins.kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
 gradlePlugins.safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"
 deps.gradlePlugins = gradlePlugins
