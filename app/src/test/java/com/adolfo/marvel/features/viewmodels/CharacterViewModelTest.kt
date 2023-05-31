@@ -35,7 +35,7 @@ class CharacterViewModelTest {
     private val characterObserver = mockk<Observer<CharacterView>>()
 
     @Before
-    fun setup() {
+    fun setUp() {
         viewModel = CharacterViewModel(SavedStateHandle(), getCharacterDetail)
     }
 
