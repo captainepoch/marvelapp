@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
                                 slideOutHorizontally { it }
                             },
                         ) {
-                            CharacterDetailScreen()
+                            CharacterDetailScreen(viewModel = koinViewModel())
                         }
                     }
                 }
