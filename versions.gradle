@@ -1,15 +1,18 @@
 ext.deps = [:]
 
 def versions = [:]
-versions.appcompat = "1.6.1"
+versions.coil = "2.4.0"
+versions.composeActivity = "1.6.1"
+versions.composeBom = "2023.04.01"
+versions.composeViewModel = "2.5.1"
 versions.constraintlayout = "2.1.4"
 versions.coreKtx = "1.9.0"
 versions.coretesting = "2.2.0"
 versions.glide = "4.15.1"
 versions.junit = "4.13.2"
 versions.kluent = "1.72"
-versions.koin = "3.4.0"
-versions.kotlin = "1.8.10"
+versions.koin = "3.4.1"
+versions.kotlin = "1.8.20"
 versions.kotlinx = "1.6.4"
 versions.lifecycle = "2.6.1"
 versions.lottie = "6.0.0"
@@ -44,7 +47,6 @@ ext.flavors = flavors
 
 def pluginsVersion = [:]
 pluginsVersion.androidGradlePlugin = "7.4.2"
-pluginsVersion.gradlePluginVersions = "0.46.0"
 versions.plugins = pluginsVersion
 
 def deps = [:]
@@ -67,15 +69,30 @@ androidx.viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.life
 androidx.viewmodel_savedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${versions.lifecycle}"
 deps.androidx = androidx
 
+def coil = [:]
+coil.compose = "io.coil-kt:coil-compose:${versions.coil}"
+coil.lib = "io.coil-kt:coil:${versions.coil}"
+deps.coil = coil
+
+def compose = [:]
+compose.activity = "androidx.activity:activity-compose:${versions.composeActivity}"
+compose.bom = "androidx.compose:compose-bom:${versions.composeBom}"
+compose.material = "androidx.compose.material:material"
+compose.material3 = "androidx.compose.material3:material3"
+compose.preview = "androidx.compose.ui:ui-tooling-preview"
+compose.uiTooling = "androidx.compose.ui:ui-tooling"
+compose.viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${versions.composeViewModel}"
+deps.compose = compose
+
 def gradlePlugins = [:]
 gradlePlugins.gradle = "com.android.tools.build:gradle:${pluginsVersion.androidGradlePlugin}"
-gradlePlugins.gradlePluginVersions = "com.github.ben-manes:gradle-versions-plugin:${pluginsVersion.gradlePluginVersions}"
 gradlePlugins.kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
 gradlePlugins.safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"
 deps.gradlePlugins = gradlePlugins
 
 def koin = [:]
 koin.android = "io.insert-koin:koin-android:${versions.koin}"
+koin.compose = "io.insert-koin:koin-androidx-compose:${versions.koin}"
 koin.core = "io.insert-koin:koin-core:${versions.koin}"
 koin.test = "io.insert-koin:koin-test-junit4:${versions.koin}"
 deps.koin = koin

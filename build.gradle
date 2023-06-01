@@ -10,23 +10,20 @@ buildscript {
 
         // Third-party plugins
         classpath deps.gradlePlugins.safeArgs
-        classpath deps.gradlePlugins.gradlePluginVersions
     }
 }
 
 allprojects {
     addRepos(repositories)
 
-    apply plugin: com.github.benmanes.gradle.versions.VersionsPlugin
-    tasks.named("dependencyUpdates").configure {
-        gradleReleaseChannel = "current"
-
-        rejectVersionIf {
-            isNonStable(it.candidate.version)
-        }
+    tasks.withType(JavaCompile) {
+        options.encoding(buildVersions.encoding)
+        options.compilerArgs += [
+                "-Xlint:all",
+                "-Xlint:unchecked",
+                "-Xlint:-deprecation",
+        ]
     }
-
-    apply plugin: "com.github.ben-manes.versions"
 }
 
 task clean(type: Delete) {

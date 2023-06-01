@@ -72,10 +72,9 @@ android {
 }
 
 dependencies {
-    api deps.androidx.coreKtx
-
-    api deps.androidx.appcompat
+    //api deps.androidx.appcompat
     api deps.androidx.constraintlayout
+    api deps.androidx.coreKtx
     api deps.androidx.lifecycleJava8
     api deps.androidx.lifecycleLivedataKtx
     api deps.androidx.lifecycleRuntime
@@ -84,13 +83,16 @@ dependencies {
     api deps.androidx.recyclerview
     api deps.androidx.viewmodel
     api deps.androidx.viewmodel_savedstate
-    api "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
-    api "io.insert-koin:koin-androidx-compose:3.4.1"
 
-    api "io.coil-kt:coil:2.2.2"
-    api "io.coil-kt:coil-compose:2.2.2"
+    api deps.coil.compose
+    api deps.coil.lib
+
+    api platform(deps.compose.bom)
+    api deps.compose.activity
+    api deps.compose.viewModel
 
     api deps.koin.android
+    api deps.koin.compose
     api deps.koin.core
 
     api deps.kotlinx.coroutinesCore
