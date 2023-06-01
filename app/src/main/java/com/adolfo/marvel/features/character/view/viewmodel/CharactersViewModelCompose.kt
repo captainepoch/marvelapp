@@ -1,7 +1,5 @@
 package com.adolfo.marvel.features.character.view.viewmodel
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adolfo.characters.data.models.view.CharactersView
@@ -12,9 +10,12 @@ import com.adolfo.core.functional.State.Success
 import com.adolfo.marvel.common.navigation.models.CharacterItemModel
 import com.adolfo.marvel.common.navigation.models.CharactersScreenState
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CharactersViewModelCompose(
@@ -23,8 +24,8 @@ class CharactersViewModelCompose(
 
     private var charactersJob: Job? = null
 
-    private val _characters = mutableStateOf(CharactersScreenState())
-    val characters: State<CharactersScreenState>
+    private val _characters = MutableStateFlow(CharactersScreenState())
+    val characters: StateFlow<CharactersScreenState>
         get() = _characters
 
     private val offset: Int
@@ -52,28 +53,29 @@ class CharactersViewModelCompose(
                         is Success<CharactersView> -> {
                             val results = result.data.results
 
-                            _characters.value = _characters.value.copy(
-                                characters = results.map {
-                                    CharacterItemModel(
-                                        it.name,
-                                        it.thumbnail
+                            if (results.isEmpty() && (offset == 0)) {
+                                //_characters.value =
+                            } else if (results.isEmpty() && isPaginated) {
+                                /*charactersLiveData.value =
+                                    CharactersView(listOf(), isPaginationEmpty = true)*/
+                            } else {
+                                _characters.update { state ->
+                                    state.copy(
+                                        isLoading = false,
+                                        characters = state.characters.plus(
+                                            results.map {
+                                                CharacterItemModel(
+                                                    it.id,
+                                                    it.name,
+                                                    it.thumbnail
+                                                )
+                                            }
+                                        )
                                     )
                                 }
-                            )
-                            /*val list = charactersLiveData.value?.results.orEmpty().toMutableList()
-                            val results = state.data.results
-
-                            if (results.isNullOrEmpty() && (offset == 0)) {
-                                charactersLiveData.value =
-                                    CharactersView(listOf(), isFullEmpty = true)
-                            } else if (results.isNullOrEmpty() && isPaginated) {
-                                charactersLiveData.value =
-                                    CharactersView(listOf(), isPaginationEmpty = true)
-                            } else {
-                                list.addAll(results)
-                                charactersLiveData.value = CharactersView(list)
-                            }*/
+                            }
                         }
+
                         is Error -> {
                             Unit
                             /*if (isPaginated) {

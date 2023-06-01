@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -23,6 +24,7 @@ fun CharactersScreen(
     modifier: Modifier = Modifier,
     viewModel: CharactersViewModelCompose = koinViewModel()
 ) {
+    val state by viewModel.characters.collectAsState()
     val listState = rememberLazyListState()
     val isAtBottom by remember { derivedStateOf { !listState.canScrollForward } }
 
@@ -38,7 +40,7 @@ fun CharactersScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(8.dp)
         ) {
-            items(viewModel.characters.value.characters, key = { it.id }) { hero ->
+            items(state.characters, key = { it.id }) { hero ->
                 CharacterScreenItem(modifier, hero = hero)
             }
         }
