@@ -13,16 +13,15 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adolfo.marvel.common.navigation.models.CharacterScreenItem
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModelCompose
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CharactersScreen(
     modifier: Modifier = Modifier,
-    viewModel: CharactersViewModelCompose = koinViewModel()
+    viewModel: CharactersViewModelCompose,
+    onCharacterClicked: (Int) -> Unit
 ) {
     val state by viewModel.characters.collectAsState()
     val listState = rememberLazyListState()
@@ -41,14 +40,10 @@ fun CharactersScreen(
             contentPadding = PaddingValues(8.dp)
         ) {
             items(state.characters, key = { it.id }) { hero ->
-                CharacterScreenItem(modifier, hero = hero)
+                CharacterScreenItem(modifier, hero = hero) {
+                    onCharacterClicked(hero.id)
+                }
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewCharactersScreen() {
-    CharactersScreen()
 }

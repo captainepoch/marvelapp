@@ -1,5 +1,6 @@
 package com.adolfo.marvel.common.navigation.models
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,7 +33,8 @@ import com.adolfo.marvel.ui.theme.TextStyles
 @Composable
 fun CharacterScreenItem(
     modifier: Modifier = Modifier,
-    hero: CharacterItemModel = CharacterItemModel()
+    hero: CharacterItemModel = CharacterItemModel(),
+    onClick: () -> Unit = {}
 ) {
     var imageContentScale by remember { mutableStateOf(ContentScale.FillBounds) }
 
@@ -40,6 +42,9 @@ fun CharacterScreenItem(
         modifier = modifier
             .height(128.dp)
             .fillMaxWidth()
+            .clickable {
+                onClick()
+            }
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -86,5 +91,5 @@ fun CharacterScreenItem(
 @Preview
 @Composable
 fun PreviewCharacterScreenItem() {
-    CharacterScreenItem(hero = CharacterItemModel("Placeholder", ""))
+    CharacterScreenItem(hero = CharacterItemModel(-1, "Placeholder", ""))
 }
