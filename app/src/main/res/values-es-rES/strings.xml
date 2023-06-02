@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="character_detail_n_comics">Número de comics donde aparece</string>
-    <string name="character_detail_n_stories">Número de historias donde aparece</string>
-    <string name="character_detail_n_events">Número de eventos donde aparece</string>
-    <string name="character_detail_n_series">Número de series donde aparece</string>
     <string name="character_detail_no_description">Este personaje no dispone de descripción.</string>
     <string name="characters_emtpy_state_title">Nada que mostrar</string>
     <string name="characters_emtpy_state_desc">No hay ningún dato que mostrar en este momento. Por favor, prueba en unos minutos.</string>
@@ -18,4 +14,5 @@
     <string name="button_retry">Reintentar</string>
     <string name="button_goback">Ir atrás</string>
     <string name="button_exit">Salir</string>
+    <string name="characters_toolbar_title">Personajes</string>
 </resources>
