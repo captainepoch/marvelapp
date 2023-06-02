@@ -44,11 +44,6 @@ class CharactersViewModelCompose(
                         state.copy(isLoading = true)
                     }
                 }
-                .onCompletion {
-                    _characters.update { state ->
-                        state.copy(isLoading = false)
-                    }
-                }
                 .catch {/* failure ->
                     if (isPaginated) {
                         customErrorLiveData.value = Event(CustomError(CustomError.PAGINATION_ERROR))

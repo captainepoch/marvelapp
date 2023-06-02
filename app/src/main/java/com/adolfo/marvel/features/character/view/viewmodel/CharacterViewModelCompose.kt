@@ -41,8 +41,6 @@ class CharacterViewModelCompose(
         getCharacterJob?.cancelIfActive()
         getCharacterJob = viewModelScope.launch {
             getCharacterDetail.execute(GetCharacterDetail.Params(id))
-                .onStart { /*showLoader(true)*/ }
-                .onCompletion { /*showLoader(false)*/ }
                 .catch { failure ->
                     /*handleFailure(Throwable(failure))*/
                 }
