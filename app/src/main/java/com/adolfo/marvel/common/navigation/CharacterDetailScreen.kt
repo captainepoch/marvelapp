@@ -5,10 +5,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -34,14 +38,9 @@ fun CharacterDetailScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = state.character.name,
-                        style = MaterialTheme.typography.h6
-                    )
-                }
-            )
+            CharacterDetailTopAppBar(state.character.name) {
+                onBackPressed()
+            }
         }
     ) { paddingValues ->
         Column(
@@ -66,10 +65,28 @@ fun CharacterDetailScreen(
                 text = state.character.name,
                 modifier = modifier.padding(8.dp)
             )
+
+            BackHandler(onBack = { onBackPressed() })
         }
     }
+}
 
-    BackHandler {
-        onBackPressed()
-    }
+@Composable
+fun CharacterDetailTopAppBar(characterName: String, onBack: () -> Unit) {
+    TopAppBar(
+        title = {
+            Text(
+                text = characterName,
+                style = MaterialTheme.typography.h6
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Back",
+                )
+            }
+        }
+    )
 }
