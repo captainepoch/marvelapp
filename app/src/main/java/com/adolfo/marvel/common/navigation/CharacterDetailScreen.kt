@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Icon
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy.ENABLED
@@ -30,12 +32,13 @@ import coil.request.ImageRequest.Builder
 import com.adolfo.marvel.R.drawable
 import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModelCompose
 import kotlinx.coroutines.Dispatchers
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun CharacterDetailScreen(
     modifier: Modifier = Modifier,
-    viewModel: CharacterViewModelCompose,
+    viewModel: CharacterViewModelCompose = koinViewModel(),
     onBackPressed: () -> Unit
 ) {
     val state by viewModel.character.collectAsState()
@@ -49,36 +52,54 @@ fun CharacterDetailScreen(
                     }
                 }
             ) { paddingValues ->
-                Column(
-                    modifier = modifier.padding(paddingValues),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                CharacterDetail(
+                    modifier,
+                    paddingValues,
+                    state.character.image,
+                    state.character.description
                 ) {
-                    AsyncImage(
-                        model = Builder(LocalContext.current)
-                            .data(state.character.image)
-                            .fallback(drawable.ic_marvel_logo)
-                            .crossfade(true)
-                            .diskCachePolicy(ENABLED)
-                            .dispatcher(Dispatchers.IO)
-                            .build(),
-                        placeholder = painterResource(id = drawable.ic_marvel_logo),
-                        contentDescription = "Hero Image",
-                        modifier = modifier.wrapContentHeight(),
-                        contentScale = ContentScale.Fit,
-                        alignment = Alignment.TopCenter
-                    )
-
-                    Text(
-                        text = state.character.name,
-                        modifier = modifier.padding(8.dp)
-                    )
-
-                    BackHandler(onBack = { onBackPressed() })
+                    onBackPressed()
                 }
             }
         } else {
             Loader(modifier)
         }
+    }
+}
+
+@Composable
+fun CharacterDetail(
+    modifier: Modifier = Modifier,
+    paddingValues: PaddingValues,
+    image: String,
+    description: String,
+    onBack: () -> Unit
+) {
+    Column(
+        modifier = modifier.padding(paddingValues),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        AsyncImage(
+            model = Builder(LocalContext.current)
+                .data(image)
+                .fallback(drawable.ic_marvel_logo)
+                .crossfade(true)
+                .diskCachePolicy(ENABLED)
+                .dispatcher(Dispatchers.IO)
+                .build(),
+            placeholder = painterResource(id = drawable.ic_marvel_logo),
+            contentDescription = "Hero Image",
+            modifier = modifier.wrapContentHeight(),
+            contentScale = ContentScale.Fit,
+            alignment = Alignment.TopCenter
+        )
+
+        Text(
+            text = description,
+            modifier = modifier.padding(8.dp)
+        )
+
+        BackHandler(onBack = { onBack() })
     }
 }
 
@@ -100,4 +121,15 @@ fun CharacterDetailTopAppBar(characterName: String, onBack: () -> Unit) {
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun CharacterDetailPreview() {
+    CharacterDetail(
+        modifier = Modifier,
+        paddingValues = PaddingValues(),
+        image = "",
+        description = "Description of the character for the preview, to see if it looks good or not.",
+    ) {}
 }
