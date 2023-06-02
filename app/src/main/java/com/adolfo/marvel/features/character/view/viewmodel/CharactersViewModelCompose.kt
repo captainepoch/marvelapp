@@ -39,7 +39,11 @@ class CharactersViewModelCompose(
         charactersJob?.cancelIfActive()
         charactersJob = viewModelScope.launch {
             getCharacters(GetCharacters.Params(offset, isPaginated))
-                .onStart { /*showLoader(true)*/ }
+                .onStart {
+                    _characters.update {state ->
+                        state.copy(isLoading = true)
+                    }
+                }
                 .onCompletion { /*showLoader(false)*/ }
                 .catch {/* failure ->
                     if (isPaginated) {
