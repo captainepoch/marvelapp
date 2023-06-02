@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.CachePolicy.ENABLED
 import coil.request.ImageRequest.Builder
 import com.adolfo.marvel.R.drawable
 import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModelCompose
@@ -31,6 +32,7 @@ fun CharacterDetailScreen(
                 .data(state.character.image)
                 .fallback(drawable.ic_marvel_logo)
                 .crossfade(true)
+                .diskCachePolicy(ENABLED)
                 .build(),
             placeholder = painterResource(id = drawable.ic_marvel_logo),
             contentDescription = "Hero Image",
@@ -38,6 +40,7 @@ fun CharacterDetailScreen(
             contentScale = ContentScale.Fit,
             alignment = Alignment.TopCenter
         )
+
         Text(
             text = state.character.name,
             modifier = modifier.padding(8.dp)
