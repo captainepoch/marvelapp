@@ -82,6 +82,7 @@ dependencies {
     implementation deps.androidx.navigationUi
 
     implementation deps.lottie
+    implementation deps.lottieCompose
     implementation deps.material
 
     testImplementation project(":core-testing")
