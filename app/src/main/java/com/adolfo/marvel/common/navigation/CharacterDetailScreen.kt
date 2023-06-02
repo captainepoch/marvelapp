@@ -24,11 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy.ENABLED
 import coil.request.ImageRequest.Builder
+import com.adolfo.core.extensions.isEmptyOrBlank
+import com.adolfo.marvel.R
 import com.adolfo.marvel.R.drawable
 import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModelCompose
 import kotlinx.coroutines.Dispatchers
@@ -95,7 +98,11 @@ fun CharacterDetail(
         )
 
         Text(
-            text = description,
+            text = if (description.isEmptyOrBlank()) {
+                stringResource(id = R.string.character_detail_no_description)
+            } else {
+                description
+            },
             modifier = modifier.padding(8.dp)
         )
 
