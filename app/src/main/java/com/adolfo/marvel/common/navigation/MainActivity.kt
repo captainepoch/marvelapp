@@ -59,7 +59,12 @@ class MainActivity : ComponentActivity() {
                                 slideOutHorizontally { it }
                             },
                         ) {
-                            CharacterDetailScreen(viewModel = koinViewModel())
+                            CharacterDetailScreen(
+                                viewModel = koinViewModel(),
+                                onBackPressed = {
+                                    navController.popBackStack()
+                                }
+                            )
                         }
                     }
                 }

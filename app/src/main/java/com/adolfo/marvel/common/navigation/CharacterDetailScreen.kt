@@ -1,5 +1,6 @@
 package com.adolfo.marvel.common.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -26,7 +27,8 @@ import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModelCom
 @Composable
 fun CharacterDetailScreen(
     modifier: Modifier = Modifier,
-    viewModel: CharacterViewModelCompose
+    viewModel: CharacterViewModelCompose,
+    onBackPressed: () -> Unit
 ) {
     val state by viewModel.character.collectAsState()
 
@@ -65,5 +67,9 @@ fun CharacterDetailScreen(
                 modifier = modifier.padding(8.dp)
             )
         }
+    }
+
+    BackHandler {
+        onBackPressed()
     }
 }
