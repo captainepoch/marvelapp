@@ -1,6 +1,7 @@
 ext.deps = [:]
 
 def versions = [:]
+versions.accompanist = "0.30.1"
 versions.coil = "2.4.0"
 versions.composeActivity = "1.6.1"
 versions.composeBom = "2023.04.01"
@@ -58,6 +59,7 @@ androidx.coreKtx = "androidx.core:core-ktx:${versions.coreKtx}"
 androidx.coretesting = "androidx.arch.core:core-testing:${versions.coretesting}"
 androidx.lifecycleJava8 = "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
 androidx.lifecycleLivedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}"
+androidx.lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle}"
 androidx.lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime:${versions.lifecycle}"
 androidx.navigationFragment = "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
 androidx.navigationUi = "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
@@ -78,10 +80,15 @@ def compose = [:]
 compose.activity = "androidx.activity:activity-compose:${versions.composeActivity}"
 compose.bom = "androidx.compose:compose-bom:${versions.composeBom}"
 compose.material = "androidx.compose.material:material"
-compose.material3 = "androidx.compose.material3:material3"
 compose.preview = "androidx.compose.ui:ui-tooling-preview"
 compose.uiTooling = "androidx.compose.ui:ui-tooling"
 compose.viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${versions.composeViewModel}"
+
+def accompanist = [:]
+accompanist.navigation = "com.google.accompanist:accompanist-navigation-animation:${versions.accompanist}"
+accompanist.systemuicontroller = "com.google.accompanist:accompanist-systemuicontroller:${versions.accompanist}"
+compose.accompanist = accompanist
+
 deps.compose = compose
 
 def gradlePlugins = [:]
