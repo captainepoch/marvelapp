@@ -5,16 +5,13 @@
     <string name="empty" translatable="false" />
 
     <!-- Characters -->
+    <string name="characters_toolbar_title">Characters</string>
     <string name="characters_emtpy_state_title">Nothing to show</string>
     <string name="characters_emtpy_state_desc">There is not anything we can show to you right now. Please try again in a few minutes.</string>
     <string name="characters_pagination_empty_title">You reached the end of the list!</string>
     <string name="characters_pagination_error">An error occurred while scrolling. Please try again in a few minutes</string>
 
     <!-- Character detail -->
-    <string name="character_detail_n_comics">Number of comics this hero appears</string>
-    <string name="character_detail_n_stories">Number of stories this hero appears</string>
-    <string name="character_detail_n_events">Number of events this hero appears</string>
-    <string name="character_detail_n_series">Number of series this hero appears</string>
     <string name="character_detail_no_description">This character does not have any description.</string>
 
     <!-- Common errors -->

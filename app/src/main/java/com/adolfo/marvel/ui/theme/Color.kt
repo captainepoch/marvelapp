@@ -2,7 +2,8 @@ package com.adolfo.marvel.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val marvelRed = Color(0xFFED1D24)
+val liquorice = Color(0xFF202020)
+
+val primaryLight = Color(0xFFFF5F4E)
+val secondaryLight = Color(0xFFFFB300)
