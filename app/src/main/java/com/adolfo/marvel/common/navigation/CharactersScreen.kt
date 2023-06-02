@@ -1,5 +1,7 @@
 package com.adolfo.marvel.common.navigation
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,15 +19,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.adolfo.marvel.R
 import com.adolfo.marvel.common.navigation.models.CharacterScreenItem
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModelCompose
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun CharactersScreen(
     modifier: Modifier = Modifier,
@@ -42,34 +43,36 @@ fun CharactersScreen(
         }
     }
 
-    if (state.isLoading) {
-        Loader(modifier)
-    } else {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(id = R.string.characters_toolbar_title),
-                            style = MaterialTheme.typography.h6
-                        )
-                    }
-                )
-            }
-        ) { paddingValues ->
-            Column(modifier = modifier.padding(paddingValues)) {
-                LazyColumn(
-                    state = listState,
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    contentPadding = PaddingValues(8.dp)
-                ) {
-                    items(state.characters, key = { it.id }) { hero ->
-                        CharacterScreenItem(modifier, hero = hero) {
-                            onCharacterClicked(hero.id)
+    AnimatedContent(targetState = state.isLoading) { isLoading ->
+        if (!isLoading) {
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = {
+                            Text(
+                                text = stringResource(id = R.string.characters_toolbar_title),
+                                style = MaterialTheme.typography.h6
+                            )
+                        }
+                    )
+                }
+            ) { paddingValues ->
+                Column(modifier = modifier.padding(paddingValues)) {
+                    LazyColumn(
+                        state = listState,
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(8.dp)
+                    ) {
+                        items(state.characters, key = { it.id }) { hero ->
+                            CharacterScreenItem(modifier, hero = hero) {
+                                onCharacterClicked(hero.id)
+                            }
                         }
                     }
                 }
             }
+        } else {
+            Loader(modifier)
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.adolfo.marvel.common.navigation
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -29,6 +31,7 @@ import com.adolfo.marvel.R.drawable
 import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModelCompose
 import kotlinx.coroutines.Dispatchers
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun CharacterDetailScreen(
     modifier: Modifier = Modifier,
@@ -37,38 +40,44 @@ fun CharacterDetailScreen(
 ) {
     val state by viewModel.character.collectAsState()
 
-    Scaffold(
-        topBar = {
-            CharacterDetailTopAppBar(state.character.name) {
-                onBackPressed()
+    AnimatedContent(targetState = state.isLoading) { isLoading ->
+        if (!isLoading) {
+            Scaffold(
+                topBar = {
+                    CharacterDetailTopAppBar(state.character.name) {
+                        onBackPressed()
+                    }
+                }
+            ) { paddingValues ->
+                Column(
+                    modifier = modifier.padding(paddingValues),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    AsyncImage(
+                        model = Builder(LocalContext.current)
+                            .data(state.character.image)
+                            .fallback(drawable.ic_marvel_logo)
+                            .crossfade(true)
+                            .diskCachePolicy(ENABLED)
+                            .dispatcher(Dispatchers.IO)
+                            .build(),
+                        placeholder = painterResource(id = drawable.ic_marvel_logo),
+                        contentDescription = "Hero Image",
+                        modifier = modifier.wrapContentHeight(),
+                        contentScale = ContentScale.Fit,
+                        alignment = Alignment.TopCenter
+                    )
+
+                    Text(
+                        text = state.character.name,
+                        modifier = modifier.padding(8.dp)
+                    )
+
+                    BackHandler(onBack = { onBackPressed() })
+                }
             }
-        }
-    ) { paddingValues ->
-        Column(
-            modifier = modifier.padding(paddingValues),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            AsyncImage(
-                model = Builder(LocalContext.current)
-                    .data(state.character.image)
-                    .fallback(drawable.ic_marvel_logo)
-                    .crossfade(true)
-                    .diskCachePolicy(ENABLED)
-                    .dispatcher(Dispatchers.IO)
-                    .build(),
-                placeholder = painterResource(id = drawable.ic_marvel_logo),
-                contentDescription = "Hero Image",
-                modifier = modifier.wrapContentHeight(),
-                contentScale = ContentScale.Fit,
-                alignment = Alignment.TopCenter
-            )
-
-            Text(
-                text = state.character.name,
-                modifier = modifier.padding(8.dp)
-            )
-
-            BackHandler(onBack = { onBackPressed() })
+        } else {
+            Loader(modifier)
         }
     }
 }
