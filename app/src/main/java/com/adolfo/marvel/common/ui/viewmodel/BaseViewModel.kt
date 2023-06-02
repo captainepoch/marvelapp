@@ -14,11 +14,11 @@ open class BaseViewModel : ViewModel() {
     private val failureLiveData: MutableLiveData<Failure> = MutableLiveData()
     val failure: LiveData<Failure> get() = failureLiveData
 
-    protected fun showLoader(show: Boolean?) {
+    protected fun showLoader(show: Boolean) {
         loaderLiveData.value = show
     }
 
-    protected fun handleFailure(failure: Failure?) {
+    protected fun handleFailure(failure: Failure) {
         failureLiveData.value = failure
         showLoader(false)
     }
