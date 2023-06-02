@@ -30,6 +30,7 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.adolfo.marvel.R
 import com.adolfo.marvel.ui.theme.TextStyles
+import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun CharacterScreenItem(
@@ -53,6 +54,7 @@ fun CharacterScreenItem(
                 .fallback(R.drawable.ic_marvel_logo)
                 .crossfade(true)
                 .diskCachePolicy(ENABLED)
+                .dispatcher(Dispatchers.IO)
                 .listener(object : ImageRequest.Listener {
 
                     override fun onSuccess(request: ImageRequest, result: SuccessResult) {

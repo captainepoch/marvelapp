@@ -27,6 +27,7 @@ import coil.request.CachePolicy.ENABLED
 import coil.request.ImageRequest.Builder
 import com.adolfo.marvel.R.drawable
 import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModelCompose
+import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun CharacterDetailScreen(
@@ -53,6 +54,7 @@ fun CharacterDetailScreen(
                     .fallback(drawable.ic_marvel_logo)
                     .crossfade(true)
                     .diskCachePolicy(ENABLED)
+                    .dispatcher(Dispatchers.IO)
                     .build(),
                 placeholder = painterResource(id = drawable.ic_marvel_logo),
                 contentDescription = "Hero Image",
