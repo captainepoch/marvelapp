@@ -3,7 +3,6 @@ package com.adolfo.core.exception
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-@Deprecated("Old class for errors")
 sealed class Failure {
 
     @Parcelize
