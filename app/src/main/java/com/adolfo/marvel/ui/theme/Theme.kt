@@ -19,7 +19,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 private val LightColorPalette = lightColors(
     primary = marvelRed,
     primaryVariant = primaryLight,
-    secondary = secondaryLight,
+    secondary = secondaryLight
 )
 
 @Composable
@@ -48,7 +48,7 @@ fun MarvelAppTheme(
             ProvideTextStyle(
                 value = TextStyle(
                     color = if (darkTheme) {
-                        liquorice
+                        Color.White
                     } else {
                         liquorice
                     }

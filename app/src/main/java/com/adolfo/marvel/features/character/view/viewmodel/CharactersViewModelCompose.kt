@@ -80,7 +80,6 @@ class CharactersViewModelCompose(
                         }
 
                         is Error -> {
-                            Unit
                             /*if (isPaginated) {
                                 customErrorLiveData.value =
                                     Event(CustomError(CustomError.PAGINATION_ERROR))

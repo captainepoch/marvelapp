@@ -22,9 +22,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.adolfo.marvel.R
+import com.adolfo.marvel.R.drawable
+import com.adolfo.marvel.R.string
 import com.adolfo.marvel.common.navigation.models.CharacterScreenItem
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModelCompose
+import kotlin.system.exitProcess
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -50,22 +52,46 @@ fun CharactersScreen(
                     TopAppBar(
                         title = {
                             Text(
-                                text = stringResource(id = R.string.characters_toolbar_title),
+                                text = stringResource(id = string.characters_toolbar_title),
                                 style = MaterialTheme.typography.h6
                             )
                         }
                     )
                 }
             ) { paddingValues ->
-                Column(modifier = modifier.padding(paddingValues)) {
-                    LazyColumn(
-                        state = listState,
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
-                        contentPadding = PaddingValues(16.dp)
-                    ) {
-                        items(state.characters, key = { it.id }) { hero ->
-                            CharacterScreenItem(modifier, hero = hero) {
-                                onCharacterClicked(hero.id)
+                if (state.error != null) {
+                    InformationView(
+                        drawableId = drawable.ic_error_outline,
+                        title = "Error",
+                        description = "Más errores",
+                        onAcceptText = "Acepta",
+                        onAccept = { /*TODO*/ },
+                        onDeclineText = "CANCELA",
+                        onDecline = {}
+                    )
+                } else {
+                    if (state.characters.isEmpty()) {
+                        InformationView(
+                            drawableId = drawable.ic_error_outline,
+                            title = stringResource(id = string.characters_emtpy_state_title),
+                            description = stringResource(id = string.characters_emtpy_state_desc),
+                            onAcceptText = stringResource(id = string.button_retry),
+                            onAccept = { viewModel.getCharacters() },
+                            onDeclineText = stringResource(id = string.button_exit),
+                            onDecline = { exitProcess(0) }
+                        )
+                    } else {
+                        Column(modifier = modifier.padding(paddingValues)) {
+                            LazyColumn(
+                                state = listState,
+                                verticalArrangement = Arrangement.spacedBy(16.dp),
+                                contentPadding = PaddingValues(16.dp)
+                            ) {
+                                items(state.characters, key = { it.id }) { hero ->
+                                    CharacterScreenItem(modifier, hero = hero) {
+                                        onCharacterClicked(hero.id)
+                                    }
+                                }
                             }
                         }
                     }
