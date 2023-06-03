@@ -6,8 +6,10 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -21,7 +23,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -79,31 +80,37 @@ fun CharacterDetail(
     onBack: () -> Unit
 ) {
     Column(
-        modifier = modifier.padding(paddingValues),
+        modifier = modifier
+            .padding(paddingValues)
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        AsyncImage(
-            model = Builder(LocalContext.current)
-                .data(image)
-                .fallback(drawable.ic_marvel_logo)
-                .crossfade(true)
-                .diskCachePolicy(ENABLED)
-                .dispatcher(Dispatchers.IO)
-                .build(),
-            placeholder = painterResource(id = drawable.ic_marvel_logo),
-            contentDescription = "Hero Image",
-            modifier = modifier.wrapContentHeight(),
-            contentScale = ContentScale.Fit,
-            alignment = Alignment.TopCenter
-        )
+        Card(
+            modifier = modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 16.dp)
+        ) {
+            AsyncImage(
+                model = Builder(LocalContext.current)
+                    .data(image)
+                    .fallback(drawable.ic_marvel_logo)
+                    .crossfade(true)
+                    .diskCachePolicy(ENABLED)
+                    .dispatcher(Dispatchers.IO)
+                    .build(),
+                placeholder = painterResource(id = drawable.ic_marvel_logo),
+                contentDescription = "Hero Image",
+                modifier = modifier.wrapContentHeight()
+            )
+        }
 
         Text(
+            modifier = modifier.padding(start = 16.dp, end = 16.dp),
             text = if (description.isEmptyOrBlank()) {
                 stringResource(id = R.string.character_detail_no_description)
             } else {
                 description
-            },
-            modifier = modifier.padding(8.dp)
+            }
         )
 
         BackHandler(onBack = { onBack() })
