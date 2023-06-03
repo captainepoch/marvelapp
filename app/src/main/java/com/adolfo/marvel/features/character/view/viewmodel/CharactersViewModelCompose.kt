@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.domain.usecases.GetCharacters
 import com.adolfo.core.exception.Failure
+import com.adolfo.core.exception.Failure.CustomError
 import com.adolfo.core.extensions.cancelIfActive
 import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
@@ -68,10 +69,18 @@ class CharactersViewModelCompose(
                             val results = result.data.results
 
                             if (results.isEmpty() && (offset == 0)) {
-                                //_characters.value =
+                                _characters.update { state ->
+                                    state.copy(
+                                        isLoading = false
+                                    )
+                                }
                             } else if (results.isEmpty() && isPaginated) {
-                                /*charactersLiveData.value =
-                                    CharactersView(listOf(), isPaginationEmpty = true)*/
+                                _characters.update { state ->
+                                    state.copy(
+                                        isLoading = false,
+                                        finishPagination = true
+                                    )
+                                }
                             } else {
                                 _characters.update { state ->
                                     state.copy(
@@ -91,12 +100,21 @@ class CharactersViewModelCompose(
                         }
 
                         is Error -> {
-                            /*if (isPaginated) {
-                                customErrorLiveData.value =
-                                    Event(CustomError(CustomError.PAGINATION_ERROR))
+                            if (isPaginated) {
+                                _characters.update { state ->
+                                    state.copy(
+                                        isLoading = false,
+                                        error = Error(CustomError(CustomError.PAGINATION_ERROR))
+                                    )
+                                }
                             } else {
-                                handleFailure(state.failure)
-                            }*/
+                                _characters.update { state ->
+                                    state.copy(
+                                        isLoading = false,
+                                        error = Error(result.failure)
+                                    )
+                                }
+                            }
                         }
                     }
                 }
