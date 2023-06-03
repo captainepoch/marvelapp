@@ -1,12 +1,13 @@
 package com.adolfo.marvel.common.navigation.models
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,6 +33,7 @@ import com.adolfo.marvel.R
 import com.adolfo.marvel.ui.theme.TextStyles
 import kotlinx.coroutines.Dispatchers
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CharacterScreenItem(
     modifier: Modifier = Modifier,
@@ -40,55 +42,55 @@ fun CharacterScreenItem(
 ) {
     var imageContentScale by remember { mutableStateOf(ContentScale.FillBounds) }
 
-    Box(
+    Card(
         modifier = modifier
-            .height(128.dp)
             .fillMaxWidth()
-            .clickable {
-                onClick()
-            }
+            .height(128.dp),
+        onClick = onClick
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(hero.image)
-                .fallback(R.drawable.ic_marvel_logo)
-                .crossfade(true)
-                .diskCachePolicy(ENABLED)
-                .dispatcher(Dispatchers.IO)
-                .listener(object : ImageRequest.Listener {
+        Box {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(hero.image)
+                    .fallback(R.drawable.ic_marvel_logo)
+                    .crossfade(true)
+                    .diskCachePolicy(ENABLED)
+                    .dispatcher(Dispatchers.IO)
+                    .listener(object : ImageRequest.Listener {
 
-                    override fun onSuccess(request: ImageRequest, result: SuccessResult) {
-                        super.onSuccess(request, result)
+                        override fun onSuccess(request: ImageRequest, result: SuccessResult) {
+                            super.onSuccess(request, result)
 
-                        imageContentScale = ContentScale.Crop
-                    }
-                })
-                .build(),
-            placeholder = painterResource(id = R.drawable.ic_marvel_logo),
-            contentDescription = "Marvel logo",
-            modifier = modifier
-                .fillMaxSize()
-                .drawWithCache {
-                    val gradient = Brush.verticalGradient(
-                        colors = listOf(Color.Transparent, Color.Black),
-                        startY = size.height / 3,
-                        endY = size.height
-                    )
-                    onDrawWithContent {
-                        drawContent()
-                        drawRect(gradient, blendMode = BlendMode.Multiply)
-                    }
-                },
-            contentScale = imageContentScale
-        )
-        Text(
-            text = hero.name,
-            modifier = modifier
-                .wrapContentSize()
-                .align(Alignment.BottomStart)
-                .padding(4.dp),
-            style = TextStyles.CharacterTitle
-        )
+                            imageContentScale = ContentScale.Crop
+                        }
+                    })
+                    .build(),
+                placeholder = painterResource(id = R.drawable.ic_marvel_logo),
+                contentDescription = "Marvel logo",
+                modifier = modifier
+                    .fillMaxSize()
+                    .drawWithCache {
+                        val gradient = Brush.verticalGradient(
+                            colors = listOf(Color.Transparent, Color.Black),
+                            startY = size.height / 3,
+                            endY = size.height
+                        )
+                        onDrawWithContent {
+                            drawContent()
+                            drawRect(gradient, blendMode = BlendMode.Multiply)
+                        }
+                    },
+                contentScale = imageContentScale
+            )
+            Text(
+                text = hero.name,
+                modifier = modifier
+                    .wrapContentSize()
+                    .padding(4.dp)
+                    .align(Alignment.BottomStart),
+                style = TextStyles.CharacterTitle
+            )
+        }
     }
 }
 

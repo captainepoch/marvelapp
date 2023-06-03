@@ -60,8 +60,8 @@ fun CharactersScreen(
                 Column(modifier = modifier.padding(paddingValues)) {
                     LazyColumn(
                         state = listState,
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        contentPadding = PaddingValues(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        contentPadding = PaddingValues(16.dp)
                     ) {
                         items(state.characters, key = { it.id }) { hero ->
                             CharacterScreenItem(modifier, hero = hero) {
