@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -47,16 +48,15 @@ fun InformationView(
         ) {
             Image(painter = painterResource(id = drawableId), contentDescription = "Error Logo")
             Text(
-                modifier = modifier
-                    .padding(start = 16.dp, end = 16.dp)
-                    .align(Alignment.CenterHorizontally),
-                text = title, style = MaterialTheme.typography.h5
+                modifier = modifier.padding(start = 16.dp, end = 16.dp),
+                text = title,
+                style = MaterialTheme.typography.h5,
+                textAlign = TextAlign.Center
             )
             Text(
-                modifier = modifier
-                    .padding(start = 16.dp, end = 16.dp)
-                    .align(Alignment.CenterHorizontally),
-                text = description
+                modifier = modifier.padding(start = 16.dp, end = 16.dp),
+                text = description,
+                textAlign = TextAlign.Center
             )
         }
 
