@@ -29,7 +29,7 @@ versions.timber = "5.0.1"
 
 // Android related dependencies
 def buildVersions = [:]
-buildVersions.applicationId = "${buildVersions.namespaceBase}.marvel"
+buildVersions.applicationId = "com.adolfo.marvel"
 buildVersions.minSdk = 23
 buildVersions.targetSdk = 33
 buildVersions.compileSdk = 33
