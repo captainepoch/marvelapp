@@ -43,7 +43,7 @@ fun CharactersScreen(
     val isAtBottom by remember { derivedStateOf { !listState.canScrollForward } }
 
     LaunchedEffect(key1 = isAtBottom) {
-        if (isAtBottom) {
+        if (isAtBottom && !state.finishPagination) {
             viewModel.getCharacters(true)
         }
     }

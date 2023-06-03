@@ -5,5 +5,6 @@ import com.adolfo.core.functional.State.Error
 data class CharactersScreenState(
     val isLoading: Boolean = true,
     val error: Error? = null,
+    val finishPagination: Boolean = false,
     val characters: List<CharacterItemModel> = listOf()
 )
