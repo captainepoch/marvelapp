@@ -6,7 +6,9 @@ import com.adolfo.characters.data.models.entity.CharactersEntity
 import com.adolfo.core.functional.State
 import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class CharactersRepositoryImp(
     private val datasource: CharactersDatasource
@@ -23,7 +25,7 @@ class CharactersRepositoryImp(
             )
             is Error -> emit(Error(data.failure))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
     override fun getCharacter(id: Int?) = flow {
         when (val data: State<CharacterEntity> = datasource.getCharacter(id)) {
@@ -34,5 +36,5 @@ class CharactersRepositoryImp(
             )
             is Error -> emit(Error(data.failure))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }
