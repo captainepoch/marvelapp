@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.domain.usecases.GetCharacters
+import com.adolfo.core.exception.Failure
 import com.adolfo.core.extensions.cancelIfActive
 import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
@@ -13,7 +14,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -36,6 +36,13 @@ class CharactersViewModelCompose(
     }
 
     fun getCharacters(isPaginated: Boolean = false) {
+        // TODO: FUTURE USE
+        val paginatedRequest = if (isPaginated) {
+            isPaginated
+        } else {
+            _characters.value.characters.isNotEmpty()
+        }
+
         charactersJob?.cancelIfActive()
         charactersJob = viewModelScope.launch {
             getCharacters(GetCharacters.Params(offset, isPaginated))
@@ -44,12 +51,16 @@ class CharactersViewModelCompose(
                         state.copy(isLoading = true)
                     }
                 }
-                .catch {/* failure ->
+                .catch { failure ->
                     if (isPaginated) {
-                        customErrorLiveData.value = Event(CustomError(CustomError.PAGINATION_ERROR))
+                        //customErrorLiveData.value = Event(CustomError(CustomError.PAGINATION_ERROR))
                     } else {
-                        handleFailure(Throwable(failure))
-                    }*/
+                        _characters.update { state ->
+                            state.copy(
+                                error = Error(Failure.Throwable(failure))
+                            )
+                        }
+                    }
                 }
                 .collect { result ->
                     when (result) {

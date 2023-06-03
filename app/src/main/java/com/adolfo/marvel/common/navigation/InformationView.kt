@@ -14,10 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adolfo.marvel.R
+import com.adolfo.marvel.R.string
 
 @Composable
 fun InformationView(
@@ -87,5 +89,53 @@ fun InformationViewPreview() {
         onAccept = {},
         onDeclineText = "Decline Long Text",
         onDecline = {}
+    )
+}
+
+@Composable
+fun GenericErrorView(
+    onAccept: () -> Unit,
+    onDecline: () -> Unit
+) {
+    return InformationView(
+        drawableId = R.drawable.ic_error_outline,
+        title = stringResource(id = string.unknown_error_title),
+        description = stringResource(id = string.unknown_error_title),
+        onAcceptText = stringResource(id = string.button_retry),
+        onAccept = { onAccept() },
+        onDeclineText = stringResource(id = string.button_exit),
+        onDecline = { onDecline() }
+    )
+}
+
+@Composable
+fun NetworkErrorView(
+    onAccept: () -> Unit,
+    onDecline: () -> Unit
+) {
+    return InformationView(
+        drawableId = R.drawable.ic_error_outline,
+        title = stringResource(id = string.network_connection_error_title),
+        description = stringResource(id = string.network_connection_error_desc),
+        onAcceptText = stringResource(id = string.button_retry),
+        onAccept = { onAccept() },
+        onDeclineText = stringResource(id = string.button_exit),
+        onDecline = { onDecline() }
+    )
+}
+
+@Composable
+fun ServerErrorView(
+    onAccept: () -> Unit,
+    onDecline: () -> Unit
+) {
+    return InformationView(
+        drawableId = R.drawable.ic_error_outline,
+        title = stringResource(id = string.server_error_title),
+        description = stringResource(id = string.server_error_desc),
+        onAcceptText = stringResource(id = string.button_retry),
+        onAccept = { onAccept() },
+        onDeclineText = stringResource(id = string.button_exit),
+        onDecline = { onDecline() }
     )
 }

@@ -22,6 +22,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.adolfo.core.exception.Failure.CustomError
+import com.adolfo.core.exception.Failure.NetworkConnection
+import com.adolfo.core.exception.Failure.ServerError
 import com.adolfo.marvel.R.drawable
 import com.adolfo.marvel.R.string
 import com.adolfo.marvel.common.navigation.models.CharacterScreenItem
@@ -60,25 +63,36 @@ fun CharactersScreen(
                 }
             ) { paddingValues ->
                 if (state.error != null) {
-                    InformationView(
-                        drawableId = drawable.ic_error_outline,
-                        title = "Error",
-                        description = "Más errores",
-                        onAcceptText = "Acepta",
-                        onAccept = { /*TODO*/ },
-                        onDeclineText = "CANCELA",
-                        onDecline = {}
-                    )
+                    when (state.error?.failure) {
+                        is NetworkConnection -> NetworkErrorView(
+                            onAccept = { viewModel.getCharacters() },
+                            onDecline = { exitProcess(-1) }
+                        )
+
+                        is ServerError -> ServerErrorView(
+                            onAccept = { viewModel.getCharacters() },
+                            onDecline = { exitProcess(-1) }
+                        )
+
+                        is CustomError -> {
+                            // TODO: Snackbar if pagination
+                        }
+
+                        else -> GenericErrorView(
+                            onAccept = { viewModel.getCharacters() },
+                            onDecline = { exitProcess(-1) }
+                        )
+                    }
                 } else {
                     if (state.characters.isEmpty()) {
                         InformationView(
-                            drawableId = drawable.ic_error_outline,
+                            drawableId = drawable.ic_emoji_people,
                             title = stringResource(id = string.characters_emtpy_state_title),
                             description = stringResource(id = string.characters_emtpy_state_desc),
                             onAcceptText = stringResource(id = string.button_retry),
                             onAccept = { viewModel.getCharacters() },
                             onDeclineText = stringResource(id = string.button_exit),
-                            onDecline = { exitProcess(0) }
+                            onDecline = { exitProcess(-1) }
                         )
                     } else {
                         Column(modifier = modifier.padding(paddingValues)) {
