@@ -40,10 +40,12 @@ fun CharactersScreen(
 ) {
     val state by viewModel.characters.collectAsState()
     val listState = rememberLazyListState()
-    val isAtBottom by remember { derivedStateOf { !listState.canScrollForward } }
+    val isAtBottom by remember {
+        derivedStateOf { !listState.canScrollForward && listState.layoutInfo.totalItemsCount > 0 }
+    }
 
     LaunchedEffect(key1 = isAtBottom) {
-        if (isAtBottom && !state.finishPagination) {
+        if (isAtBottom) {
             viewModel.getCharacters(true)
         }
     }
