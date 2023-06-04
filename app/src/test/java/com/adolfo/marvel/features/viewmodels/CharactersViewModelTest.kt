@@ -3,10 +3,11 @@ package com.adolfo.marvel.features.viewmodels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.domain.usecases.GetCharacters
+import com.adolfo.characters.domain.usecases.GetCharacters.Params
 import com.adolfo.core.functional.State
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core_testing.CoroutineTestRule
-import com.adolfo.marvel.common.navigation.models.CharactersScreenState
+import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModelCompose
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -16,6 +17,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.`should be instance of`
 import org.junit.After
@@ -46,12 +50,12 @@ class CharactersViewModelTest {
     }
 
     @Test
-    fun `should emit get characters`() = runTest {
+    fun `should emit get characters`() = runBlocking {
         val channel = Channel<State<CharactersView>>()
         val flow = channel.consumeAsFlow()
 
         coEvery {
-            getCharacters.invoke(GetCharacters.Params(0, false, 15))
+            getCharacters.invoke(Params(0, false, 15))
         } returns flow
 
         val mockResponse = Success(
@@ -67,7 +71,7 @@ class CharactersViewModelTest {
 
         viewModel.getCharacters()
         coVerify {
-            getCharacters.invoke(GetCharacters.Params(0, false, 15))
+            getCharacters.invoke(Params(0, false, 15))
         }
 
         viewModel.characters.value.`should be instance of`<CharactersScreenState>()

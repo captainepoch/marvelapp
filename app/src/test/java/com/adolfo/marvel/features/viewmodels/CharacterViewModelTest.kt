@@ -7,7 +7,7 @@ import com.adolfo.characters.domain.usecases.GetCharacterDetail
 import com.adolfo.core.functional.State
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core_testing.CoroutineTestRule
-import com.adolfo.marvel.common.navigation.models.CharacterScreenState
+import com.adolfo.marvel.features.character.view.ui.models.CharacterScreenState
 import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModelCompose
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -18,6 +18,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.`should be instance of`
 import org.junit.After
@@ -53,7 +56,7 @@ class CharacterViewModelTest {
     }
 
     @Test
-    fun `should emit get characters`() = runTest {
+    fun `should emit get characters`() = runBlocking {
         val channel = Channel<State<CharacterView>>()
         val flow = channel.consumeAsFlow()
 
