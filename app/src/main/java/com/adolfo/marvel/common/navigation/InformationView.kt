@@ -100,7 +100,7 @@ fun GenericErrorView(
     return InformationView(
         drawableId = R.drawable.ic_error_outline,
         title = stringResource(id = string.unknown_error_title),
-        description = stringResource(id = string.unknown_error_title),
+        description = stringResource(id = string.unknown_error_desc),
         onAcceptText = stringResource(id = string.button_retry),
         onAccept = { onAccept() },
         onDeclineText = stringResource(id = string.button_exit),
