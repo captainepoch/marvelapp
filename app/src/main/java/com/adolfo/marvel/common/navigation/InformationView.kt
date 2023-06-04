@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -46,7 +47,10 @@ fun InformationView(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Image(painter = painterResource(id = drawableId), contentDescription = "Error Logo")
+            Image(
+                modifier = modifier.size(128.dp),
+                painter = painterResource(id = drawableId), contentDescription = "Error Logo"
+            )
             Text(
                 modifier = modifier.padding(start = 16.dp, end = 16.dp),
                 text = title,
