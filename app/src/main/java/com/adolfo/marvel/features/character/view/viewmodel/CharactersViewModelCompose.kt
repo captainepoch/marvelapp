@@ -15,7 +15,6 @@ import com.adolfo.marvel.common.navigation.models.CharactersScreenState
 import com.adolfo.marvel.common.navigation.models.CharactersScreenState.LoadingType
 import com.adolfo.marvel.common.navigation.models.CharactersScreenState.LoadingType.NONE
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -66,8 +65,6 @@ class CharactersViewModelCompose(
                     }
                 }
                 .collect { result ->
-                    delay(5000)
-
                     when (result) {
                         is Success<CharactersView> -> {
                             val results = result.data.results
