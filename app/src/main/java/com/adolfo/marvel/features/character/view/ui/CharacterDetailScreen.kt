@@ -1,4 +1,4 @@
-package com.adolfo.marvel.common.navigation
+package com.adolfo.marvel.features.character.view.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
@@ -36,6 +36,10 @@ import com.adolfo.core.exception.Failure.ServerError
 import com.adolfo.core.extensions.isEmptyOrBlank
 import com.adolfo.marvel.R
 import com.adolfo.marvel.R.drawable
+import com.adolfo.marvel.common.navigation.GenericErrorView
+import com.adolfo.marvel.common.navigation.Loader
+import com.adolfo.marvel.common.navigation.NetworkErrorView
+import com.adolfo.marvel.common.navigation.ServerErrorView
 import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModelCompose
 import kotlin.system.exitProcess
 import kotlinx.coroutines.Dispatchers

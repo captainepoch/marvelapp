@@ -69,20 +69,21 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas")
+            arg("room.incremental", "true")
+        }
+    }
 }
 
 dependencies {
-    //api deps.androidx.appcompat
-    api deps.androidx.constraintlayout
     api deps.androidx.coreKtx
     api deps.androidx.lifecycleJava8
-    api deps.androidx.lifecycleLivedataKtx
     api deps.androidx.lifecycleRuntime
     api deps.androidx.room
     api deps.androidx.roomKtx
-    api deps.androidx.recyclerview
-    api deps.androidx.viewmodel
-    api deps.androidx.viewmodel_savedstate
 
     api deps.coil.compose
     api deps.coil.lib
@@ -102,7 +103,6 @@ dependencies {
     api deps.retrofit.convGson
     api deps.retrofit.lib
 
-    api deps.glide
     api deps.timber
 
     testImplementation project(":core-testing")

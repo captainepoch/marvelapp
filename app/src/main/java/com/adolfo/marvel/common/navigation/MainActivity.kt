@@ -12,6 +12,8 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.adolfo.marvel.features.character.view.ui.CharacterDetailScreen
+import com.adolfo.marvel.features.character.view.ui.CharactersScreen
 import com.adolfo.marvel.ui.theme.MarvelAppTheme
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable

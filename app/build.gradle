@@ -3,7 +3,6 @@ plugins {
     id "kotlin-android"
     id "kotlin-kapt"
     id "kotlin-parcelize"
-    id "androidx.navigation.safeargs"
 }
 
 android {
@@ -76,19 +75,15 @@ android {
 dependencies {
     implementation project(":core")
     implementation project(":characters")
-    implementation project(":design")
 
-    implementation deps.androidx.navigationFragment
+    implementation deps.androidx.lifecycleRuntimeKtx
     implementation deps.androidx.navigationUi
 
-    implementation deps.lottie
     implementation deps.lottieCompose
-    implementation deps.material
 
     testImplementation project(":core-testing")
 
     // Compose-related dependencies
-    implementation deps.androidx.lifecycleRuntimeKtx
     implementation platform(deps.compose.bom)
     implementation deps.compose.activity
     implementation deps.compose.material

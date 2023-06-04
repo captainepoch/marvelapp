@@ -1,4 +1,4 @@
-package com.adolfo.marvel.common.navigation.models
+package com.adolfo.marvel.features.character.view.ui.models
 
 data class CharacterDetailItemModel(
     val image: String = "",

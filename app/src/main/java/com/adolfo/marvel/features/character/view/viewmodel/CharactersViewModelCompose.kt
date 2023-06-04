@@ -10,10 +10,10 @@ import com.adolfo.core.exception.Failure.Throwable
 import com.adolfo.core.extensions.cancelIfActive
 import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
-import com.adolfo.marvel.common.navigation.models.CharacterItemModel
-import com.adolfo.marvel.common.navigation.models.CharactersScreenState
-import com.adolfo.marvel.common.navigation.models.CharactersScreenState.LoadingType
-import com.adolfo.marvel.common.navigation.models.CharactersScreenState.LoadingType.NONE
+import com.adolfo.marvel.features.character.view.ui.models.CharacterItemModel
+import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState
+import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState.LoadingType
+import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState.LoadingType.NONE
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

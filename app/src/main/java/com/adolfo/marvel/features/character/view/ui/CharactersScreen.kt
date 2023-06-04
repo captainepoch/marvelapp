@@ -1,4 +1,4 @@
-package com.adolfo.marvel.common.navigation
+package com.adolfo.marvel.features.character.view.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,11 +34,16 @@ import com.adolfo.core.exception.Failure.NetworkConnection
 import com.adolfo.core.exception.Failure.ServerError
 import com.adolfo.marvel.R.drawable
 import com.adolfo.marvel.R.string
-import com.adolfo.marvel.common.navigation.models.CharacterItemModel
-import com.adolfo.marvel.common.navigation.models.CharacterScreenItem
-import com.adolfo.marvel.common.navigation.models.CharactersScreenState.LoadingType
-import com.adolfo.marvel.common.navigation.models.CharactersScreenState.LoadingType.NORMAL
-import com.adolfo.marvel.common.navigation.models.CharactersScreenState.LoadingType.PAGINATION
+import com.adolfo.marvel.common.navigation.GenericErrorView
+import com.adolfo.marvel.common.navigation.InformationView
+import com.adolfo.marvel.common.navigation.Loader
+import com.adolfo.marvel.common.navigation.NetworkErrorView
+import com.adolfo.marvel.common.navigation.ServerErrorView
+import com.adolfo.marvel.features.character.view.ui.models.CharacterItemModel
+import com.adolfo.marvel.features.character.view.ui.models.CharacterScreenItem
+import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState.LoadingType
+import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState.LoadingType.NORMAL
+import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState.LoadingType.PAGINATION
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModelCompose
 import kotlin.system.exitProcess
 import kotlinx.coroutines.launch

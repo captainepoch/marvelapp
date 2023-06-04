@@ -9,8 +9,8 @@ import com.adolfo.core.exception.Failure
 import com.adolfo.core.extensions.cancelIfActive
 import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
-import com.adolfo.marvel.common.navigation.models.CharacterDetailItemModel
-import com.adolfo.marvel.common.navigation.models.CharacterScreenState
+import com.adolfo.marvel.features.character.view.ui.models.CharacterDetailItemModel
+import com.adolfo.marvel.features.character.view.ui.models.CharacterScreenState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

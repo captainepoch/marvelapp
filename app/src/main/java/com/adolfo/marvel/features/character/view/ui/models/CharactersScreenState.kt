@@ -1,7 +1,7 @@
-package com.adolfo.marvel.common.navigation.models
+package com.adolfo.marvel.features.character.view.ui.models
 
 import com.adolfo.core.functional.State.Error
-import com.adolfo.marvel.common.navigation.models.CharactersScreenState.LoadingType.NORMAL
+import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState.LoadingType.NORMAL
 
 data class CharactersScreenState(
     val isLoading: LoadingType = NORMAL,
