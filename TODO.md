@@ -1,6 +1,7 @@
 # List of things to improve
 
 ## Features
+
 - [x] Display a list of characters.
 - [x] Detail screen to show the chraracter detail.
 - [ ] Display series, events and stories of each character.
@@ -8,8 +9,13 @@
 - [ ] Search locally a character.
 
 ## UI
--  Add animations on navigation.
+
+- Add animations on navigation.
+- Improve animations performance.
+- Improve items UI.
+- Improve character detail UI/UX.
 
 ## Data and Domain layers
--  Failure class: make a Failure state for domain/data, and FailureView for the
-View layer.
+
+- Failure class: make a Failure state for domain/data, and FailureView for the
+  View layer.
