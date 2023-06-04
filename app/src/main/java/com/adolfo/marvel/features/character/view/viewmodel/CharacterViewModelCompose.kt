@@ -40,7 +40,7 @@ class CharacterViewModelCompose(
     fun getCharacterDetail(id: Int? = characterId) {
         getCharacterJob?.cancelIfActive()
         getCharacterJob = viewModelScope.launch {
-            getCharacterDetail.execute(GetCharacterDetail.Params(id))
+            getCharacterDetail(GetCharacterDetail.Params(id))
                 .onStart {
                     _character.update { state ->
                         state.copy(isLoading = true)
