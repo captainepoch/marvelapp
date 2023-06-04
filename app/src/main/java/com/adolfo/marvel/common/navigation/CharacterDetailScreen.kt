@@ -31,10 +31,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy.ENABLED
 import coil.request.ImageRequest.Builder
+import com.adolfo.core.exception.Failure.NetworkConnection
+import com.adolfo.core.exception.Failure.ServerError
 import com.adolfo.core.extensions.isEmptyOrBlank
 import com.adolfo.marvel.R
 import com.adolfo.marvel.R.drawable
 import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModelCompose
+import kotlin.system.exitProcess
 import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.compose.koinViewModel
 
@@ -56,13 +59,32 @@ fun CharacterDetailScreen(
                     }
                 }
             ) { paddingValues ->
-                CharacterDetail(
-                    modifier,
-                    paddingValues,
-                    state.character.image,
-                    state.character.description
-                ) {
-                    onBackPressed()
+                if (state.error != null) {
+                    when (state.error?.failure) {
+                        is NetworkConnection -> NetworkErrorView(
+                            onAccept = { viewModel.getCharacterDetail() },
+                            onDecline = { exitProcess(-1) }
+                        )
+
+                        is ServerError -> ServerErrorView(
+                            onAccept = { viewModel.getCharacterDetail() },
+                            onDecline = { exitProcess(-1) }
+                        )
+
+                        else -> GenericErrorView(
+                            onAccept = { viewModel.getCharacterDetail() },
+                            onDecline = { exitProcess(-1) }
+                        )
+                    }
+                } else {
+                    CharacterDetail(
+                        modifier,
+                        paddingValues,
+                        state.character.image,
+                        state.character.description
+                    ) {
+                        onBackPressed()
+                    }
                 }
             }
         } else {

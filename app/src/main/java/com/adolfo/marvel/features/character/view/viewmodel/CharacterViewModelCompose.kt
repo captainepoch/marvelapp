@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.domain.usecases.GetCharacterDetail
+import com.adolfo.core.exception.Failure
 import com.adolfo.core.extensions.cancelIfActive
 import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
@@ -14,7 +15,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -37,12 +37,22 @@ class CharacterViewModelCompose(
         getCharacterDetail(characterId)
     }
 
-    fun getCharacterDetail(id: Int?) {
+    fun getCharacterDetail(id: Int? = characterId) {
         getCharacterJob?.cancelIfActive()
         getCharacterJob = viewModelScope.launch {
             getCharacterDetail.execute(GetCharacterDetail.Params(id))
+                .onStart {
+                    _character.update { state ->
+                        state.copy(isLoading = true)
+                    }
+                }
                 .catch { failure ->
-                    /*handleFailure(Throwable(failure))*/
+                    _character.update { state ->
+                        state.copy(
+                            isLoading = false,
+                            error = Error(Failure.Throwable(failure))
+                        )
+                    }
                 }
                 .collect { result ->
                     when (result) {
@@ -50,6 +60,7 @@ class CharacterViewModelCompose(
                             _character.update { state ->
                                 state.copy(
                                     isLoading = false,
+                                    error = null,
                                     character = CharacterDetailItemModelItemModel(
                                         result.data.thumbnail,
                                         result.data.name,
@@ -59,7 +70,14 @@ class CharacterViewModelCompose(
                             }
                         }
 
-                        is Error -> Unit /*handleFailure(state.failure)*/
+                        is Error -> {
+                            _character.update { state ->
+                                state.copy(
+                                    isLoading = false,
+                                    error = Error(result.failure)
+                                )
+                            }
+                        }
                     }
                 }
         }
