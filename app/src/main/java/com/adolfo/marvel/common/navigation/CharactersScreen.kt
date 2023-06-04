@@ -24,6 +24,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.adolfo.core.exception.Failure.CustomError
@@ -152,7 +155,14 @@ fun CharactersList(
     isLoading: LoadingType,
     onCharacterClicked: (Int) -> Unit
 ) {
-    Column(modifier = modifier.padding(paddingValues)) {
+    Column(
+        modifier = modifier
+            .padding(paddingValues)
+            .paint(
+                painterResource(id = drawable.background),
+                contentScale = ContentScale.FillBounds
+            )
+    ) {
         LazyColumn(
             state = listState,
             verticalArrangement = Arrangement.spacedBy(16.dp),
