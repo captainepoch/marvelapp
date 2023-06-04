@@ -4,14 +4,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.domain.usecases.GetCharacters
-import com.adolfo.core.exception.Failure
+import com.adolfo.characters.domain.usecases.GetCharacters.Params
 import com.adolfo.core.exception.Failure.CustomError
+import com.adolfo.core.exception.Failure.Throwable
 import com.adolfo.core.extensions.cancelIfActive
 import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
 import com.adolfo.marvel.common.navigation.models.CharacterItemModel
 import com.adolfo.marvel.common.navigation.models.CharactersScreenState
+import com.adolfo.marvel.common.navigation.models.CharactersScreenState.LoadingType
+import com.adolfo.marvel.common.navigation.models.CharactersScreenState.LoadingType.NONE
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -37,33 +41,33 @@ class CharactersViewModelCompose(
     }
 
     fun getCharacters(isPaginated: Boolean = false) {
-        // TODO: FUTURE USE
-        val paginatedRequest = if (isPaginated) {
-            isPaginated
-        } else {
-            _characters.value.characters.isNotEmpty()
-        }
-
         charactersJob?.cancelIfActive()
         charactersJob = viewModelScope.launch {
-            getCharacters(GetCharacters.Params(offset, isPaginated))
+            getCharacters(Params(offset, isPaginated))
                 .onStart {
                     _characters.update { state ->
-                        state.copy(isLoading = true)
+                        state.copy(isLoading = LoadingType.getPaginationLoader(isPaginated))
                     }
                 }
                 .catch { failure ->
                     if (isPaginated) {
-                        //customErrorLiveData.value = Event(CustomError(CustomError.PAGINATION_ERROR))
+                        _characters.update { state ->
+                            state.copy(
+                                isLoading = NONE,
+                                error = Error(CustomError(CustomError.PAGINATION_ERROR))
+                            )
+                        }
                     } else {
                         _characters.update { state ->
                             state.copy(
-                                error = Error(Failure.Throwable(failure))
+                                error = Error(Throwable(failure))
                             )
                         }
                     }
                 }
                 .collect { result ->
+                    delay(5000)
+
                     when (result) {
                         is Success<CharactersView> -> {
                             val results = result.data.results
@@ -71,20 +75,20 @@ class CharactersViewModelCompose(
                             if (results.isEmpty() && (offset == 0)) {
                                 _characters.update { state ->
                                     state.copy(
-                                        isLoading = false
+                                        isLoading = NONE
                                     )
                                 }
                             } else if (results.isEmpty() && isPaginated) {
                                 _characters.update { state ->
                                     state.copy(
-                                        isLoading = false,
+                                        isLoading = NONE,
                                         finishPagination = true
                                     )
                                 }
                             } else {
                                 _characters.update { state ->
                                     state.copy(
-                                        isLoading = false,
+                                        isLoading = NONE,
                                         characters = state.characters.plus(
                                             results.map {
                                                 CharacterItemModel(
@@ -103,14 +107,14 @@ class CharactersViewModelCompose(
                             if (isPaginated) {
                                 _characters.update { state ->
                                     state.copy(
-                                        isLoading = false,
+                                        isLoading = NONE,
                                         error = Error(CustomError(CustomError.PAGINATION_ERROR))
                                     )
                                 }
                             } else {
                                 _characters.update { state ->
                                     state.copy(
-                                        isLoading = false,
+                                        isLoading = NONE,
                                         error = Error(result.failure)
                                     )
                                 }
