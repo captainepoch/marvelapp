@@ -9,7 +9,7 @@ import com.adolfo.core.exception.Failure
 import com.adolfo.core.extensions.cancelIfActive
 import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
-import com.adolfo.marvel.common.navigation.models.CharacterDetailItemModelItemModel
+import com.adolfo.marvel.common.navigation.models.CharacterDetailItemModel
 import com.adolfo.marvel.common.navigation.models.CharacterScreenState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -61,7 +61,7 @@ class CharacterViewModelCompose(
                                 state.copy(
                                     isLoading = false,
                                     error = null,
-                                    character = CharacterDetailItemModelItemModel(
+                                    character = CharacterDetailItemModel(
                                         result.data.thumbnail,
                                         result.data.name,
                                         result.data.description
