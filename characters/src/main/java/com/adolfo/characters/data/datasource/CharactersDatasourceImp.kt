@@ -48,7 +48,10 @@ class CharactersDatasourceImp(
         }.map {
             it
         }.getOrElse { throwable ->
-            Error(Failure.Throwable(throwable))
+            when (throwable) {
+                is SSLHandshakeException -> Error(ServerError(ServerError.SSL_HANDSHAKE_EXCEPTION))
+                else -> Error(Failure.Throwable(throwable))
+            }
         }
     }
 

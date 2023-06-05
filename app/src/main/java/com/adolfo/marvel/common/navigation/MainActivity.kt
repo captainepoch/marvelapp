@@ -1,76 +1,75 @@
 package com.adolfo.marvel.common.navigation
 
 import android.os.Bundle
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.NavHostFragment
-import com.adolfo.core.extensions.gone
-import com.adolfo.core.extensions.isVisible
-import com.adolfo.marvel.common.extensions.viewBinding
-import com.adolfo.core.extensions.visible
-import com.adolfo.marvel.R
-import com.adolfo.marvel.databinding.ActivityMainBinding
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import com.adolfo.marvel.features.character.view.ui.CharacterDetailScreen
+import com.adolfo.marvel.features.character.view.ui.CharactersScreen
+import com.adolfo.marvel.ui.theme.MarvelAppTheme
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import org.koin.androidx.compose.koinViewModel
 
-class MainActivity : AppCompatActivity() {
-
-    private val binding by viewBinding(ActivityMainBinding::inflate)
-    private lateinit var navController: NavController
+@OptIn(ExperimentalAnimationApi::class)
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
 
-        initNavigation()
-        initListeners()
-    }
-
-    private fun initNavigation() {
-        setSupportActionBar(binding.toolbar)
-
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(binding.fragmentContainer.id) as NavHostFragment
-        navController = navHostFragment.navController
-    }
-
-    private fun initListeners() {
-        binding.toolbar.setNavigationOnClickListener {
-            onBackPressed()
-        }
-
-        navController.addOnDestinationChangedListener { _, dest, _ ->
-            supportActionBar?.title = when (dest.id) {
-                R.id.fragmentCharacters -> getString(R.string.empty)
-                else -> supportActionBar?.title
-            }
-
-            binding.toolbar.visibility = when (dest.id) {
-                R.id.fragmentCharacterDetail -> View.VISIBLE
-                else -> View.GONE
-            }
-        }
-    }
-
-    fun navigateTo(direction: NavDirections) {
-        navController.navigate(direction)
-    }
-
-    fun navigateBack() {
-        navController.popBackStack()
-    }
-
-    fun setToolbarTitle(title: String) {
-        supportActionBar?.title = title
-    }
-
-    fun showLoader(show: Boolean) {
-        if (binding.loader.isVisible() != show && binding.animation.isAnimating != show) {
-            if (show) {
-                binding.animation.playAnimation()
-                binding.loader.visible()
-            } else {
-                binding.loader.gone()
+        setContent {
+            MarvelAppTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
+                    val navController = rememberAnimatedNavController()
+                    AnimatedNavHost(
+                        navController = navController,
+                        startDestination = "characters"
+                    ) {
+                        composable("characters") {
+                            CharactersScreen(
+                                viewModel = koinViewModel(),
+                                onCharacterClicked = {
+                                    navController.navigate("character/${it}")
+                                }
+                            )
+                        }
+                        composable(
+                            route = "character/{id}",
+                            arguments = listOf(navArgument("id") { type = NavType.IntType }),
+                            enterTransition = {
+                                slideInHorizontally { it }
+                            },
+                            exitTransition = {
+                                slideOutHorizontally { -it }
+                            },
+                            popEnterTransition = {
+                                slideInHorizontally { -it }
+                            },
+                            popExitTransition = {
+                                slideOutHorizontally { it }
+                            },
+                        ) {
+                            CharacterDetailScreen(
+                                viewModel = koinViewModel(),
+                                onBackPressed = {
+                                    navController.popBackStack()
+                                }
+                            )
+                        }
+                    }
+                }
             }
         }
     }

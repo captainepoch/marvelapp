@@ -1,15 +1,19 @@
 ext.deps = [:]
 
 def versions = [:]
-versions.appcompat = "1.6.1"
+versions.accompanist = "0.30.1"
+versions.coil = "2.4.0"
+versions.composeActivity = "1.6.1"
+versions.composeBom = "2023.04.01"
+versions.composeViewModel = "2.5.1"
 versions.constraintlayout = "2.1.4"
 versions.coreKtx = "1.9.0"
 versions.coretesting = "2.2.0"
 versions.glide = "4.15.1"
 versions.junit = "4.13.2"
 versions.kluent = "1.72"
-versions.koin = "3.4.0"
-versions.kotlin = "1.8.10"
+versions.koin = "3.4.1"
+versions.kotlin = "1.8.20"
 versions.kotlinx = "1.6.4"
 versions.lifecycle = "2.6.1"
 versions.lottie = "6.0.0"
@@ -25,7 +29,7 @@ versions.timber = "5.0.1"
 
 // Android related dependencies
 def buildVersions = [:]
-buildVersions.applicationId = "${buildVersions.namespaceBase}.marvel"
+buildVersions.applicationId = "com.adolfo.marvel"
 buildVersions.minSdk = 23
 buildVersions.targetSdk = 33
 buildVersions.compileSdk = 33
@@ -49,31 +53,45 @@ versions.plugins = pluginsVersion
 def deps = [:]
 
 def androidx = [:]
-androidx.appcompat = "androidx.appcompat:appcompat:${versions.appcompat}"
-androidx.constraintlayout = "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
 androidx.coreKtx = "androidx.core:core-ktx:${versions.coreKtx}"
 androidx.coretesting = "androidx.arch.core:core-testing:${versions.coretesting}"
 androidx.lifecycleJava8 = "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
-androidx.lifecycleLivedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}"
+androidx.lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle}"
 androidx.lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime:${versions.lifecycle}"
-androidx.navigationFragment = "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
 androidx.navigationUi = "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
-androidx.recyclerview = "androidx.recyclerview:recyclerview:${versions.recyclerview}"
 androidx.room = "androidx.room:room-runtime:${versions.room}"
 androidx.roomCompiler = "androidx.room:room-compiler:${versions.room}"
 androidx.roomKtx = "androidx.room:room-ktx:${versions.room}"
-androidx.viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
-androidx.viewmodel_savedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${versions.lifecycle}"
 deps.androidx = androidx
 
+def coil = [:]
+coil.compose = "io.coil-kt:coil-compose:${versions.coil}"
+coil.lib = "io.coil-kt:coil:${versions.coil}"
+deps.coil = coil
+
+def compose = [:]
+compose.activity = "androidx.activity:activity-compose:${versions.composeActivity}"
+compose.bom = "androidx.compose:compose-bom:${versions.composeBom}"
+compose.material = "androidx.compose.material:material"
+compose.preview = "androidx.compose.ui:ui-tooling-preview"
+compose.uiTooling = "androidx.compose.ui:ui-tooling"
+compose.viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${versions.composeViewModel}"
+
+def accompanist = [:]
+accompanist.navigation = "com.google.accompanist:accompanist-navigation-animation:${versions.accompanist}"
+accompanist.systemuicontroller = "com.google.accompanist:accompanist-systemuicontroller:${versions.accompanist}"
+compose.accompanist = accompanist
+
+deps.compose = compose
+
 def gradlePlugins = [:]
-gradlePlugins.gradle = "com.android.tools.build:gradle:${versions.plugins.androidGradlePlugin}"
+gradlePlugins.gradle = "com.android.tools.build:gradle:${pluginsVersion.androidGradlePlugin}"
 gradlePlugins.kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-gradlePlugins.safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"
 deps.gradlePlugins = gradlePlugins
 
 def koin = [:]
 koin.android = "io.insert-koin:koin-android:${versions.koin}"
+koin.compose = "io.insert-koin:koin-androidx-compose:${versions.koin}"
 koin.core = "io.insert-koin:koin-core:${versions.koin}"
 koin.test = "io.insert-koin:koin-test-junit4:${versions.koin}"
 deps.koin = koin
@@ -103,11 +121,9 @@ retrofit.convGson = "com.squareup.retrofit2:retrofit:${versions.retrofit}"
 retrofit.lib = "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
 deps.retrofit = retrofit
 
-deps.glide = "com.github.bumptech.glide:glide:${versions.glide}"
 deps.junit = "junit:junit:${versions.junit}"
 deps.kluent = "org.amshove.kluent:kluent:${versions.kluent}"
-deps.lottie = "com.airbnb.android:lottie:${versions.lottie}"
-deps.material = "com.google.android.material:material:${versions.material}"
+deps.lottieCompose = "com.airbnb.android:lottie-compose:${versions.lottie}"
 deps.roboelectric = "org.robolectric:robolectric:${versions.roboelectric}"
 deps.timber = "com.jakewharton.timber:timber:${versions.timber}"
 

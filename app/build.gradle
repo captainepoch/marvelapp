@@ -3,7 +3,6 @@ plugins {
     id "kotlin-android"
     id "kotlin-kapt"
     id "kotlin-parcelize"
-    id "androidx.navigation.safeargs"
 }
 
 android {
@@ -12,12 +11,18 @@ android {
 
     defaultConfig {
         applicationId buildVersions.applicationId
+
         minSdk buildVersions.minSdk
         targetSdk buildVersions.targetSdk
+
         versionCode buildVersions.versionCode
         versionName buildVersions.versionName
 
         testInstrumentationRunner buildVersions.testRunner
+
+        vectorDrawables {
+            useSupportLibrary true
+        }
     }
 
     buildTypes {
@@ -51,7 +56,15 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = buildVersions.java.toString()
+        jvmTarget = buildVersions.java
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.6"
     }
 
     buildFeatures {
@@ -62,13 +75,22 @@ android {
 dependencies {
     implementation project(":core")
     implementation project(":characters")
-    implementation project(":design")
 
-    implementation deps.androidx.navigationFragment
+    implementation deps.androidx.lifecycleRuntimeKtx
     implementation deps.androidx.navigationUi
 
-    implementation deps.lottie
-    implementation deps.material
+    implementation deps.lottieCompose
 
     testImplementation project(":core-testing")
+
+    // Compose-related dependencies
+    implementation platform(deps.compose.bom)
+    implementation deps.compose.activity
+    implementation deps.compose.material
+    implementation deps.compose.preview
+
+    debugImplementation deps.compose.uiTooling
+
+    implementation deps.compose.accompanist.navigation
+    implementation deps.compose.accompanist.systemuicontroller
 }

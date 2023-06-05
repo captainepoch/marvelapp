@@ -14,6 +14,7 @@ android {
         targetSdk buildVersions.targetSdk
 
         testInstrumentationRunner buildVersions.testRunner
+
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -62,29 +63,37 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = buildVersions.java.toString()
+        jvmTarget = buildVersions.java
     }
 
     buildFeatures {
         viewBinding true
     }
+
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas")
+            arg("room.incremental", "true")
+        }
+    }
 }
 
 dependencies {
     api deps.androidx.coreKtx
-
-    api deps.androidx.appcompat
-    api deps.androidx.constraintlayout
     api deps.androidx.lifecycleJava8
-    api deps.androidx.lifecycleLivedataKtx
     api deps.androidx.lifecycleRuntime
     api deps.androidx.room
     api deps.androidx.roomKtx
-    api deps.androidx.recyclerview
-    api deps.androidx.viewmodel
-    api deps.androidx.viewmodel_savedstate
+
+    api deps.coil.compose
+    api deps.coil.lib
+
+    api platform(deps.compose.bom)
+    api deps.compose.activity
+    api deps.compose.viewModel
 
     api deps.koin.android
+    api deps.koin.compose
     api deps.koin.core
 
     api deps.kotlinx.coroutinesCore
@@ -94,7 +103,6 @@ dependencies {
     api deps.retrofit.convGson
     api deps.retrofit.lib
 
-    api deps.glide
     api deps.timber
 
     testImplementation project(":core-testing")

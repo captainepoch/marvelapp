@@ -2,6 +2,10 @@
 
 This is a client to list and see the detail of Marvel's character roster.
 
+## Requirements
+
+- Android Studio Flamingo or newer (and Java 17).
+
 ## How to build
 
 In order to build the application, you must follow the following steps:

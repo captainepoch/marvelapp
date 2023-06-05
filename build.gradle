@@ -7,14 +7,20 @@ buildscript {
         // Base plugins
         classpath deps.gradlePlugins.gradle
         classpath deps.gradlePlugins.kotlin
-
-        // Third-party plugins
-        classpath deps.gradlePlugins.safeArgs
     }
 }
 
 allprojects {
     addRepos(repositories)
+
+    tasks.withType(JavaCompile) {
+        options.encoding(buildVersions.encoding)
+        options.compilerArgs += [
+                "-Xlint:all",
+                "-Xlint:unchecked",
+                "-Xlint:-deprecation",
+        ]
+    }
 }
 
 task clean(type: Delete) {

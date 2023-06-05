@@ -19,24 +19,24 @@ begining of the navigation.
 
 The navigation is provided by the Navigation component, part of Jetpack.
 
+The UI/UX is provided by Jetpack Compose.
+
 ## Modularization
 
 The application is separated into different modules that provide different
 functionality to the application:
 
--  `app`: this module contains all the Views and ViewModels of the application,
-   along the Activity and resources only for the application. It is organized in
-   features (and a common part).
--  `characters`: this module provides the functionality of the Characters and
-   all the services related to it. This module contains the data and domain
-   parts of the Clean Architecture dedicated to the characters feature.
--  `core`: this module contains all the shared classes and extensions for the
-   whole application, along the Base clases.
--  `core-testing`: this module contains **only** the testing libraries and
-   classes needed in the application. This will be a dependency in each module
-   that requires testing.
--  `design`: this module contains the components used throught the application,
-   along with shared resources accoss all the modules.
+- `app`: this module contains all the Views and ViewModels of the application,
+  along the Activity and resources only for the application. It is organized in
+  features (and a common part).
+- `characters`: this module provides the functionality of the Characters and
+  all the services related to it. This module contains the data and domain
+  parts of the Clean Architecture dedicated to the characters feature.
+- `core`: this module contains all the shared classes and extensions for the
+  whole application, along the Base clases.
+- `core-testing`: this module contains **only** the testing libraries and
+  classes needed in the application. This will be a dependency in each module
+  that requires testing.
 
 ## MVVM (Model-View-ViewModel)
 
@@ -50,13 +50,16 @@ not know anything about the view.
 	width="700"/>
 </p>
 
-The View gets the data from the ViewModel by observing changes through and
-observer. In this case, (Mutable)LiveData (but there are also MutableStateFlow,
-MutableSharedFlow, StateFlow, SharedFlow, or Single or Observable using RxJava).
+The View gets the data from the ViewModel by observing changes through an
+observer. In this case, a (Mutable)StateFlow (Single or Observable using
+RxJava).
 
 This way, we keep a single source of truth for the views, meaning that all the
-data will live in the LiveData(s) that the View is observing, making the
+data will live in the StateFlow(s) that the View is observing, making the
 restoration of the view while navigating an easy task.
+
+Each ViewModel holds a ScreenState data model, which holds all the information
+that it needs to be displayed to the user.
 
 ### Jetpack ViewModel
 
@@ -68,7 +71,7 @@ that the state of the application, along with the data we want to preserve and
 restore when the application is killed by the system and restored by the user,
 respectively.
 
-In this case, it was used for the LiveData objects of the ViewModels in the
+In this case, it was used for the StateFlow objects of the ViewModels in the
 application. That way, if the app is killed by the system while in background,
 the data is restored when the app is opened from background by the user.
 

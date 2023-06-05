@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.flowOn
 
 abstract class UseCase<in P, out R> {
 
-    abstract fun execute(params: P? = null): Flow<R>
+    abstract suspend fun execute(params: P? = null): Flow<R>
 
-    operator fun invoke(
+    suspend operator fun invoke(
         params: P,
         dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Flow<R> {
