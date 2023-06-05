@@ -26,12 +26,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.adolfo.core.exception.Failure.CustomError
 import com.adolfo.core.exception.Failure.NetworkConnection
 import com.adolfo.core.exception.Failure.ServerError
+import com.adolfo.marvel.R
 import com.adolfo.marvel.R.drawable
 import com.adolfo.marvel.R.string
 import com.adolfo.marvel.common.navigation.GenericErrorView
@@ -54,6 +56,7 @@ fun CharactersScreen(
     viewModel: CharactersViewModelCompose,
     onCharacterClicked: (Int) -> Unit
 ) {
+    val context = LocalContext.current
     val state by viewModel.characters.collectAsState()
     val listState = rememberLazyListState()
     val scaffoldState = rememberScaffoldState()
@@ -74,7 +77,9 @@ fun CharactersScreen(
             when (failure.code) {
                 CustomError.PAGINATION_ERROR -> {
                     snackbarCoroutineScope.launch {
-                        scaffoldState.snackbarHostState.showSnackbar("Button Clicked")
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            context.getString(R.string.characters_pagination_error)
+                        )
                     }
                 }
             }
