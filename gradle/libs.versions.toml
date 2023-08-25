@@ -13,6 +13,7 @@ koin = "3.4.3"
 koin-compose = "3.4.6"
 kotlin = "1.9.0"
 kotlinx = "1.7.3"
+ktlint = "11.5.1"
 lifecycle = "2.6.1"
 lottie = "6.1.0"
 mockk = "1.13.7"
@@ -28,6 +29,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 
 [libraries]
 accompanist-navigation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
