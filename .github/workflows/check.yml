@@ -7,7 +7,7 @@ on:
 permissions: read-all
 
 jobs:
-  make-check:
+  prepare-env:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,12 +29,28 @@ jobs:
           java-version: 17
           cache: "gradle"
 
+  check-formatting:
+    needs: prepare-env
+    steps:
       - name: Check formatting
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: ktlintCheck
-
+          arguments: clean ktlintCheck
+  
+  execute-testing:
+    needs: [prepare-env, check-formatting]
+    steps:
       - name: Test - app
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :app:testProReleaseUnit
+          arguments: clean :app:testProReleaseUnit
+
+      - name: Test - characters
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: clean :app:testProReleaseUnit
+
+      - name: Test - core
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: clean :app:testProReleaseUnit
