@@ -1,0 +1,25 @@
+ext.deps = [:]
+
+// Android related dependencies
+def buildVersions = [:]
+buildVersions.applicationId = "com.adolfo.marvel"
+
+buildVersions.minSdk = 23
+buildVersions.targetSdk = 34
+buildVersions.compileSdk = 34
+
+buildVersions.versionCode = 1
+buildVersions.versionName = "1.0.0"
+
+buildVersions.java = JavaVersion.VERSION_17
+buildVersions.testRunner = "androidx.test.runner.AndroidJUnitRunner"
+buildVersions.kotlinComposeExtension = "1.5.2"
+
+buildVersions.namespaceBase = "com.adolfo"
+ext.buildVersions = buildVersions
+
+def flavors = [:]
+flavors.env = "environment"
+flavors.pre = "pre"
+flavors.pro = "pro"
+ext.flavors = flavors

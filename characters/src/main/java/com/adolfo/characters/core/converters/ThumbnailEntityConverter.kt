@@ -1,10 +1,12 @@
 package com.adolfo.characters.core.converters
 
+import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.adolfo.characters.data.models.entity.CharacterThumbEntity
 import com.adolfo.core.extensions.empty
 import com.google.gson.Gson
 
+@ProvidedTypeConverter
 object ThumbnailEntityConverter {
 
     private val gson = Gson()

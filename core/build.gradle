@@ -1,8 +1,8 @@
 plugins {
-    id "com.android.library"
-    id "kotlin-android"
-    id "kotlin-kapt"
-    id "kotlin-parcelize"
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -19,7 +19,6 @@ android {
     }
 
     buildTypes {
-
         release {
             minifyEnabled false
 
@@ -67,6 +66,7 @@ android {
     }
 
     buildFeatures {
+        buildConfig true
         viewBinding true
     }
 
@@ -79,31 +79,33 @@ android {
 }
 
 dependencies {
-    api deps.androidx.coreKtx
-    api deps.androidx.lifecycleJava8
-    api deps.androidx.lifecycleRuntime
-    api deps.androidx.room
-    api deps.androidx.roomKtx
+    api libs.core.ktx
 
-    api deps.coil.compose
-    api deps.coil.lib
+    api libs.room.ktx
+    api libs.room.runtime
 
-    api platform(deps.compose.bom)
-    api deps.compose.activity
-    api deps.compose.viewModel
+    api libs.coil
+    api libs.coil.compose
 
-    api deps.koin.android
-    api deps.koin.compose
-    api deps.koin.core
+    api platform(libs.compose.bom)
+    api libs.compose.activity
+    api libs.compose.viewmodel
 
-    api deps.kotlinx.coroutinesCore
-    api deps.kotlinx.coroutinesAndroid
+    api libs.koin.core
+    api libs.koin.android
+    api libs.koin.compose
 
-    api deps.okhttp.okHttpLogInterceptor
-    api deps.retrofit.convGson
-    api deps.retrofit.lib
+    api libs.kotlinx.coroutines.android
+    api libs.kotlinx.coroutines.core
 
-    api deps.timber
+    api libs.okhttp.logging.interceptor
+
+    api libs.retrofit
+    api libs.retrofit.gson
+
+    api libs.timber
 
     testImplementation project(":core-testing")
+    //api deps.androidx.lifecycleJava8
+    //api deps.androidx.lifecycleRuntime
 }

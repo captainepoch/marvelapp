@@ -1,6 +1,22 @@
+pluginManagement {
+    repositories {
+        google()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 rootProject.name = "Marvel API"
 
-include ":app"
-include ":core"
-include ":core-testing"
-include ":characters"
+include ":app",
+        ":core",
+        ":core-testing",
+        ":characters"
