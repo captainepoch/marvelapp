@@ -1,8 +1,8 @@
 plugins {
-    id "com.android.application"
-    id "kotlin-android"
-    id "kotlin-kapt"
-    id "kotlin-parcelize"
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -61,36 +61,38 @@ android {
 
     buildFeatures {
         compose true
+        buildConfig true
+        resValues true
+        viewBinding true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
+        kotlinCompilerExtensionVersion = buildVersions.kotlinComposeExtension
     }
 
-    buildFeatures {
-        viewBinding true
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas")
+            arg("room.incremental", "true")
+        }
     }
 }
 
 dependencies {
     implementation project(":core")
     implementation project(":characters")
-
-    implementation deps.androidx.lifecycleRuntimeKtx
-    implementation deps.androidx.navigationUi
-
-    implementation deps.lottieCompose
-
     testImplementation project(":core-testing")
 
-    // Compose-related dependencies
-    implementation platform(deps.compose.bom)
-    implementation deps.compose.activity
-    implementation deps.compose.material
-    implementation deps.compose.preview
+    implementation libs.lottie.compose
 
-    debugImplementation deps.compose.uiTooling
+    implementation platform(libs.compose.bom)
+    implementation libs.compose.activity
+    implementation libs.compose.material
+    implementation libs.compose.preview
+    debugImplementation libs.compose.ui.tooling
 
-    implementation deps.compose.accompanist.navigation
-    implementation deps.compose.accompanist.systemuicontroller
+    implementation libs.accompanist.navigation
+    implementation libs.accompanist.systemuicontroller
+    /*implementation deps.androidx.lifecycleRuntimeKtx
+    implementation deps.androidx.navigationUi*/
 }
