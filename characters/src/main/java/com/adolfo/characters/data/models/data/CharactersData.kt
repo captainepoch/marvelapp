@@ -9,10 +9,8 @@ data class CharactersData(
     val total: Int?,
     val count: Int?,
     val results: List<CharacterData>?
-) {
+)
 
-    fun toCharactersView() = CharactersView(
-        //offset ?: -1,
-        results?.map { it.toCharacterView() } ?: listOf()
-    )
-}
+fun CharactersData.toCharactersView() = CharactersView(
+    results?.map { it.toCharacterView() } ?: listOf()
+)

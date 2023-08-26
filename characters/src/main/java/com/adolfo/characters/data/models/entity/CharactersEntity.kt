@@ -18,8 +18,8 @@ data class CharactersEntity(
         fun fromList(list: List<CharacterEntity>): CharactersEntity =
             CharactersEntity(-1, -1, -1, -1, -1, list)
     }
-
-    fun toCharacters() = CharactersData(
-        id, offset, limit, total, count, results?.map { it.toCharacter() }
-    )
 }
+
+fun CharactersEntity.toCharacters() = CharactersData(
+    id, offset, limit, total, count, results?.map { it.toCharacter() }
+)
