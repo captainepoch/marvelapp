@@ -54,7 +54,7 @@ class CharactersViewModelTest {
         val flow = channel.consumeAsFlow()
 
         coEvery {
-            getCharacters.execute(
+            getCharacters.invoke(
                 Params(
                     0,
                     false,
@@ -77,7 +77,7 @@ class CharactersViewModelTest {
         viewModel.getCharacters()
 
         coVerify {
-            getCharacters.execute(
+            getCharacters.invoke(
                 Params(
                     0,
                     false,

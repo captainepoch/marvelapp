@@ -34,10 +34,14 @@ class CharactersViewModel(
     private val offset: Int
         get() = _characters.value.characters.size
 
+    init {
+        getCharacters()
+    }
+
     fun getCharacters(isPaginated: Boolean = false) {
         charactersJob.cancelIfActive()
         charactersJob = viewModelScope.launch {
-            getCharacters.execute(Params(offset, isPaginated))
+            getCharacters.invoke(Params(offset, isPaginated))
                 .onStart {
                     _characters.update { state ->
                         state.copy(isLoading = LoadingType.getPaginationLoader(isPaginated))
