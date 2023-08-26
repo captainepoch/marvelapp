@@ -50,7 +50,7 @@ object NetworkConfig {
         return client.build()
     }
 
-    fun initRetrofit(url: String = BuildConfig.ENDPOINT) {
+    private fun initRetrofit(url: String = BuildConfig.ENDPOINT) {
         retrofitClient = Retrofit.Builder()
             .baseUrl(url)
             .client(getOkhttpClient())
