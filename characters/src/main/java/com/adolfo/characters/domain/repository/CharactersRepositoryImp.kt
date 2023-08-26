@@ -23,14 +23,18 @@ class CharactersRepositoryImp(
     private val local: CharactersLocal
 ) : CharactersRepository {
 
-    override suspend fun getCharacters(offset: Int?, isPaginated: Boolean, limit: Int?): Flow<Either<Failure, CharactersView>> = flow {
-        when(val result = getCharactersFromSource(offset, isPaginated, limit)) {
+    override suspend fun getCharacters(
+        offset: Int?,
+        isPaginated: Boolean,
+        limit: Int?
+    ): Flow<Either<Failure, CharactersView>> = flow {
+        when (val result = getCharactersFromSource(offset, isPaginated, limit)) {
             is Either.Left -> {
-                emit(Either.Left(result.data))
+                emit(result)
             }
+
             is Either.Right -> {
-                val data:CharactersEntity = result.data
-                emit(Either.Right(data.toCharacters().toCharactersView()))
+                emit(Either.Right(result.data.toCharacters().toCharactersView()))
             }
         }
     }
