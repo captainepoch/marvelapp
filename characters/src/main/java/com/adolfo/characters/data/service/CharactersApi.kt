@@ -1,6 +1,7 @@
 package com.adolfo.characters.data.service
 
 import com.adolfo.characters.core.utils.CharactersConstants
+import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.models.entity.CharactersEntity
 import com.adolfo.core.platform.ApiResponse
 import retrofit2.Response
@@ -22,5 +23,5 @@ interface CharactersApi {
     ): Response<ApiResponse<CharactersEntity>>
 
     @GET(CHARACTER)
-    suspend fun getCharacter(@Path("id") id: Int?): Response<ApiResponse<CharactersEntity>>
+    suspend fun getCharacter(@Path("id") id: Int?): Response<ApiResponse<CharacterEntity>>
 }
