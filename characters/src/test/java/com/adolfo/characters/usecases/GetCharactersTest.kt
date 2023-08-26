@@ -1,43 +1,43 @@
 package com.adolfo.characters.usecases
 
-import com.adolfo.characters.data.datasource.CharactersDatasourceImp
+import com.adolfo.characters.data.models.data.toCharactersView
 import com.adolfo.characters.data.models.entity.CharactersEntity
+import com.adolfo.characters.data.models.entity.toCharacters
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.domain.repository.CharactersRepository
-import com.adolfo.characters.domain.repository.CharactersRepositoryImp
-import com.adolfo.core.functional.State.Success
+import com.adolfo.characters.domain.usecases.GetCharacters
+import com.adolfo.characters.domain.usecases.GetCharacters.Params
+import com.adolfo.core.exception.Failure
+import com.adolfo.core.functional.Either
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.`should be instance of`
-import org.amshove.kluent.shouldBeEqualTo
+import org.junit.Before
 import org.junit.Test
 
 class GetCharactersTest {
 
-    private lateinit var repository: CharactersRepository
+    private lateinit var useCase: GetCharacters
+    private val repository = mockk<CharactersRepository>()
+
+    @Before
+    fun setUp() {
+        useCase = GetCharacters(repository)
+    }
 
     @Test
     fun `should get characters`() = runBlocking {
-        val mockResponse = Success(CharactersEntity.empty())
+        val mockResponse: Either<Failure, CharactersView> = Either.Right(
+            CharactersEntity.empty().toCharacters().toCharactersView()
+        )
 
-        val dataSource = mockk<CharactersDatasourceImp>()
         coEvery {
-            dataSource.getCharacters(0, false, 15)
+            repository.getCharacters(0, false, 15)
         } returns mockResponse
 
-        repository = CharactersRepositoryImp(dataSource)
-
-        val flow = repository.getCharacters(0, false, 15)
-        flow.collect { result ->
-            result.`should be instance of`<Success<CharactersView>>()
-            when (result) {
-                is Success<CharactersView> -> {
-                    result.data shouldBeEqualTo mockResponse.data.toCharacters().toCharactersView()
-                }
-
-                else -> {}
-            }
+        useCase.invoke(Params(0, false, 15)).collect {
+            it.`should be instance of`<Either.Right<CharactersView>>()
         }
     }
 }
