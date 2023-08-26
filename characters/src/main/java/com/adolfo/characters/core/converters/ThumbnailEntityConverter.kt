@@ -3,7 +3,7 @@ package com.adolfo.characters.core.converters
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.adolfo.characters.data.models.entity.CharacterThumbEntity
-import com.adolfo.core.extensions.empty
+import com.adolfo.core.extensions.Empty
 import com.google.gson.Gson
 
 @ProvidedTypeConverter
@@ -36,6 +36,6 @@ object ThumbnailEntityConverter {
             }
         }
 
-        return String.empty()
+        return String.Empty
     }
 }

@@ -1,7 +1,7 @@
 package com.adolfo.characters.data.models.data
 
 import com.adolfo.characters.data.models.view.CharacterView
-import com.adolfo.core.extensions.empty
+import com.adolfo.core.extensions.Empty
 
 data class CharacterData(
     val id: Int?,
@@ -14,10 +14,10 @@ data class CharacterData(
 
     fun toCharacterView() = CharacterView(
         id ?: -1,
-        name ?: String.empty(),
-        description ?: String.empty(),
-        modified ?: String.empty(),
-        resourceURI ?: String.empty(),
+        name ?: String.Empty,
+        description ?: String.Empty,
+        modified ?: String.Empty,
+        resourceURI ?: String.Empty,
         getThumbnailUrl()
     )
 
@@ -26,11 +26,11 @@ data class CharacterData(
         val ext = thumbnail?.extension
 
         if (url?.isEmpty() == true || url?.isBlank() == true) {
-            return String.empty()
+            return String.Empty
         }
 
         if (ext?.isEmpty() == true || url?.isBlank() == true) {
-            return String.empty()
+            return String.Empty
         }
 
         return "$url.$ext"

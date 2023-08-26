@@ -7,7 +7,7 @@ import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.models.entity.CharactersEntity
 import com.adolfo.characters.data.service.CharactersApi
 import com.adolfo.characters.data.service.CharactersService
-import com.adolfo.core.extensions.empty
+import com.adolfo.core.extensions.Empty
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core.network.NetworkTools
 import com.adolfo.core.platform.ApiResponse
@@ -37,12 +37,12 @@ class CharactersDatasourceTest {
         val characters = CharactersEntity.empty()
         val response = ApiResponse(
             -1,
-            String.empty(),
-            String.empty(),
-            String.empty(),
-            String.empty(),
+            String.Empty,
+            String.Empty,
+            String.Empty,
+            String.Empty,
             characters,
-            String.empty(),
+            String.Empty,
         )
 
         val api = mockk<CharactersApi>()
@@ -80,12 +80,12 @@ class CharactersDatasourceTest {
         val characters = CharactersEntity.fromList(listOf(character))
         val response = ApiResponse(
             -1,
-            String.empty(),
-            String.empty(),
-            String.empty(),
-            String.empty(),
+            String.Empty,
+            String.Empty,
+            String.Empty,
+            String.Empty,
             characters,
-            String.empty(),
+            String.Empty,
         )
 
         val api = mockk<CharactersApi>()

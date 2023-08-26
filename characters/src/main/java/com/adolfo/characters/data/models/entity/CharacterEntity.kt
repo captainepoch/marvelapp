@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.adolfo.characters.core.converters.ThumbnailEntityConverter
 import com.adolfo.characters.data.models.data.CharacterData
-import com.adolfo.core.extensions.empty
+import com.adolfo.core.extensions.Empty
 
 @Entity
 data class CharacterEntity(
@@ -23,10 +23,10 @@ data class CharacterEntity(
 
         fun empty() = CharacterEntity(
             -1,
-            String.empty(),
-            String.empty(),
-            String.empty(),
-            String.empty(),
+            String.Empty,
+            String.Empty,
+            String.Empty,
+            String.Empty,
             CharacterThumbEntity.empty()
         )
     }

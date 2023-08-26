@@ -7,7 +7,6 @@ import com.adolfo.characters.data.service.CharactersService
 import com.adolfo.core.exception.Failure
 import com.adolfo.core.exception.Failure.NetworkConnection
 import com.adolfo.core.exception.Failure.ServerError
-import com.adolfo.core.extensions.isNotNullOrEmpty
 import com.adolfo.core.functional.State
 import com.adolfo.core.functional.State.Error
 import com.adolfo.core.functional.State.Success
@@ -27,7 +26,7 @@ class CharactersDatasourceImp(
     ): State<CharactersEntity> {
         return runCatching {
             val localData = local.getAllCharacters()
-            if (localData.isNotNullOrEmpty() && !isPaginated) {
+            if (!localData.isNullOrEmpty() && !isPaginated) {
                 Success(CharactersEntity.fromList(localData.orEmpty()))
             } else {
                 getCharactersFromService(offset, limit)
