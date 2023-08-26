@@ -27,14 +27,14 @@ class CharactersRepositoryImp(
         offset: Int?,
         isPaginated: Boolean,
         limit: Int?
-    ): Flow<Either<Failure, CharactersView>> = flow {
-        when (val result = getCharactersFromSource(offset, isPaginated, limit)) {
+    ): Either<Failure, CharactersView>  {
+        return when (val result = getCharactersFromSource(offset, isPaginated, limit)) {
             is Either.Left -> {
-                emit(result)
+                result
             }
 
             is Either.Right -> {
-                emit(Either.Right(result.data.toCharacters().toCharactersView()))
+                Either.Right(result.data.toCharacters().toCharactersView())
             }
         }
     }

@@ -16,7 +16,7 @@ interface CharactersRepository {
         offset: Int?,
         isPaginated: Boolean,
         limit: Int?
-    ): Flow<Either<Failure, CharactersView>>
+    ): Either<Failure, CharactersView>
 
     suspend fun getCharacter(id: Int?): Flow<State<CharacterView>>
 }
