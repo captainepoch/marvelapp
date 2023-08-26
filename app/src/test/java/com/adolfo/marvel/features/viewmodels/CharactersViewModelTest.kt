@@ -8,7 +8,7 @@ import com.adolfo.core.functional.State
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core_testing.CoroutineTestRule
 import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState
-import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModelCompose
+import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -18,9 +18,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.TestCoroutineScheduler
-import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.`should be instance of`
 import org.junit.After
 import org.junit.Before
@@ -36,12 +33,12 @@ class CharactersViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var viewModel: CharactersViewModelCompose
+    private lateinit var viewModel: CharactersViewModel
     private val getCharacters = mockk<GetCharacters>()
 
     @Before
     fun setUp() {
-        viewModel = CharactersViewModelCompose(getCharacters)
+        viewModel = CharactersViewModel(getCharacters)
     }
 
     @After
