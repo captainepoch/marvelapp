@@ -3,12 +3,11 @@ package com.adolfo.marvel.features.character.view.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.domain.usecases.GetCharacterDetail
 import com.adolfo.core.exception.Failure
 import com.adolfo.core.extensions.cancelIfActive
+import com.adolfo.core.functional.Either
 import com.adolfo.core.functional.State.Error
-import com.adolfo.core.functional.State.Success
 import com.adolfo.marvel.features.character.view.ui.models.CharacterDetailItemModel
 import com.adolfo.marvel.features.character.view.ui.models.CharacterScreenState
 import kotlinx.coroutines.Job
@@ -19,7 +18,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class CharacterViewModelCompose(
+class CharacterViewModel(
     private val getCharacterDetail: GetCharacterDetail,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -38,9 +37,9 @@ class CharacterViewModelCompose(
     }
 
     fun getCharacterDetail(id: Int? = characterId) {
-        getCharacterJob?.cancelIfActive()
+        getCharacterJob.cancelIfActive()
         getCharacterJob = viewModelScope.launch {
-            getCharacterDetail(GetCharacterDetail.Params(id))
+            getCharacterDetail.invoke(GetCharacterDetail.Params(id))
                 .onStart {
                     _character.update { state ->
                         state.copy(isLoading = true)
@@ -56,7 +55,7 @@ class CharacterViewModelCompose(
                 }
                 .collect { result ->
                     when (result) {
-                        is Success<CharacterView> -> {
+                        is Either.Right -> {
                             _character.update { state ->
                                 state.copy(
                                     isLoading = false,
@@ -70,11 +69,11 @@ class CharacterViewModelCompose(
                             }
                         }
 
-                        is Error -> {
+                        is Either.Left -> {
                             _character.update { state ->
                                 state.copy(
                                     isLoading = false,
-                                    error = Error(result.failure)
+                                    error = Error(result.data)
                                 )
                             }
                         }

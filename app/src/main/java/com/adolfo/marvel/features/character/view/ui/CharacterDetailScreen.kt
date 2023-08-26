@@ -40,7 +40,7 @@ import com.adolfo.marvel.common.navigation.GenericErrorView
 import com.adolfo.marvel.common.navigation.Loader
 import com.adolfo.marvel.common.navigation.NetworkErrorView
 import com.adolfo.marvel.common.navigation.ServerErrorView
-import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModelCompose
+import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModel
 import kotlin.system.exitProcess
 import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.compose.koinViewModel
@@ -49,12 +49,12 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun CharacterDetailScreen(
     modifier: Modifier = Modifier,
-    viewModel: CharacterViewModelCompose = koinViewModel(),
+    viewModel: CharacterViewModel = koinViewModel(),
     onBackPressed: () -> Unit
 ) {
     val state by viewModel.character.collectAsState()
 
-    AnimatedContent(targetState = state.isLoading) { isLoading ->
+    AnimatedContent(targetState = state.isLoading, label = "CharacterDetailScreen") { isLoading ->
         if (!isLoading) {
             Scaffold(
                 topBar = {
