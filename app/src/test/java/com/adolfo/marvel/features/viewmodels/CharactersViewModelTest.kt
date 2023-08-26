@@ -1,11 +1,13 @@
 package com.adolfo.marvel.features.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.adolfo.characters.core.utils.CharactersConstants
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.domain.usecases.GetCharacters
 import com.adolfo.characters.domain.usecases.GetCharacters.Params
-import com.adolfo.core.functional.State
-import com.adolfo.core.functional.State.Success
+import com.adolfo.core.exception.Failure
+import com.adolfo.core.functional.Either
+import com.adolfo.core.functional.Either.Right
 import com.adolfo.core_testing.CoroutineTestRule
 import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModel
@@ -47,15 +49,21 @@ class CharactersViewModelTest {
     }
 
     @Test
-    fun `should emit get characters`() = runBlocking {
-        val channel = Channel<State<CharactersView>>()
+    fun `should emit get characters`(): Unit = runBlocking {
+        val channel = Channel<Either<Failure, CharactersView>>()
         val flow = channel.consumeAsFlow()
 
         coEvery {
-            getCharacters.invoke(Params(0, false, 15))
+            getCharacters.execute(
+                Params(
+                    0,
+                    false,
+                    CharactersConstants.Services.DEFAULT_CHARACTERS_LIMIT
+                )
+            )
         } returns flow
 
-        val mockResponse = Success(
+        val mockResponse = Right(
             CharactersView(
                 listOf(),
                 isFullEmpty = false,
@@ -67,10 +75,16 @@ class CharactersViewModelTest {
         }
 
         viewModel.getCharacters()
-        coVerify {
-            getCharacters.invoke(Params(0, false, 15))
-        }
 
+        coVerify {
+            getCharacters.execute(
+                Params(
+                    0,
+                    false,
+                    CharactersConstants.Services.DEFAULT_CHARACTERS_LIMIT
+                )
+            )
+        }
         viewModel.characters.value.`should be instance of`<CharactersScreenState>()
 
         job.cancel()
