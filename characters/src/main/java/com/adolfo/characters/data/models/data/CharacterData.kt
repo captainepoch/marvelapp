@@ -12,16 +12,7 @@ data class CharacterData(
     val thumbnail: CharacterThumbData?
 ) {
 
-    fun toCharacterView() = CharacterView(
-        id ?: -1,
-        name ?: String.Empty,
-        description ?: String.Empty,
-        modified ?: String.Empty,
-        resourceURI ?: String.Empty,
-        getThumbnailUrl()
-    )
-
-    private fun getThumbnailUrl(): String {
+    internal fun getThumbnailUrl(): String {
         val url = thumbnail?.path
         val ext = thumbnail?.extension
 
@@ -36,3 +27,12 @@ data class CharacterData(
         return "$url.$ext"
     }
 }
+
+fun CharacterData.toCharacterView() = CharacterView(
+    id ?: -1,
+    name ?: String.Empty,
+    description ?: String.Empty,
+    modified ?: String.Empty,
+    resourceURI ?: String.Empty,
+    getThumbnailUrl()
+)

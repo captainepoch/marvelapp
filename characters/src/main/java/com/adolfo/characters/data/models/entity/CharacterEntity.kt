@@ -31,12 +31,14 @@ data class CharacterEntity(
         )
     }
 
-    fun toCharacter() = CharacterData(
-        id,
-        name,
-        description,
-        modified,
-        resourceURI,
-        thumbnail?.toCharacterThumbData()
-    )
+
 }
+
+fun CharacterEntity.toCharacter() = CharacterData(
+    id,
+    name,
+    description,
+    modified,
+    resourceURI,
+    thumbnail?.toCharacterThumbData()
+)
