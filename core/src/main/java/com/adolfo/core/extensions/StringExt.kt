@@ -4,7 +4,8 @@ import com.adolfo.core.platform.Constants
 import java.math.BigInteger
 import java.security.MessageDigest
 
-fun String.Companion.empty() = ""
+val String.Companion.Empty
+    inline get() = ""
 
 fun String?.isNull(): Boolean {
     return (this == null)
