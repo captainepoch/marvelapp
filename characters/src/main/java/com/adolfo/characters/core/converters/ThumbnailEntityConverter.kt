@@ -6,8 +6,7 @@ import com.adolfo.characters.data.models.entity.CharacterThumbEntity
 import com.adolfo.core.extensions.Empty
 import com.google.gson.Gson
 
-@ProvidedTypeConverter
-object ThumbnailEntityConverter {
+class ThumbnailEntityConverter {
 
     private val gson = Gson()
 

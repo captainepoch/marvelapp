@@ -8,7 +8,6 @@ import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.database.dao.CharactersDao
 
 @Database(entities = [CharacterEntity::class], version = 1)
-@TypeConverters(ThumbnailEntityConverter::class)
 abstract class CharactersDatabase : RoomDatabase() {
 
     abstract fun getCharactersDao(): CharactersDao

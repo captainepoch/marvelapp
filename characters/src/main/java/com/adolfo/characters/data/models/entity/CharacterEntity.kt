@@ -8,6 +8,7 @@ import com.adolfo.characters.data.models.data.CharacterData
 import com.adolfo.core.extensions.Empty
 
 @Entity
+@TypeConverters(ThumbnailEntityConverter::class)
 data class CharacterEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
@@ -15,7 +16,6 @@ data class CharacterEntity(
     val description: String?,
     val modified: String?,
     val resourceURI: String?,
-    @TypeConverters(ThumbnailEntityConverter::class)
     val thumbnail: CharacterThumbEntity?
 ) {
 
