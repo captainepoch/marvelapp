@@ -5,18 +5,18 @@ import org.junit.Test
 class BooleanExtTest {
 
     @Test
-    fun `should be null and empty value boolean`() {
+    fun `should be null and false value boolean`() {
         val expectedValue = false
         val booleanValue: Boolean? = null
-        val testBoolean = booleanValue.orEmpty()
+        val testBoolean = booleanValue.orFalse()
 
         assert(expectedValue == testBoolean)
     }
 
     @Test
-    fun `should be boolean value itself`() {
+    fun `should be bool asigned value itself`() {
         val expectedValue = true
-        val testBoolean = expectedValue.orEmpty()
+        val testBoolean = expectedValue.orFalse()
 
         assert(expectedValue == testBoolean)
     }

@@ -1,5 +1,5 @@
 package com.adolfo.core.extensions
 
-fun Boolean?.orEmpty(): Boolean {
+fun Boolean?.orFalse(): Boolean {
     return this ?: false
 }
