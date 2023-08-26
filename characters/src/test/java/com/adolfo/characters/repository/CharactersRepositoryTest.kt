@@ -1,6 +1,5 @@
 package com.adolfo.characters.repository
 
-import com.adolfo.characters.data.datasource.CharactersDatasource
 import com.adolfo.characters.data.datasource.CharactersDatasourceImp
 import com.adolfo.characters.data.local.CharactersLocal
 import com.adolfo.characters.data.models.entity.CharacterEntity
