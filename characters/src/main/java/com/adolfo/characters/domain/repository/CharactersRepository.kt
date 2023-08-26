@@ -18,5 +18,5 @@ interface CharactersRepository {
         limit: Int?
     ): Either<Failure, CharactersView>
 
-    suspend fun getCharacter(id: Int?): Flow<State<CharacterView>>
+    suspend fun getCharacter(id: Int?): Either<Failure, CharacterView>
 }

@@ -1,21 +1,20 @@
 package com.adolfo.characters.domain.repository
 
 import com.adolfo.characters.data.local.CharactersLocal
+import com.adolfo.characters.data.models.data.toCharacterView
 import com.adolfo.characters.data.models.data.toCharactersView
-import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.models.entity.CharactersEntity
+import com.adolfo.characters.data.models.entity.toCharacter
 import com.adolfo.characters.data.models.entity.toCharacters
+import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.data.models.view.CharactersView
 import com.adolfo.characters.data.service.CharactersApi
 import com.adolfo.core.exception.Failure
 import com.adolfo.core.exception.Failure.NetworkConnection
 import com.adolfo.core.exception.Failure.ServerError
 import com.adolfo.core.functional.Either
-import com.adolfo.core.functional.State.Success
 import com.adolfo.core.network.NetworkTools
 import javax.net.ssl.SSLHandshakeException
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
 class CharactersRepositoryImp(
     private val networkTools: NetworkTools,
@@ -27,7 +26,7 @@ class CharactersRepositoryImp(
         offset: Int?,
         isPaginated: Boolean,
         limit: Int?
-    ): Either<Failure, CharactersView>  {
+    ): Either<Failure, CharactersView> {
         return when (val result = getCharactersFromSource(offset, isPaginated, limit)) {
             is Either.Left -> {
                 result
@@ -80,16 +79,17 @@ class CharactersRepositoryImp(
         }
     }
 
-    override suspend fun getCharacter(id: Int?) = flow {
-        emit(Success(CharacterEntity.empty().toCharacter().toCharacterView()))
-        /*when (val data: State<CharacterEntity> = datasource.getCharacter(id)) {
-            is Success<CharacterEntity> -> emit(
-                Success(
-                    data.data.toCharacter().toCharacterView()
-                )
-            )
-
-            is Error -> emit(Error(data.failure))
-        }*/
+    override suspend fun getCharacter(id: Int?): Either<Failure, CharacterView> {
+        return if (networkTools.hasInternetConnection()) {
+            service.getCharacter(id).run {
+                if (isSuccessful && body() != null) {
+                    Either.Right(body()!!.data.toCharacter().toCharacterView())
+                } else {
+                    Either.Left(ServerError(code()))
+                }
+            }
+        } else {
+            Either.Left(NetworkConnection)
+        }
     }
 }
