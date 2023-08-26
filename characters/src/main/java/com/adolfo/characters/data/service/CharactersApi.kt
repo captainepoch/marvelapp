@@ -22,6 +22,5 @@ interface CharactersApi {
     ): Response<ApiResponse<CharactersEntity>>
 
     @GET(CHARACTER)
-    suspend fun getCharacter(@Path("id") id: Int?)
-            : Response<ApiResponse<CharactersEntity>>
+    suspend fun getCharacter(@Path("id") id: Int?): Response<ApiResponse<CharactersEntity>>
 }
