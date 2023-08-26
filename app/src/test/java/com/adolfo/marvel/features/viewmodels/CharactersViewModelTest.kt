@@ -7,7 +7,6 @@ import com.adolfo.characters.domain.usecases.GetCharacters
 import com.adolfo.characters.domain.usecases.GetCharacters.Params
 import com.adolfo.core.exception.Failure
 import com.adolfo.core.functional.Either
-import com.adolfo.core.functional.Either.Right
 import com.adolfo.core_testing.CoroutineTestRule
 import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState
 import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModel
@@ -63,7 +62,7 @@ class CharactersViewModelTest {
             )
         } returns flow
 
-        val mockResponse = Right(
+        val mockResponse = Either.Right(
             CharactersView(
                 listOf(),
                 isFullEmpty = false,
