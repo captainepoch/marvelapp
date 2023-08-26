@@ -32,7 +32,7 @@ val charactersDatabase = module {
         Room.databaseBuilder(
             get(),
             CharactersDatabase::class.java,
-            CharactersConstants.BBDD.DATABASE_NAME
+            CharactersConstants.Database.DATABASE_NAME
         ).build()
     }
 
