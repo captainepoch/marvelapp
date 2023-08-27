@@ -72,11 +72,12 @@ android {
 }
 
 dependencies {
-    implementation project(":core")
     implementation project(":characters")
+    implementation project(":core")
     testImplementation project(":core-testing")
 
-    implementation libs.lottie.compose
+    implementation libs.accompanist.navigation
+    implementation libs.accompanist.systemuicontroller
 
     implementation platform(libs.compose.bom)
     implementation libs.compose.activity
@@ -84,8 +85,5 @@ dependencies {
     implementation libs.compose.preview
     debugImplementation libs.compose.ui.tooling
 
-    implementation libs.accompanist.navigation
-    implementation libs.accompanist.systemuicontroller
-    /*implementation deps.androidx.lifecycleRuntimeKtx
-    implementation deps.androidx.navigationUi*/
+    implementation libs.lottie.compose
 }
