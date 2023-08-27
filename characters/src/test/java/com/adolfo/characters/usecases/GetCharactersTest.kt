@@ -11,8 +11,10 @@ import com.adolfo.core.exception.Failure
 import com.adolfo.core.functional.Either
 import io.mockk.coEvery
 import io.mockk.mockk
+import io.mockk.unmockkAll
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.`should be instance of`
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
@@ -24,6 +26,11 @@ class GetCharactersTest {
     @Before
     fun setUp() {
         useCase = GetCharacters(repository)
+    }
+
+    @After
+    fun finishTest() {
+        unmockkAll()
     }
 
     @Test
