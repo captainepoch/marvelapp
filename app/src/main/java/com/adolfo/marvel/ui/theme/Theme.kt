@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-private val DarkColorPalette = darkColors(
+private val darkColorPalette = darkColors(
     primary = marvelRedDark,
     primaryVariant = primaryDark,
     secondary = secondaryDark,
@@ -18,7 +18,7 @@ private val DarkColorPalette = darkColors(
     onSurface = Color.White
 )
 
-private val LightColorPalette = lightColors(
+private val lightColorPalette = lightColors(
     primary = marvelRed,
     primaryVariant = primaryLight,
     secondary = secondaryLight,
@@ -36,12 +36,12 @@ fun MarvelAppTheme(
         systemUiController.setSystemBarsColor(
             color = marvelRedDark
         )
-        DarkColorPalette
+        darkColorPalette
     } else {
         systemUiController.setSystemBarsColor(
             color = marvelRed
         )
-        LightColorPalette
+        lightColorPalette
     }
 
     MaterialTheme(
