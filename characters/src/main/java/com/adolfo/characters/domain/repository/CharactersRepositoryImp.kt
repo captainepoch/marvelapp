@@ -3,6 +3,7 @@ package com.adolfo.characters.domain.repository
 import com.adolfo.characters.data.local.CharactersLocal
 import com.adolfo.characters.data.models.data.toCharacterView
 import com.adolfo.characters.data.models.data.toCharactersView
+import com.adolfo.characters.data.models.entity.CharacterEntity
 import com.adolfo.characters.data.models.entity.CharactersEntity
 import com.adolfo.characters.data.models.entity.toCharacter
 import com.adolfo.characters.data.models.entity.toCharacters
@@ -83,7 +84,8 @@ class CharactersRepositoryImp(
         return if (networkTools.hasInternetConnection()) {
             service.getCharacter(id).run {
                 if (isSuccessful && body() != null) {
-                    Either.Right(body()!!.data.toCharacter().toCharacterView())
+                    val singleItem = body()!!.data.results?.first() ?: CharacterEntity.empty()
+                    Either.Right(singleItem.toCharacter().toCharacterView())
                 } else {
                     Either.Left(ServerError(code()))
                 }
