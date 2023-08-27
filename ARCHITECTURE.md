@@ -21,7 +21,7 @@ The navigation is provided by the Navigation component, part of Jetpack.
 
 The UI/UX is provided by Jetpack Compose.
 
-## Modularization
+## Modularization
 
 The application is separated into different modules that provide different
 functionality to the application:
@@ -95,13 +95,12 @@ View. The ViewModel might also prepare the data before sending it to the view,
 adjusting some values or making mathematical operations. The View does not have
 to handle this kind of operations.
 
-The View then will handle the data accordingly to the State type (Success or
-Failure), providing the user with a View filled with the information according
-with each case.
+The View will handle the data accordingly to the Either type received by the
+UseCase, providing a model that the View can understand to show the information.
 
 ### Concurrency
 
-For being able to retrive information from a REST API the framework used for
+For being able to retrieve information from a REST API the framework used for
 creating and managing background jobs has been Kotlin's Coroutines.
 
 This new framework provides an easy way to create Jobs, being able to have
