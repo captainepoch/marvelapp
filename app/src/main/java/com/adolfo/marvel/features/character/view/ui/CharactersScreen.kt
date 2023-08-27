@@ -46,14 +46,14 @@ import com.adolfo.marvel.features.character.view.ui.models.CharacterScreenItem
 import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState.LoadingType
 import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState.LoadingType.NORMAL
 import com.adolfo.marvel.features.character.view.ui.models.CharactersScreenState.LoadingType.PAGINATION
-import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModelCompose
+import com.adolfo.marvel.features.character.view.viewmodel.CharactersViewModel
 import kotlin.system.exitProcess
 import kotlinx.coroutines.launch
 
 @Composable
 fun CharactersScreen(
     modifier: Modifier = Modifier,
-    viewModel: CharactersViewModelCompose,
+    viewModel: CharactersViewModel,
     onCharacterClicked: (Int) -> Unit
 ) {
     val context = LocalContext.current

@@ -5,9 +5,10 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.adolfo.characters.core.converters.ThumbnailEntityConverter
 import com.adolfo.characters.data.models.data.CharacterData
-import com.adolfo.core.extensions.empty
+import com.adolfo.core.extensions.Empty
 
 @Entity
+@TypeConverters(ThumbnailEntityConverter::class)
 data class CharacterEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
@@ -15,7 +16,6 @@ data class CharacterEntity(
     val description: String?,
     val modified: String?,
     val resourceURI: String?,
-    @TypeConverters(ThumbnailEntityConverter::class)
     val thumbnail: CharacterThumbEntity?
 ) {
 
@@ -23,20 +23,22 @@ data class CharacterEntity(
 
         fun empty() = CharacterEntity(
             -1,
-            String.empty(),
-            String.empty(),
-            String.empty(),
-            String.empty(),
+            String.Empty,
+            String.Empty,
+            String.Empty,
+            String.Empty,
             CharacterThumbEntity.empty()
         )
     }
 
-    fun toCharacter() = CharacterData(
-        id,
-        name,
-        description,
-        modified,
-        resourceURI,
-        thumbnail?.toCharacterThumbData()
-    )
+
 }
+
+fun CharacterEntity.toCharacter() = CharacterData(
+    id,
+    name,
+    description,
+    modified,
+    resourceURI,
+    thumbnail?.toCharacterThumbData()
+)

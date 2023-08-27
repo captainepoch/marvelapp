@@ -40,8 +40,5 @@ dependencies {
     api libs.kotlinx.coroutines.test
     api libs.testing.core
     api libs.testing.kluent
-    api libs.testing.koin
-    api libs.testing.kotlin
-    api libs.testing.kotlin.reflect
     api libs.testing.mockk
 }

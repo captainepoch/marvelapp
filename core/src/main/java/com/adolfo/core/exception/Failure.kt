@@ -22,5 +22,5 @@ sealed class Failure {
         }
     }
 
-    object NetworkConnection : Failure()
+    data object NetworkConnection : Failure()
 }

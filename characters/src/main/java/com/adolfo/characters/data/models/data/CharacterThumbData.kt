@@ -1,6 +1,7 @@
 package com.adolfo.characters.data.models.data
 
-import com.adolfo.core.extensions.empty
+import com.adolfo.core.extensions.Empty
+
 
 data class CharacterThumbData(
     val path: String?,
@@ -9,6 +10,6 @@ data class CharacterThumbData(
 
     companion object {
 
-        fun empty() = CharacterThumbData(String.empty(), String.empty())
+        fun empty() = CharacterThumbData(String.Empty, String.Empty)
     }
 }

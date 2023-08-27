@@ -69,30 +69,21 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = buildVersions.kotlinComposeExtension
     }
-
-    kapt {
-        arguments {
-            arg("room.schemaLocation", "$projectDir/schemas")
-            arg("room.incremental", "true")
-        }
-    }
 }
 
 dependencies {
-    implementation project(":core")
     implementation project(":characters")
+    implementation project(":core")
     testImplementation project(":core-testing")
 
-    implementation libs.lottie.compose
+    implementation libs.accompanist.navigation
+    implementation libs.accompanist.systemuicontroller
 
     implementation platform(libs.compose.bom)
     implementation libs.compose.activity
     implementation libs.compose.material
-    implementation libs.compose.preview
-    debugImplementation libs.compose.ui.tooling
+    implementation libs.compose.tooling.preview
+    debugImplementation libs.compose.tooling.ui
 
-    implementation libs.accompanist.navigation
-    implementation libs.accompanist.systemuicontroller
-    /*implementation deps.androidx.lifecycleRuntimeKtx
-    implementation deps.androidx.navigationUi*/
+    implementation libs.lottie.compose
 }

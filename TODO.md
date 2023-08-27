@@ -15,7 +15,3 @@
 - Improve items UI.
 - Improve character detail UI/UX.
 
-## Data and Domain layers
-
-- Failure class: make a Failure state for domain/data, and FailureView for the
-  View layer.

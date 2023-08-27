@@ -84,8 +84,8 @@ dependencies {
     api libs.room.ktx
     api libs.room.runtime
 
-    api libs.coil
     api libs.coil.compose
+    api libs.coil.lib
 
     api platform(libs.compose.bom)
     api libs.compose.activity
@@ -100,12 +100,10 @@ dependencies {
 
     api libs.okhttp.logging.interceptor
 
-    api libs.retrofit
     api libs.retrofit.gson
+    api libs.retrofit.lib
 
     api libs.timber
 
     testImplementation project(":core-testing")
-    //api deps.androidx.lifecycleJava8
-    //api deps.androidx.lifecycleRuntime
 }

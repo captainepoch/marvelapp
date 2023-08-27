@@ -33,7 +33,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: clean ktlintCheck
-      
+
       - name: Test - app
         uses: gradle/gradle-build-action@v2
         with:

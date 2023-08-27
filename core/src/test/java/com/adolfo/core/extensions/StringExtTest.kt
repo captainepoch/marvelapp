@@ -1,36 +1,20 @@
 package com.adolfo.core.extensions
 
-import io.mockk.clearAllMocks
 import java.util.Locale
-import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.koin.test.mock.MockProviderRule
-import org.mockito.Mockito
 
 class StringExtTest {
 
-    @get:Rule
-    val mockProvider = MockProviderRule.create { clazz ->
-        Mockito.mock(clazz.java)
-    }
-
     @Before
     fun setUp() {
-        val locale = Locale("en", "IE")
-        Locale.setDefault(locale)
-    }
-
-    @After
-    fun cleanUp() {
-        clearAllMocks()
+        Locale.setDefault(Locale("en", "IE"))
     }
 
     @Test
     fun `should be empty string`() {
         val expected = ""
-        val test = String.empty()
+        val test = String.Empty
 
         assert(expected == test)
     }
@@ -38,7 +22,7 @@ class StringExtTest {
     @Test
     fun `should be not empty string`() {
         val expected = "test"
-        val test = String.empty()
+        val test = String.Empty
 
         assert(expected != test)
     }
@@ -69,7 +53,7 @@ class StringExtTest {
 
     @Test
     fun `should not be null string`() {
-        val expected: String = "test"
+        val expected = "test"
         val test = false
 
         assert(expected.isNull() == test)
@@ -77,7 +61,7 @@ class StringExtTest {
 
     @Test
     fun `should check md5`() {
-        val expected: String = "null"
+        val expected = "null"
         val test = "37a6259cc0c1dae299a7866489dff0bd"
 
         assert(expected.md5() == test)

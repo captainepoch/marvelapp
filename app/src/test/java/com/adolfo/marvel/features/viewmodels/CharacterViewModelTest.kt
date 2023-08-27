@@ -4,11 +4,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
 import com.adolfo.characters.data.models.view.CharacterView
 import com.adolfo.characters.domain.usecases.GetCharacterDetail
+import com.adolfo.core.exception.Failure
+import com.adolfo.core.functional.Either
 import com.adolfo.core.functional.State
 import com.adolfo.core.functional.State.Success
 import com.adolfo.core_testing.CoroutineTestRule
 import com.adolfo.marvel.features.character.view.ui.models.CharacterScreenState
-import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModelCompose
+import com.adolfo.marvel.features.character.view.viewmodel.CharacterViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -19,9 +21,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.TestCoroutineScheduler
-import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.`should be instance of`
 import org.junit.After
 import org.junit.Before
@@ -37,7 +36,7 @@ class CharacterViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var viewModel: CharacterViewModelCompose
+    private lateinit var viewModel: CharacterViewModel
     private val getCharacterDetail = mockk<GetCharacterDetail>()
     private val savedStateHandle = mockk<SavedStateHandle>()
 
@@ -47,7 +46,7 @@ class CharacterViewModelTest {
             savedStateHandle.get<Int>("id")
         } returns 1
 
-        viewModel = CharacterViewModelCompose(getCharacterDetail, savedStateHandle)
+        viewModel = CharacterViewModel(getCharacterDetail, savedStateHandle)
     }
 
     @After
@@ -57,14 +56,14 @@ class CharacterViewModelTest {
 
     @Test
     fun `should emit get characters`() = runBlocking {
-        val channel = Channel<State<CharacterView>>()
+        val channel = Channel<Either<Failure, CharacterView>>()
         val flow = channel.consumeAsFlow()
 
         coEvery {
             getCharacterDetail.invoke(GetCharacterDetail.Params(1))
         } returns flow
 
-        val mockResponse = Success(
+        val mockResponse = Either.Right(
             CharacterView(1, "", "", "", "", "")
         )
         val job = launch {
