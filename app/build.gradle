@@ -82,8 +82,8 @@ dependencies {
     implementation platform(libs.compose.bom)
     implementation libs.compose.activity
     implementation libs.compose.material
-    implementation libs.compose.preview
-    debugImplementation libs.compose.ui.tooling
+    implementation libs.compose.tooling.preview
+    debugImplementation libs.compose.tooling.ui
 
     implementation libs.lottie.compose
 }
