@@ -12,6 +12,7 @@ data class CharacterThumbEntity(
 
         fun empty() = CharacterThumbEntity(String.Empty, String.Empty)
     }
-
-    fun toCharacterThumbData() = CharacterThumbData(path, extension)
 }
+
+
+fun CharacterThumbEntity.toCharacterThumbData() = CharacterThumbData(path, extension)
